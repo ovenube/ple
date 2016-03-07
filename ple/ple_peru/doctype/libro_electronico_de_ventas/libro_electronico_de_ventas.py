@@ -87,7 +87,7 @@ def get_sales_invoices(year, periodo):
 			currency as moneda,
 			conversion_rate as tipo_cambio,
 			IF(is_return,(SELECT due_date FROM `tabSales Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
-			IF(is_return,(SELECT codigo_tipo_comprobante FROM `tabSales Invoice` WHERE name=return_against),"") as tipo_devolucion,
+			IF(is_return,(SELECT codigo_comprobante FROM `tabSales Invoice` WHERE name=return_against),"") as tipo_devolucion,
 			IF(is_return,SUBSTRING((SELECT name FROM `tabSales Invoice` WHERE name=return_against),4,3),"") as serie_devolucion,
 			IF(is_return,SUBSTRING((SELECT name FROM `tabSales Invoice` WHERE name=return_against),8),"")  as dua,
 			"" as contrato,
