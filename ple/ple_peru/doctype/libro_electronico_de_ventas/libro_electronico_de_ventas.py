@@ -92,7 +92,7 @@ def get_sales_invoices(year, periodo):
 			IF(is_return,SUBSTRING((SELECT name FROM `tabSales Invoice` WHERE name=return_against),8),"")  as dua,
 			"" as contrato,
 			"" as error_1,
-			IF(1=null,"",u'1') as indicador_pago,
+			'1' as indicador_pago,
 			IF(posting_date<due_date,'8','1') as anotacion
 		from
 			`tabSales Invoice` sales_invoice
