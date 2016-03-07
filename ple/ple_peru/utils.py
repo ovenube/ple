@@ -82,8 +82,8 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['periodo']+"|"+
 				row['cuo']+"|"+
 				row['correlativo_asiento']+"|"+
-				str(row['fecha_emision'])+"|"+
-				str(row['fecha_cancelacion'])+"|"+
+				row['fecha_emision']+"|"+
+				row['fecha_cancelacion']+"|"+
 				row['codigo_tipo_comprobante']+"|"+
 				row['serie_comprobante']+"|"+
 				row['numero_comprobante']+"|"+
@@ -92,9 +92,9 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['numero_documento']+"|"+
 				row['nombre_cliente']+"|"+
 				row['valor_exportacion']+"|"+
-				str(row['base_imponible'])+"|"+
+				row['base_imponible']+"|"+
 				row['descuento']+"|"+
-				str(row['monto_impuesto'])+"|"+
+				row['monto_impuesto']+"|"+
 				row['descuento_igv']+"|"+
 				row['total_exonerado']+"|"+
 				row['total_inafecto']+"|"+
@@ -102,17 +102,17 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['base_arroz']+"|"+
 				row['impuesto_arroz']+"|"+
 				row['otros_conceptos']+"|"+
-				str(row['valor_adquisicion'])+"|"+
+				row['valor_adquisicion']+"|"+
 				row['moneda']+"|"+
-				str(row['tipo_cambio'])+"|"+
-				str(row['fecha_inicial_devolucion'])+"|"+
-				str(row['tipo_devolucion'])+"|"+
-				str(row['serie_devolucion'])+"|"+
-				str(row['dua'])+"|"+
+				row['tipo_cambio']+"|"+
+				row['fecha_inicial_devolucion']+"|"+
+				row['tipo_devolucion']+"|"+
+				row['serie_devolucion']+"|"+
+				row['dua']+"|"+
 				row['contrato']+"|"+
 				row['error_1']+"|"+
 				row['indicador_pago']+"|"+
-				str(row['anotacion']+"\n"))
+				row['anotacion']+"\n")
 	elif tipo=="diario":
 		if primer=="1":
 			for row in data:
