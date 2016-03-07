@@ -18,50 +18,50 @@ class LibroElectronicodeVentas(Document):
 
 
 @frappe.whitelist()
-def get_sales_invoices(periodo):
+def get_sales_invoices(year, periodo):
 	sales_invoice_list = []
 	from_date = ""
 	to_date = ""
 	if periodo=='Enero':
-		from_date='2016-01-01'
-		to_date='2016-01-31'
+		from_date=year+'-01-01'
+		to_date=year+'-01-31'
 	elif periodo=='Febrero':
-		from_date='2016-02-01'
-		to_date='2016-02-29'
+		from_date=year+'-02-01'
+		to_date=year+'-02-29'
 	elif periodo=='Marzo':
-		from_date='2016-03-01'
-		to_date='2016-03-31'
+		from_date=year+'-03-01'
+		to_date=year+'-03-31'
 	elif periodo=='Abril':
-		from_date='2016-04-01'
-		to_date='2016-04-30'
+		from_date=year+'-04-01'
+		to_date=year+'-04-30'
 	elif periodo=='Mayo':
-		from_date='2016-05-01'
-		to_date='2016-05-29'
+		from_date=year+'-05-01'
+		to_date=year+'-05-29'
 	elif periodo=='Junio':
-		from_date='2016-06-01'
-		to_date='2016-06-30'
+		from_date=year+'-06-01'
+		to_date=year+'-06-30'
 	elif periodo=='Julio':
-		from_date='2016-07-01'
-		to_date='2016-07-31'
+		from_date=year+'-07-01'
+		to_date=year+'-07-31'
 	elif periodo=='Agosto':
-		from_date='2016-08-01'
-		to_date='2016-08-31'
+		from_date=year+'-08-01'
+		to_date=year+'-08-31'
 	elif periodo=='Setiembre':
-		from_date='2016-09-01'
-		to_date='2016-09-30'
+		from_date=year+'-09-01'
+		to_date=year+'-09-30'
 	elif periodo=='Octubre':
-		from_date='2016-10-10'
-		to_date='2016-10-31'
+		from_date=year+'-10-10'
+		to_date=year+'-10-31'
 	elif periodo=='Noviembre':
-		from_date='2016-11-01'
-		to_date='2016-11-30'
+		from_date=year+'-11-01'
+		to_date=year+'-11-30'
 	elif periodo=='Diciembre':
-		from_date='2016-12-01'
-		to_date='2016-12-31'
+		from_date=year+'-12-01'
+		to_date=year+'-12-31'
 
 	sales_invoices = frappe.db.sql("""select
 			CONCAT(DATE_FORMAT(due_date,'%Y%m'),'00') as periodo,
-			journal_entry.parent as cuo,
+			SUBSTRING(journal_entry.parent,4) as cuo,
 			CONCAT('M',journal_entry.idx) as correlativo_asiento,
 			DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_emision,
 			DATE_FORMAT(due_date,'%d/%m/%Y') as fecha_cancelacion,
@@ -88,7 +88,7 @@ def get_sales_invoices(periodo):
 			conversion_rate as tipo_cambio,
 			IF(is_return,return_against_date,"") as fecha_inicial_devolucion,
 			IF(is_return,return_against_codigo_comprobante,"") as tipo_devolucion,
-			IF(is_return,return_name,"") as serie_devolucion,
+			IF(is_return,return_against,"") as serie_devolucion,
 			"" as dua,
 			"" as contrato,
 			"" as error_1,
@@ -144,34 +144,34 @@ def get_sales_invoices(periodo):
 
 
 @frappe.whitelist()
-def export_libro_de_ventas(periodo, ruc):
+def export_libro_de_ventas(year, periodo, ruc):
 	tipo = "ventas"
 	codigo_periodo = ""
-	data = get_sales_invoices(periodo)
+	data = get_sales_invoices(year, periodo)
 	if periodo=='Enero':
-		codigo_periodo = "201601"
+		codigo_periodo = year + "01"
 	elif periodo=='Febrero':
-		codigo_periodo = "201602"
+		codigo_periodo = year + "02"
 	elif periodo=='Marzo':
-		codigo_periodo = "201603"
+		codigo_periodo = year + "03"
 	elif periodo=='Abril':
-		codigo_periodo = "201604"
+		codigo_periodo = year + "04"
 	elif periodo=='Mayo':
-		codigo_periodo = "201605"
+		codigo_periodo = year + "05"
 	elif periodo=='Junio':
-		codigo_periodo = "201606"
+		codigo_periodo = year + "06"
 	elif periodo=='Julio':
-		codigo_periodo = "201607"
+		codigo_periodo = year + "07"
 	elif periodo=='Agosto':
-		codigo_periodo = "201608"
+		codigo_periodo = year + "08"
 	elif periodo=='Setiembre':
-		codigo_periodo = "201609"
+		codigo_periodo = year + "09"
 	elif periodo=='Octubre':
-		codigo_periodo = "201610"
+		codigo_periodo = year + "610"
 	elif periodo=='Noviembre':
-		codigo_periodo = "201611"
+		codigo_periodo = year + "11"
 	elif periodo=='Diciembre':
-		codigo_periodo = "201612"
+		codigo_periodo = year + "12"
 	nombre = "LE"+str(ruc)+codigo_periodo+'140100'+'00'+'1'+'1'+'1'+'1'
 	send_txt_to_client(data,nombre, tipo)
 

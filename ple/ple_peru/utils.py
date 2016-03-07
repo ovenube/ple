@@ -20,8 +20,8 @@ def send_txt_to_client(data, nombre, tipo, primer=None):
 
 
 @frappe.whitelist()
-def send_csv_to_client(data, nombre, tipo, primer=None):
-	file = to_csv(data, tipo, nombre, primer)
+def send_csv_to_client(data, nombre, tipo):
+	file = to_csv(data, tipo, nombre)
 	data = read_txt(file)
 	frappe.response['result'] = cstr(data)
 	frappe.response['type'] = 'csv'
@@ -151,9 +151,9 @@ def to_txt(data, tipo, nombre, primer=None):
 
 
 def to_csv(data, tipo, nombre, primer=None):
-	archivo = nombre+".csv"
+	archivo = nombre+".txt"
 	exported_file = open(archivo,"w")	
-	if tipo=="compras":
+	if tipo=="Compras":
 		exported_file.write(
 			'Libro Electronico de Compras'+'\n'
 			'periodo'+','+
@@ -240,7 +240,7 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['error_4']+','+
 				str(row['indicador_pago'])+','+
 				str(row['anotacion']+'\n'))
-	elif tipo=="ventas":
+	elif tipo=="Ventas":
 		exported_file.write(
 			'Libro Electronico de Ventas'+'\n'
 			'periodo'+","+
@@ -302,9 +302,9 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['base_arroz']+","+
 				row['impuesto_arroz']+","+
 				row['otros_conceptos']+","+
-				row['valor_adquisicion']+","+
+				str(row['valor_adquisicion'])+","+
 				row['moneda']+","+
-				row['tipo_cambio']+","+
+				str(row['tipo_cambio'])+","+
 				row['fecha_inicial_devolucion']+","+
 				row['tipo_devolucion']+","+
 				row['serie_devolucion']+","+
@@ -313,7 +313,7 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['error_1']+","+
 				str(row['indicador_pago'])+","+
 				str(row['anotacion']+"\n"))
-	elif tipo=="diario":
+	elif tipo=="Diario":
 		if primer=="1":
 			exported_file.write(
 				'Libro Electronico Diario Primero'+'\n'
@@ -359,8 +359,8 @@ def to_csv(data, tipo, nombre, primer=None):
 				'estado'+"\n")
 			for row in data:
 				exported_file.write(
-					row['periodo']+","+
-					row['cuo']+","+
+					row['periodo']+",'"+
+					row['cuo']+"',"+
 					row['correlativo_asiento']+","+
 					row['codigo_asiento']+","+
 					row['cuo_ue']+","+
@@ -370,14 +370,14 @@ def to_csv(data, tipo, nombre, primer=None):
 					row['codigo_comprobante']+","+
 					row['serie_comprobante']+","+
 					row['numero_comprobante']+","+
-					row['fecha_contable']+","+
-					row['fecha_emision']+","+
+					str(row['fecha_contable'])+","+
+					str(row['fecha_emision'])+","+
 					row['fecha_vencimiento']+","+
 					row['glosa']+","+
-					row['debe']+","+
-					row['haber']+","+
+					str(row['debe'])+","+
+					str(row['haber'])+","+
 					row['estructurado']+","+
-					row['estado']+"\n")
+					str(row['estado']+"\n"))
 
 	return archivo
 
