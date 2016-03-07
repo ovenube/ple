@@ -29,7 +29,7 @@ frappe.ui.form.on('Libro Electronico Diario', 'company', function(frm) {
             },
             callback: function (data) {
                 if (data.message.company == null) {
-                    frappe.model.set_value(frm.doctype, frm.docname, "ruc", null);
+                    
                 }
                 else{
                 	frappe.model.set_value(frm.doctype, frm.docname, "ruc", data.message.tax_id);
