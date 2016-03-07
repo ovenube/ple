@@ -110,7 +110,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['dua']+"|"+
 				row['contrato']+"|"+
 				row['error_1']+"|"+
-				str(row['indicador_pago'])+"|"+
+				row['indicador_pago']+"|"+
 				str(row['anotacion']+"\n"))
 	elif tipo=="diario":
 		if primer=="1":
