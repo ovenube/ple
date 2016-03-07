@@ -95,8 +95,8 @@ def get_account(year, periodo, primer=None):
 		        								`tabPurchase Invoice`where name=against_voucher),
 												(select codigo_comprobante from `tabSales Invoice` 
 												where name=against_voucher)) as codigo_comprobante,
-		        IF(against_voucher like 'PINV%',(select bill_series from `tabPurchase Invoice` 
-		        								where name=against_voucher),
+		        IF(against_voucher like 'PINV%',IFNULL((select bill_series from `tabPurchase Invoice` 
+		        								where name=against_voucher),''),
 												SUBSTRING(against_voucher,4,3)) as serie_comprobante,
 		        IF(against_voucher like 'PINV%',(select bill_no from `tabPurchase Invoice`where name=against_voucher),
 		        								SUBSTRING(against_voucher,8)) as numero_comprobante,
