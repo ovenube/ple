@@ -84,11 +84,11 @@ def get_purchase_invoices(year, periodo):
 			grand_total as valor_adquisicion,
 			currency as moneda,
 			conversion_rate as tipo_cambio,
-			IF(is_return,return_against_date,"") as fecha_inicial_devolucion,
-			IF(is_return,return_against_tipo_comprobante,"") as tipo_devolucion,
-			IF(is_return,return_against_series,"") as serie_devolucion,
+			IF(is_return,(SELECT bill_date FROM `tabPurchase Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
+			IF(is_return,(SELECT codigo_tipo_comprobante FROM `tabPurchase Invoice` WHERE name=return_against),"") as tipo_devolucion,
+			IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
 			"" as dua,
-			IF(is_return,return_against_no,"") as numero_devolucion,
+			IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
 			IF(is_return,posting_date,"") as fecha_devolucion,
 			"" as detraccion,
 			"" as marca_detraccion,
@@ -99,7 +99,7 @@ def get_purchase_invoices(year, periodo):
 			"" as error_3,
 			"" as error_4,
 			IF(codigo_tipo_pago=null,"",'1') as indicador_pago,
-			'1' as anotacion
+			IF(posting_date<due_date,'8','1') as anotacion
 		from
 			`tabPurchase Invoice` purchase_invoice
 		left join
