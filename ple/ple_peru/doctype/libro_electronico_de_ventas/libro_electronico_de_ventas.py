@@ -69,7 +69,7 @@ def get_sales_invoices(year, periodo):
 			SUBSTRING(sales_invoice.name,4,3) as serie_comprobante,
 			SUBSTRING(sales_invoice.name,8) as numero_comprobante,
 			"" as resumen_diario,
-			IF(codigo_tipo_documento="","",codigo_tipo_comprobante) as tipo_documento,
+			IF(codigo_tipo_documento="","",codigo_tipo_documento) as tipo_documento,
 			IF(tax_id="","",tax_id) as numero_documento,
 			IF(customer_name='Clientes Varios',customer_boleta_name,customer_name) as nombre_cliente,
 			"" as valor_exportacion,
