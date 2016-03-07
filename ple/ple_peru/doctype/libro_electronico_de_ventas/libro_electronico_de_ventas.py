@@ -71,7 +71,7 @@ def get_sales_invoices(year, periodo):
 			"" as resumen_diario,
 			codigo_tipo_documento as tipo_documento,
 			tax_id as numero_documento,
-			customer_name as nombre_cliente,
+			IF(customer_name='Clientes Varios',customer_boleta_name,customer_name) as nombre_cliente,
 			"" as valor_exportacion,
 			base_net_total as base_imponible,
 			"" as descuento,
