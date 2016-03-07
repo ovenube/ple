@@ -104,13 +104,13 @@ def to_txt(data, tipo, nombre, primer=None):
 				str(row['valor_adquisicion'])+"|"+
 				row['moneda']+"|"+
 				str(row['tipo_cambio'])+"|"+
-				row['fecha_inicial_devolucion']+"|"+
-				row['tipo_devolucion']+"|"+
-				row['serie_devolucion']+"|"+
-				row['dua']+"|"+
+				str(row['fecha_inicial_devolucion'])+"|"+
+				str(row['tipo_devolucion'])+"|"+
+				str(row['serie_devolucion'])+"|"+
+				str(row['dua'])+"|"+
 				row['contrato']+"|"+
 				row['error_1']+"|"+
-				row['indicador_pago']+"|"+
+				str(row['indicador_pago'])+"|"+
 				str(row['anotacion']+"\n"))
 	elif tipo=="diario":
 		if primer=="1":
