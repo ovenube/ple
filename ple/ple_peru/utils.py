@@ -12,8 +12,6 @@ import frappe.api
 
 @frappe.whitelist()
 def send_txt_to_client(data, nombre, tipo, primer=None):
-	data = unicode(data)
-	print(data)
 	file = to_txt(data, tipo, nombre, primer)
 	data = read_txt(file)
 	frappe.response['result'] = cstr(data)
@@ -83,8 +81,8 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['periodo']+"|"+
 				row['cuo']+"|"+
 				row['correlativo_asiento']+"|"+
-				row['fecha_emision']+"|"+
-				row['fecha_cancelacion']+"|"+
+				str(row['fecha_emision'])+"|"+
+				str(row['fecha_cancelacion'])+"|"+
 				row['codigo_tipo_comprobante']+"|"+
 				row['serie_comprobante']+"|"+
 				row['numero_comprobante']+"|"+
@@ -93,9 +91,9 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['numero_documento']+"|"+
 				row['nombre_cliente']+"|"+
 				row['valor_exportacion']+"|"+
-				row['base_imponible']+"|"+
+				str(row['base_imponible'])+"|"+
 				row['descuento']+"|"+
-				row['monto_impuesto']+"|"+
+				str(row['monto_impuesto'])+"|"+
 				row['descuento_igv']+"|"+
 				row['total_exonerado']+"|"+
 				row['total_inafecto']+"|"+
@@ -103,17 +101,17 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['base_arroz']+"|"+
 				row['impuesto_arroz']+"|"+
 				row['otros_conceptos']+"|"+
-				row['valor_adquisicion']+"|"+
+				str(row['valor_adquisicion'])+"|"+
 				row['moneda']+"|"+
-				row['tipo_cambio']+"|"+
-				row['fecha_inicial_devolucion']+"|"+
-				row['tipo_devolucion']+"|"+
-				row['serie_devolucion']+"|"+
-				row['dua']+"|"+
+				str(row['tipo_cambio'])+"|"+
+				str(row['fecha_inicial_devolucion'])+"|"+
+				str(row['tipo_devolucion'])+"|"+
+				str(row['serie_devolucion'])+"|"+
+				str(row['dua'])+"|"+
 				row['contrato']+"|"+
 				row['error_1']+"|"+
-				row['indicador_pago']+"|"+
-				row['anotacion']+"\n")
+				str(row['indicador_pago'])+"|"+
+				str(row['anotacion']+"\n"))
 	elif tipo=="diario":
 		if primer=="1":
 			for row in data:
