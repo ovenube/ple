@@ -170,7 +170,7 @@ def export_libro_diario(year, periodo, ruc, primer):
 	elif periodo=='Diciembre':
 		codigo_periodo = year + "12"
 	if primer=="1":
-		nombre = "LE"+str(ruc)+codigo_periodo+'050300'+'00'+'1'+'1'+'1'+'1'
+		nombre = "LE"+str(ruc)+codigo_periodo+'00050300'+'00'+'1'+'1'+'1'+'1'
 	else:
-		nombre = "LE"+str(ruc)+codigo_periodo+'050100'+'00'+'1'+'1'+'1'+'1'
+		nombre = "LE"+str(ruc)+codigo_periodo+'00050100'+'00'+'1'+'1'+'1'+'1'
 	send_txt_to_client(data, nombre, tipo, primer)

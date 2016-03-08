@@ -172,7 +172,7 @@ def export_libro_de_ventas(year, periodo, ruc):
 		codigo_periodo = year + "11"
 	elif periodo=='Diciembre':
 		codigo_periodo = year + "12"
-	nombre = "LE"+str(ruc)+codigo_periodo+'140100'+'00'+'1'+'1'+'1'+'1'
+	nombre = "LE"+str(ruc)+codigo_periodo+'00140100'+'00'+'1'+'1'+'1'+'1'
 	send_txt_to_client(data,nombre, tipo)
 
 
