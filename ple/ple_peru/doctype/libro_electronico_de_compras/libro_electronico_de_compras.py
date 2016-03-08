@@ -185,9 +185,10 @@ def export_libro_de_compras(year, periodo, ruc):
 		codigo_periodo = year + "11"
 	elif periodo=='Diciembre':
 		codigo_periodo = year + "12"
-	if (year >= 2016 && periodo!='Enero'):
-		nombre_2 = "LE"+str(ruc)+codigo_periodo+'00080200'+'00'+'1'+'0'+'1'+'1'
-		send_txt_to_client("",nombre, tipo)
+	if not periodo=='Enero':
+		if not year==2016:
+			nombre_2 = "LE"+str(ruc)+codigo_periodo+'00080200'+'00'+'1'+'0'+'1'+'1'
+			send_txt_to_client("",nombre_2, tipo)
 	nombre = "LE"+str(ruc)+codigo_periodo+'00080100'+'00'+'1'+'1'+'1'+'1'
 	send_txt_to_client(data,nombre, tipo)
 
