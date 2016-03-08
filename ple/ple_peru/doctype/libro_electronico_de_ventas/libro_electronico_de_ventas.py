@@ -116,7 +116,7 @@ def get_sales_invoices(year, periodo):
 			'resumen_diario': d.resumen_diario,
 			'tipo_documento': d.tipo_documento,
 			'numero_documento': d.numero_documento,
-			'nombre_cliente': unicode(d.nombre_cliente),
+			'nombre_cliente': d.nombre_cliente,
 			'valor_exportacion': d.valor_exportacion,
 			'base_imponible': d.base_imponible,
 			'descuento': d.descuento,
