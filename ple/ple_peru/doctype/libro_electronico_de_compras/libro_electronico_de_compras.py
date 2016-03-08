@@ -83,7 +83,7 @@ def get_purchase_invoices(year, periodo):
 			"" as otros_conceptos,			
 			grand_total as valor_adquisicion,
 			currency as moneda,
-			CONCAT(conversion_rate,'00') as tipo_cambio,
+			'1.000'  as tipo_cambio,
 			IF(is_return,(SELECT bill_date FROM `tabPurchase Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
 			IF(is_return,(SELECT codigo_tipo_comprobante FROM `tabPurchase Invoice` WHERE name=return_against),"") as tipo_devolucion,
 			IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
@@ -185,8 +185,10 @@ def export_libro_de_compras(year, periodo, ruc):
 		codigo_periodo = year + "11"
 	elif periodo=='Diciembre':
 		codigo_periodo = year + "12"
+	if (year >= 2016 && periodo!='Enero'):
+		nombre_2 = "LE"+str(ruc)+codigo_periodo+'00080200'+'00'+'1'+'0'+'1'+'1'
+		send_txt_to_client("",nombre, tipo)
 	nombre = "LE"+str(ruc)+codigo_periodo+'00080100'+'00'+'1'+'1'+'1'+'1'
-	print(data)
 	send_txt_to_client(data,nombre, tipo)
 
 
