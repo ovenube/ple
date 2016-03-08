@@ -89,7 +89,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['resumen_diario']+"|"+
 				row['tipo_documento']+"|"+
 				row['numero_documento']+"|"+
-				unicode(row['nombre_cliente'])+"|"+
+				row['nombre_cliente'].encode('ascii', 'ignore')+"|"+
 				row['valor_exportacion']+"|"+
 				str(row['base_imponible'])+"|"+
 				row['descuento']+"|"+
