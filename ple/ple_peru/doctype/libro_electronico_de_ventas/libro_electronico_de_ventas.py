@@ -66,7 +66,7 @@ def get_sales_invoices(year, periodo):
 			DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_emision,
 			DATE_FORMAT(due_date,'%d/%m/%Y') as fecha_cancelacion,
 			codigo_comprobante as tipo_comprobante,
-			SUBSTRING(sales_invoice.name,4,3) as serie_comprobante,
+			CONCAT('0',SUBSTRING(sales_invoice.name,4,3)) as serie_comprobante,
 			SUBSTRING(sales_invoice.name,8) as numero_comprobante,
 			"" as resumen_diario,
 			IFNULL(codigo_tipo_documento,"") as tipo_documento,

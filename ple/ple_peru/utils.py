@@ -74,7 +74,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['error_3']+'|'+
 				row['error_4']+'|'+
 				str(row['indicador_pago'])+'|'+
-				str(row['anotacion']+'\n'))
+				str(row['anotacion']+'|\n'))
 	elif tipo=="ventas":
 		for row in data:
 			exported_file.write(
@@ -111,7 +111,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['contrato']+"|"+
 				row['error_1']+"|"+
 				str(row['indicador_pago'])+"|"+
-				str(row['anotacion']+"\n"))
+				str(row['anotacion']+"|\n"))
 	elif tipo=="diario":
 		if primer=="1":
 			for row in data:
@@ -123,7 +123,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['descripcion_plan']+"|"+
 				row['codigo_cuenta']+"|"+
 				row['descripcion_cuenta']+"|"+
-				row['indicador_cuenta']+"\n")
+				row['indicador_cuenta']+"|\n")
 		else:
 			for row in data:
 				exported_file.write(
@@ -145,7 +145,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				str(row['debe'])+"|"+
 				str(row['haber'])+"|"+
 				row['estructurado']+"|"+
-				str(row['estado']+"\n"))
+				str(row['estado']+"|\n"))
 
 	return archivo
 
