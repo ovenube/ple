@@ -13,6 +13,7 @@ import frappe.api
 @frappe.whitelist()
 def send_txt_to_client(data, nombre, tipo, primer=None):
 	data = unicode(data)
+	print(data)
 	file = to_txt(data, tipo, nombre, primer)
 	data = read_txt(file)
 	frappe.response['result'] = cstr(data)
