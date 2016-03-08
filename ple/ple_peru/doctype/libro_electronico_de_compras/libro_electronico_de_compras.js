@@ -45,9 +45,11 @@ frappe.ui.form.on('Libro Electronico de Compras', 'company', function(frm) {
 ple.libro_electronico_de_compras.check_mandatory_to_set_button = function(frm) {
 	if (frm.doc.periodo && frm.doc.ruc && frm.doc.year) {
 		frm.fields_dict.get_data.$input.addClass("btn-primary");
+		frm.fields_dict.get_empty_data.$input.addClass("btn-primary");
 	}
 	else{
 		frm.fields_dict.get_data.$input.removeClass("btn-primary");
+		frm.fields_dict.get_empty_data.$input.removeClass("btn-primary");
 	}
 }
 ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
@@ -67,6 +69,13 @@ ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
 frappe.ui.form.on("Libro Electronico de Compras", "get_data", function(frm) {
 	ple.libro_electronico_de_compras.check_mandatory_to_fetch(frm.doc);
 	$(location).attr('href', "/api/method/ple.ple_peru.doctype.libro_electronico_de_compras.libro_electronico_de_compras.export_libro_de_compras?"+
+		"year="+frm.doc.year+
+		"&periodo="+frm.doc.periodo+
+		"&ruc="+frm.doc.ruc);
+});
+frappe.ui.form.on("Libro Electronico de Compras", "get_empty_data", function(frm) {
+	ple.libro_electronico_de_compras.check_mandatory_to_fetch(frm.doc);
+	$(location).attr('href', "/api/method/ple.ple_peru.doctype.libro_electronico_de_compras.libro_electronico_de_compras.export_libro_de_compras_vacio?"+
 		"year="+frm.doc.year+
 		"&periodo="+frm.doc.periodo+
 		"&ruc="+frm.doc.ruc);

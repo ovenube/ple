@@ -185,10 +185,40 @@ def export_libro_de_compras(year, periodo, ruc):
 		codigo_periodo = year + "11"
 	elif periodo=='Diciembre':
 		codigo_periodo = year + "12"
-	if not codigo_periodo=="201601":
-			nombre_2 = "LE"+str(ruc)+codigo_periodo+'00080200'+'00'+'1'+'0'+'1'+'1'
-			send_txt_to_client("",nombre_2, tipo)
 	nombre = "LE"+str(ruc)+codigo_periodo+'00080100'+'00'+'1'+'1'+'1'+'1'
+	send_txt_to_client(data,nombre, tipo)
+
+
+@frappe.whitelist()
+def export_libro_de_compras_vacio(year, periodo, ruc):
+	tipo = "compras"
+	codigo_periodo = ""
+	data = ""
+	if periodo=='Enero':
+		codigo_periodo = year + "01"
+	elif periodo=='Febrero':
+		codigo_periodo = year + "02"
+	elif periodo=='Marzo':
+		codigo_periodo = year + "03"
+	elif periodo=='Abril':
+		codigo_periodo = year + "04"
+	elif periodo=='Mayo':
+		codigo_periodo = year + "05"
+	elif periodo=='Junio':
+		codigo_periodo = year + "06"
+	elif periodo=='Julio':
+		codigo_periodo = year + "07"
+	elif periodo=='Agosto':
+		codigo_periodo = year + "08"
+	elif periodo=='Setiembre':
+		codigo_periodo = year + "09"
+	elif periodo=='Octubre':
+		codigo_periodo = year + "10"
+	elif periodo=='Noviembre':
+		codigo_periodo = year + "11"
+	elif periodo=='Diciembre':
+		codigo_periodo = year + "12"
+	nombre = "LE"+str(ruc)+codigo_periodo+'00080200'+'00'+'1'+'0'+'1'+'1'
 	send_txt_to_client(data,nombre, tipo)
 
 
