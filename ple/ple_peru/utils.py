@@ -50,9 +50,9 @@ def to_txt(data, tipo, nombre, primer=None):
 				str(row['base_imponible'])+'|'+
 				str(row['monto_impuesto'])+'|'+
 				row['base_imponible_exportacion']+'|'+
-				row['monto_imppuesto_exportacion']+'|'+
+				row['monto_impuesto_exportacion']+'|'+
 				row['base_imponible_no_gravada']+'|'+
-				row['monto_imppuesto_no_gravada']+'|'+
+				row['monto_impuesto_no_gravada']+'|'+
 				row['valor_adquisicion_no_gravada']+'|'+
 				row['monto_isc']+'|'+
 				row['otros_conceptos']+'|'+
@@ -172,9 +172,9 @@ def to_csv(data, tipo, nombre, primer=None):
 			'base_imponible'+','+
 			'monto_impuesto'+','+
 			'base_imponible_exportacion'+','+
-			'monto_imppuesto_exportacion'+','+
+			'monto_impuesto_exportacion'+','+
 			'base_imponible_no_gravada'+','+
-			'monto_imppuesto_no_gravada'+','+
+			'monto_impuesto_no_gravada'+','+
 			'valor_adquisicion_no_gravada'+','+
 			'monto_isc'+','+
 			'otros_conceptos'+','+
@@ -215,9 +215,9 @@ def to_csv(data, tipo, nombre, primer=None):
 				str(row['base_imponible'])+','+
 				str(row['monto_impuesto'])+','+
 				row['base_imponible_exportacion']+','+
-				row['monto_imppuesto_exportacion']+','+
+				row['monto_impuesto_exportacion']+','+
 				row['base_imponible_no_gravada']+','+
-				row['monto_imppuesto_no_gravada']+','+
+				row['monto_impuesto_no_gravada']+','+
 				row['valor_adquisicion_no_gravada']+','+
 				row['monto_isc']+','+
 				row['otros_conceptos']+','+
