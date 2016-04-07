@@ -46,7 +46,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['resumen_diario']+'|'+
 				row['tipo_documento']+'|'+
 				row['numero_documento']+'|'+
-				row['nombre_proveedor'].decode('utf-8')+'|'+
+				row['nombre_proveedor'].encode('utf-8')+'|'+
 				str(row['base_imponible'])+'|'+
 				str(row['monto_impuesto'])+'|'+
 				row['base_imponible_exportacion']+'|'+
@@ -89,7 +89,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['resumen_diario']+"|"+
 				row['tipo_documento']+"|"+
 				row['numero_documento']+"|"+
-				row['nombre_cliente'].decode('utf-8')+"|"+
+				row['nombre_cliente'].encode('utf-8')+"|"+
 				row['valor_exportacion']+"|"+
 				str(row['base_imponible'])+"|"+
 				row['descuento']+"|"+
@@ -211,7 +211,7 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['resumen_diario']+','+
 				row['tipo_documento']+','+
 				row['numero_documento']+','+
-				row['nombre_proveedor']+','+
+				row['nombre_proveedor'].encode('utf-8')+','+
 				str(row['base_imponible'])+','+
 				str(row['monto_impuesto'])+','+
 				row['base_imponible_exportacion']+','+
@@ -290,7 +290,7 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['resumen_diario']+","+
 				row['tipo_documento']+","+
 				row['numero_documento']+","+
-				row['nombre_cliente']+","+
+				row['nombre_cliente'].encode('utf-8')+","+
 				row['valor_exportacion']+","+
 				str(row['base_imponible'])+","+
 				row['descuento']+","+
