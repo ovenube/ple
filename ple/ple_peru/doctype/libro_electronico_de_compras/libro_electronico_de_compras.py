@@ -77,7 +77,7 @@ def get_purchase_invoices(year, periodo):
 			"" as base_imponible_exportacion,
 			"" as monto_imppuesto_exportacion,
 			"" as base_imponible_no_gravada,
-			"" as monto_imppuesto_no_gravada,
+			"" as monto_impuesto_no_gravada,
 			"" as valor_adquisicion_no_gravada,
 			"" as monto_isc,
 			"" as otros_conceptos,			
