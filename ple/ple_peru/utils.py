@@ -34,45 +34,45 @@ def to_txt(data, tipo, nombre, primer=None):
 	if tipo=="compras":
 		for row in data:
 			exported_file.write(
-				row['periodo']+'|'+
-				row['cuo']+'|'+
-				row['correlativo_asiento']+'|'+
+				str(row['periodo'])+'|'+
+				str(row['cuo'])+'|'+
+				str(row['correlativo_asiento'])+'|'+
 				str(row['fecha_emision'])+'|'+
 				str(row['fecha_cancelacion'])+'|'+
-				row['codigo_tipo_comprobante']+'|'+
-				row['serie_comprobante']+'|'+
-				row['codigo_DUA']+'|'+
-				row['numero_comprobante']+'|'+
-				row['resumen_diario']+'|'+
-				row['tipo_documento']+'|'+
-				row['numero_documento']+'|'+
-				unicode(row['nombre_proveedor'],'utf-8').decode('utf-8')+'|'+
+				str(row['codigo_tipo_comprobante'])+'|'+
+				str(row['serie_comprobante'])+'|'+
+				str(row['codigo_DUA'])+'|'+
+				str(row['numero_comprobante'])+'|'+
+				str(row['resumen_diario'])+'|'+
+				str(row['tipo_documento'])+'|'+
+				str(row['numero_documento'])+'|'+
+				str(row['nombre_proveedor'].encode('utf-8'))+'|'+
 				str(row['base_imponible'])+'|'+
 				str(row['monto_impuesto'])+'|'+
-				row['base_imponible_exportacion']+'|'+
-				row['monto_impuesto_exportacion']+'|'+
-				row['base_imponible_no_gravada']+'|'+
-				row['monto_impuesto_no_gravada']+'|'+
-				row['valor_adquisicion_no_gravada']+'|'+
-				row['monto_isc']+'|'+
-				row['otros_conceptos']+'|'+
+				str(row['base_imponible_exportacion'])+'|'+
+				str(row['monto_impuesto_exportacion'])+'|'+
+				str(row['base_imponible_no_gravada'])+'|'+
+				str(str(row['monto_impuesto_no_gravada'])+'|'+
+				str(row['valor_adquisicion_no_gravada'])+'|'+
+				str(row['monto_isc'])+'|'+
+				str(row['otros_conceptos'])+'|'+
 				str(row['valor_adquisicion'])+'|'+
-				row['moneda']+'|'+
+				str(row['moneda'])+'|'+
 				str(row['tipo_cambio'])+'|'+
-				row['fecha_inicial_devolucion']+'|'+
-				row['tipo_devolucion']+'|'+
-				row['serie_devolucion']+'|'+
-				row['dua']+'|'+
-				row['numero_devolucion']+'|'+
-				row['fecha_devolucion']+'|'+
-				row['detraccion']+'|'+
-				row['marca_detraccion']+'|'+
-				row['clasificacion_items']+'|'+
-				row['contrato']+'|'+
-				row['error_1']+'|'+
-				row['error_2']+'|'+
-				row['error_3']+'|'+
-				row['error_4']+'|'+
+				str(row['fecha_inicial_devolucion'])+'|'+
+				str(row['tipo_devolucion'])+'|'+
+				str(row['serie_devolucion'])+'|'+
+				str(row['dua'])+'|'+
+				str(row['numero_devolucion'])+'|'+
+				str(row['fecha_devolucion'])+'|'+
+				str(row['detraccion'])+'|'+
+				str(row['marca_detraccion'])+'|'+
+				str(row['clasificacion_items'])+'|'+
+				str(row['contrato'])+'|'+
+				str(row['error_1'])+'|'+
+				str(row['error_2'])+'|'+
+				str(row['error_3'])+'|'+
+				str(row['error_4'])+'|'+
 				str(row['indicador_pago'])+'|'+
 				str(row['anotacion']+'|\n'))
 	elif tipo=="ventas":
