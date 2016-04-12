@@ -29,7 +29,7 @@ def send_csv_to_client(data, nombre, tipo):
 
 def to_txt(data, tipo, nombre, primer=None):
 	archivo = nombre+".txt"
-	exported_file = open(archivo, "w", "utf-8")	
+	exported_file = open(archivo, mode="w", encoding="utf-8")	
 	if tipo=="compras":
 		for row in data:
 			exported_file.write((
@@ -383,7 +383,7 @@ def to_csv(data, tipo, nombre, primer=None):
 
 def read_txt(file):
 	data = ""
-	exported_file = open(file, 'r', 'utf-8')
+	exported_file = open(file, mode='r', encoding='utf-8')
 	for line in exported_file:
 		data = data + line
 	return data
