@@ -2,11 +2,6 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe import msgprint, _
-import json
-import csv, cStringIO
-from frappe.website.context import get_context
-import frappe.api
 
 
 @frappe.whitelist()
