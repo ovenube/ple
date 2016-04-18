@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe.utils import cstr
 import codecs
 
 
@@ -25,10 +26,10 @@ def send_csv_to_client(data, nombre, tipo):
 
 def to_txt(data, tipo, nombre, primer=None):
 	archivo = nombre+".txt"
-	exported_file = codecs.open(archivo, "w", "utf-8")	
+	exported_file = codecs.open(archivo, "w", encoding='utf-8')	
 	if tipo=="compras":
 		for row in data:
-			exported_file.write((
+			exported_file.write(
 				row['periodo']+'|'+
 				row['cuo']+'|'+
 				row['correlativo_asiento']+'|'+
@@ -69,7 +70,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['error_3']+'|'+
 				row['error_4']+'|'+
 				str(row['indicador_pago'])+'|'+
-				str(row['anotacion']+'|\n')).encode('UTF-8'))
+				str(row['anotacion']+'|\n'))
 	elif tipo=="ventas":
 		for row in data:
 			exported_file.write(
@@ -84,7 +85,7 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['resumen_diario']+"|"+
 				row['tipo_documento']+"|"+
 				row['numero_documento']+"|"+
-				row['nombre_cliente'].decode('utf-8')+"|"+
+				row['nombre_cliente']+"|"+
 				row['valor_exportacion']+"|"+
 				str(row['base_imponible'])+"|"+
 				row['descuento']+"|"+
@@ -206,7 +207,7 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['resumen_diario']+','+
 				row['tipo_documento']+','+
 				row['numero_documento']+','+
-				row['nombre_proveedor'].decode('utf-8')+','+
+				row['nombre_proveedor']+','+
 				str(row['base_imponible'])+','+
 				str(row['monto_impuesto'])+','+
 				row['base_imponible_exportacion']+','+
@@ -285,7 +286,7 @@ def to_csv(data, tipo, nombre, primer=None):
 				row['resumen_diario']+","+
 				row['tipo_documento']+","+
 				row['numero_documento']+","+
-				row['nombre_cliente'].decode('utf-8')+","+
+				row['nombre_cliente']+","+
 				row['valor_exportacion']+","+
 				str(row['base_imponible'])+","+
 				row['descuento']+","+
@@ -379,7 +380,7 @@ def to_csv(data, tipo, nombre, primer=None):
 
 def read_txt(file):
 	data = ""
-	exported_file = codecs.open(file, 'r', 'utf-8')
+	exported_file = codecs.open(file, 'r', encoding='utf-8')
 	for line in exported_file:
 		data = data + line
 	return data
