@@ -7,21 +7,29 @@ frappe.ui.form.on('Libro Electronico de Compras', {
 
 	}
 });
+
+
 frappe.ui.form.on('Libro Electronico de Compras', 'year', function(frm) {
 	ple.libro_electronico_de_compras.check_mandatory_to_set_button(frm);
 	
 	
 });
+
+
 frappe.ui.form.on('Libro Electronico de Compras', 'periodo', function(frm) {
 	ple.libro_electronico_de_compras.check_mandatory_to_set_button(frm);
 	
 	
 });
+
+
 frappe.ui.form.on('Libro Electronico de Compras', 'ruc', function(frm) {
 	ple.libro_electronico_de_compras.check_mandatory_to_set_button(frm);
 	
 	
 });
+
+
 frappe.ui.form.on('Libro Electronico de Compras', 'company', function(frm) {
 	frappe.call({
 		 	"method": "frappe.client.get",
@@ -42,6 +50,8 @@ frappe.ui.form.on('Libro Electronico de Compras', 'company', function(frm) {
 	
 	
 });
+
+
 ple.libro_electronico_de_compras.check_mandatory_to_set_button = function(frm) {
 	if (frm.doc.periodo && frm.doc.ruc && frm.doc.year) {
 		frm.fields_dict.get_data.$input.addClass("btn-primary");
@@ -52,6 +62,8 @@ ple.libro_electronico_de_compras.check_mandatory_to_set_button = function(frm) {
 		frm.fields_dict.get_empty_data.$input.removeClass("btn-primary");
 	}
 }
+
+
 ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
 	$.each(["year"], function(i, field) {
 		if(!doc[frappe.model.scrub(field)]) frappe.throw(__("Please select {0} first", [field]));
@@ -66,6 +78,8 @@ ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
 		if(!doc[frappe.model.scrub(field)]) frappe.throw(__("Please select {0} first", [field]));
 	});
 }
+
+
 frappe.ui.form.on("Libro Electronico de Compras", "get_data", function(frm) {
 	ple.libro_electronico_de_compras.check_mandatory_to_fetch(frm.doc);
 	$(location).attr('href', "/api/method/ple.ple_peru.doctype.libro_electronico_de_compras.libro_electronico_de_compras.export_libro_de_compras?"+
@@ -73,6 +87,8 @@ frappe.ui.form.on("Libro Electronico de Compras", "get_data", function(frm) {
 		"&periodo="+frm.doc.periodo+
 		"&ruc="+frm.doc.ruc);
 });
+
+
 frappe.ui.form.on("Libro Electronico de Compras", "get_empty_data", function(frm) {
 	ple.libro_electronico_de_compras.check_mandatory_to_fetch(frm.doc);
 	$(location).attr('href', "/api/method/ple.ple_peru.doctype.libro_electronico_de_compras.libro_electronico_de_compras.export_libro_de_compras_vacio?"+

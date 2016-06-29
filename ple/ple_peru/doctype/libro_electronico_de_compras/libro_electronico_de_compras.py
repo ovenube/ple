@@ -99,7 +99,7 @@ def get_purchase_invoices(year, periodo):
 			"" as error_3,
 			"" as error_4,
 			'1' as indicador_pago,
-			IF(bill_expiration_date<bill_date,'8','1') as anotacion
+			IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01'<=bill_date,'8','1') as anotacion
 		from
 			`tabPurchase Invoice` purchase_invoice
 		left join
