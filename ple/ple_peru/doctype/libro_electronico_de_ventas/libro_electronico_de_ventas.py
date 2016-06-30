@@ -61,8 +61,8 @@ def get_sales_invoices(year, periodo):
 
 	sales_invoices = frappe.db.sql("""select
 			CONCAT(DATE_FORMAT(due_date,'%Y%m'),'00') as periodo,
-			SUBSTRING(journal_entry.parent,4) as cuo,
-			CONCAT('M',journal_entry.idx) as correlativo_asiento,
+			IFNULL(SUBSTRING(journal_entry.parent,4),'0') as cuo,
+			IFNULL(CONCAT('M',journal_entry.idx),'M1') as correlativo_asiento,
 			DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_emision,
 			DATE_FORMAT(due_date,'%d/%m/%Y') as fecha_cancelacion,
 			codigo_comprobante as tipo_comprobante,
@@ -93,7 +93,7 @@ def get_sales_invoices(year, periodo):
 			"" as contrato,
 			"" as error_1,
 			'1' as indicador_pago,
-			IF(posting_date<due_date,'8','1') as anotacion
+			IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=due_date,'7','0')) as anotacion
 		from
 			`tabSales Invoice` sales_invoice
 		left join
