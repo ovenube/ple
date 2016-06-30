@@ -65,7 +65,7 @@ def get_purchase_invoices(year, periodo):
 			DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
 			DATE_FORMAT(IFNULL(bill_expiration_date,posting_date),'%d/%m/%Y') as fecha_cancelacion,
 			codigo_tipo_comprobante as tipo_comprobante,
-			CONCAT('0',IFNULL(bill_series,'0000')) as serie_comprobante,
+			SUBSTRING(IFNULL(bill_series,'0000'),4) as serie_comprobante,
 			"" as codigo_dua,
 			bill_no as numero_comprobante,
 			"" as resumen_diario,
@@ -99,7 +99,7 @@ def get_purchase_invoices(year, periodo):
 			"" as error_3,
 			"" as error_4,
 			'1' as indicador_pago,
-			IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=bill_date,'6','1') as anotacion
+			IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=bill_date,'6','0') as anotacion
 		from
 			`tabPurchase Invoice` purchase_invoice
 		left join
