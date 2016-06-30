@@ -67,7 +67,7 @@ def get_purchase_invoices(year, periodo):
 			codigo_tipo_comprobante as tipo_comprobante,
 			REPLACE(REPLACE(REPLACE(CONCAT('0',SUBSTRING(IFNULL(bill_series,'0000'),-3)),'A',"0"),"T","0"),"O","0") as serie_comprobante,
 			"" as codigo_dua,
-			REPLACE(bill_no,"-","") as numero_comprobante,
+			SUBSTRING(REPLACE(bill_no,"-",""),-8) as numero_comprobante,
 			"" as resumen_diario,
 			codigo_tipo_documento as tipo_documento,
 			tax_id as numero_documento,
