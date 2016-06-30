@@ -59,15 +59,15 @@ def get_purchase_invoices(year, periodo):
 		to_date=year+'-12-31'
 
 	purchase_invoices = frappe.db.sql("""select      
-			CONCAT(DATE_FORMAT(posting_date,'%Y%m'),'00') as periodo,
+			CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00') as periodo,
 			SUBSTRING(journal_entry.parent,4) as cuo,
 			CONCAT('M',journal_entry.idx) as correlativo_asiento,
 			DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
 			DATE_FORMAT(IFNULL(bill_expiration_date,posting_date),'%d/%m/%Y') as fecha_cancelacion,
 			codigo_tipo_comprobante as tipo_comprobante,
-			SUBSTRING(IFNULL(bill_series,'0000'),4) as serie_comprobante,
+			CONCAT('0',SUBSTRING(IFNULL(bill_series,'0000'),-3)) as serie_comprobante,
 			"" as codigo_dua,
-			bill_no as numero_comprobante,
+			REPLACE(bill_no,"-","") as numero_comprobante,
 			"" as resumen_diario,
 			codigo_tipo_documento as tipo_documento,
 			tax_id as numero_documento,
@@ -99,7 +99,7 @@ def get_purchase_invoices(year, periodo):
 			"" as error_3,
 			"" as error_4,
 			'1' as indicador_pago,
-			IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=bill_date,'7','0') as anotacion
+			'0' as anotacion
 		from
 			`tabPurchase Invoice` purchase_invoice
 		left join
