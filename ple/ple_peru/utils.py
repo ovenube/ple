@@ -83,9 +83,9 @@ def to_txt(data, tipo, nombre, primer=None):
 				row['serie_comprobante']+"|"+
 				row['numero_comprobante']+"|"+
 				row['resumen_diario']+"|"+
-				str(row['tipo_documento'])+"|"+
-				str(row['numero_documento'])+"|"+
-				str(row['nombre_cliente'])+"|"+
+				row['tipo_documento']+"|"+
+				row['numero_documento']+"|"+
+				row['nombre_cliente']+"|"+
 				row['valor_exportacion']+"|"+
 				str(row['base_imponible'])+"|"+
 				row['descuento']+"|"+
