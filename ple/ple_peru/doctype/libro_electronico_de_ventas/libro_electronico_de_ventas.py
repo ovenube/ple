@@ -69,9 +69,9 @@ def get_sales_invoices(year, periodo):
 			CONCAT('0',SUBSTRING(sales_invoice.name,4,3)) as serie_comprobante,
 			SUBSTRING(sales_invoice.name,8) as numero_comprobante,
 			"" as resumen_diario,
-			IF(base_net_total>700,'1',IF(ISNULL(tax_id),"",IFNULL(codigo_tipo_documento,""))) as tipo_documento,
-			IF(codigo_tipo_documento=7,SUBSTRING(REPLACE(tax_id,"-",""),-12),IF(base_net_total>700,'76034168',IF(ISNULL(tax_id),"",tax_id))) as numero_documento,
-			IF(base_net_total>700,'ALFARO GUTIERREZ ABRAHAM DAVID',IF(ISNULL(tax_id),"",IF(customer_name='Clientes Varios',customer_boleta_name,customer_name))) as nombre_cliente,
+			IF(base_net_total>700,codigo_tipo_documento,IF(ISNULL(tax_id),"",IFNULL(codigo_tipo_documento,""))) as tipo_documento,
+			IF(codigo_tipo_documento=7,IF(SUBSTRING(REPLACE(tax_id,"-",""),-12)="",tax_id, SUBSTRING(REPLACE(tax_id,"-",""),-12)),IF(base_net_total>700,tax_id,IF(ISNULL(tax_id),"",tax_id))) as numero_documento,
+			IF(base_net_total>700,customer_name,IF(ISNULL(tax_id),"",IF(customer_name='Clientes Varios',customer_boleta_name,customer_name))) as nombre_cliente,
 			"" as valor_exportacion,
 			base_net_total as base_imponible,
 			"" as descuento,
@@ -167,7 +167,7 @@ def export_libro_de_ventas(year, periodo, ruc):
 	elif periodo=='Setiembre':
 		codigo_periodo = year + "09"
 	elif periodo=='Octubre':
-		codigo_periodo = year + "610"
+		codigo_periodo = year + "10"
 	elif periodo=='Noviembre':
 		codigo_periodo = year + "11"
 	elif periodo=='Diciembre':
