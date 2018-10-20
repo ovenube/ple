@@ -28,7 +28,7 @@ frappe.ui.form.on('Libro Electronico Diario', 'company', function(frm) {
                 name: frm.doc.company
             },
             callback: function (data) {
-                if (data.message.company == null) {
+                if (data.message.company_name == null) {
                     
                 }
                 else{
