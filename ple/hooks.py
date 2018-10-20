@@ -10,6 +10,7 @@ app_color = "grey"
 app_email = "carlos_jcez@hotmail.com"
 app_version = "0.0.1"
 app_license = "MIT"
+fixtures = ["Custom Field"]
 
 # Includes in <head>
 # ------------------
