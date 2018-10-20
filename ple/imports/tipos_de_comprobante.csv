@@ -1,0 +1,13 @@
+Código Tipo de Comprobante,Nombre Tipo de Comprobante,Descripción Tipo de Comprobante
+0,Otros,
+1,Factura,
+2,Recibo por Honorarios,
+3,Boleta de Venta,
+7,Nota de crédito,
+8,Nota de débito,
+12,Ticket o cinta emitido por máquina registradora,
+14,Recibo de servicios públicos,Recibo por servicios públicos de suministro de energía eléctrica agua teléfono telex y telegréficos y otros servicios complementarios que se incluyan en el recibo de servicio público
+15,Boletos de transporte terrestre y ferroviario local,Boletos emitidos por el servicio de transporte terrestre regular urbano de pasajeros y el ferroviario público de pasajeros prestado en vía férrea local.
+16,Boletos de transporte terrestre nacional no electrónico,Boletos de viaje emitidos por las empresas de transporte nacional de pasajeros siempre que cuenten con la autorización de la autoridad competente en las rutas autorizadas. Vía terrestre o ferroviario público no emitido por medios electrónicos (BVME)
+18,Documentos emitidos por las AFP,Documento emitido por las Administradoras Privadas de Fondo de Pensiones que se encuentran bajo la supervisión de la Superintendencia de Banca
+45,Documentos de instituciones educativas culturales por actividades no gravadas,Documentos emitidos por centros educativos y culturales universidades asociaciones y fundaciones en lo referente a actividades no gravadas con tributos administrados por la SUNAT.
