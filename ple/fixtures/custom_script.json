@@ -3,27 +3,27 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Supplier", 
-  "modified": "2016-03-07 22:26:48.512835", 
+  "modified": "2018-10-23 16:29:52.428273", 
   "name": "Supplier-Client", 
-  "script": "frappe.ui.form.on(\"Supplier\", {\n\tnombre_tipo_documento: function(frm, cdt, cdn) {\n\t\tvar tipo_documento = frappe.model.get_doc(cdt, cdn);\n\t\tif (tipo_documento.nombre_tipo_documento){\n\t\t\tfrappe.call({\n\t\t\t\ttype: \"GET\",\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_documento_de_identidad.tipos_de_documento_de_identidad.get_tipo_documento\",\n\t\t\t\targs: {\n\t\t\t\t\ttipo_documento_identidad: tipo_documento.nombre_tipo_documento\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_documento\", r.message);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_documento\", null);\n\t\t}\n\t}\n});", 
+  "script": "cur_frm.add_fetch('nombre_tipo_documento', 'codigo_tipo_documento', 'codigo_tipo_documento');", 
   "script_type": "Client"
  }, 
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Company", 
-  "modified": "2016-03-07 22:27:09.005267", 
+  "modified": "2018-10-23 16:27:50.166690", 
   "name": "Company-Client", 
-  "script": "frappe.ui.form.on(\"Company\", {\n\ttipo_documento_identidad: function(frm, cdt, cdn) {\n\t\tvar tipo_documento = frappe.model.get_doc(cdt, cdn);\n\t\tif (tipo_documento.tipo_documento_identidad){\n\t\t\tfrappe.call({\n\t\t\t\ttype: \"GET\",\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_documento_de_identidad.tipos_de_documento_de_identidad.get_tipo_documento\",\n\t\t\t\targs: {\n\t\t\t\t\ttipo_documento_identidad: tipo_documento.tipo_documento_identidad\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_documento\", r.message);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_documento\", null);\n\t\t}\n\t}\n});\n\nfrappe.ui.form.on(\"Company\", {\n\ttipo_comprobante: function(frm, cdt, cdn) {\n\t\tvar tipos_comprobante = frappe.model.get_doc(cdt, cdn);\n\t\tif (tipos_comprobante.tipo_comprobante){\n\t\t\tfrappe.call({\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_comprobante.tipos_de_comprobante.get_tipo_comprobante\",\n\t\t\t\targs: {\n\t\t\t\t\ttipo_comprobante: tipos_comprobante.tipo_comprobante\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_comprobante\", r.message.nombre);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_comprobante\", null);\n\t\t}\n\t}\n});", 
+  "script": "cur_frm.add_fetch('tipo_documento_identidad', 'codigo_tipo_documento', 'codigo_tipo_documento');", 
   "script_type": "Client"
  }, 
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Customer", 
-  "modified": "2016-03-07 22:27:30.325963", 
+  "modified": "2018-10-23 16:30:18.202097", 
   "name": "Customer-Client", 
-  "script": "frappe.ui.form.on(\"Customer\", {\n\ttipo_documento_identidad: function(frm, cdt, cdn) {\n\t\tvar tipo_documento = frappe.model.get_doc(cdt, cdn);\n\t\tif (tipo_documento.tipo_documento_identidad){\n\t\t\tfrappe.call({\n\t\t\t\ttype: \"GET\",\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_documento_de_identidad.tipos_de_documento_de_identidad.get_tipo_documento\",\n\t\t\t\targs: {\n\t\t\t\t\ttipo_documento_identidad: tipo_documento.tipo_documento_identidad\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_documento\", r.message);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_documento\", null);\n\t\t}\n\t}\n});", 
+  "script": "cur_frm.add_fetch('tipo_documento_identidad', 'codigo_tipo_documento', 'codigo_tipo_documento');", 
   "script_type": "Client"
  }, 
  {
@@ -33,6 +33,15 @@
   "modified": "2016-03-07 22:27:48.219678", 
   "name": "Purchase Invoice-Client", 
   "script": "\nfrappe.ui.form.on(\"Purchase Invoice\", {\n\ttipo_comprobante: function(frm, cdt, cdn) {\n\t\tvar tipo_comprobante = frappe.model.get_doc(cdt, cdn);\n\t\tif (tipo_comprobante.tipo_comprobante){\n\t\t\tfrappe.call({\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_comprobante.tipos_de_comprobante.get_tipo_comprobante\",\n\t\t\t\targs: {\n\t\t\t\t\ttipo_comprobante: tipo_comprobante.tipo_comprobante\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_comprobante\", r.message.nombre);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_comprobante\", null);\n\t\t}\n\t}\n});\n\nfrappe.ui.form.on(\"Purchase Invoice\", {\n\ttipo_pago: function(frm, cdt, cdn) {\n\t\tvar tipos_pago = frappe.model.get_doc(cdt, cdn);\n\t\tif (tipos_pago.tipo_pago){\n\t\t\tfrappe.call({\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_pago.tipos_de_pago.get_tipo_pago\",\n\t\t\t\targs: {\n\t\t\t\t\ttipo_pago: tipos_pago.tipo_pago\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_pago\", r.message);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_pago\", null);\n\t\t}\n\t}\n});", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Sales Invoice", 
+  "modified": "2018-10-25 21:32:39.288310", 
+  "name": "Sales Invoice-Client", 
+  "script": "cur_frm.add_fetch('customer', 'codigo_tipo_documento', 'codigo_tipo_documento');\ncur_frm.add_fetch('customer', 'tipo_documento_identidad', 'tipo_documento_identidad');\ncur_frm.add_fetch('tipo_transaccion_sunat', 'codigo_tipo_transaccion', 'codigo_transaccion_sunat');\nfrappe.ui.form.on(\"Sales Invoice\", {\n\tcustomer: function(frm, cdt, cdn) {\n\t\tif (frm.doc.codigo_tipo_documento){\n\t\t\tfrappe.call({\n\t\t\t\ttype: \"GET\",\n\t\t\t\tmethod: \"ple.ple_peru.doctype.tipos_de_comprobante.tipos_de_comprobante.get_tipo_comprobante\",\n\t\t\t\targs: {\n\t\t\t\t\tcustomer: frm.doc.customer\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"tipo_comprobante\", r.message.descripcion);\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_comprobante\", r.message.codigo);\n\t\t\t\t\tif (r.message.codigo == 1){\n\t\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"naming_series\", \"F001-.#######\");\n\t\t\t\t\t}\n\t\t\t\t\telse if (r.message.codigo == 3){\n\t\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"naming_series\", \"B001-.#######\");\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"tipo_comprobante\", null);\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_comprobante\", null);\n\t\t}\n\t}\n});\nfrappe.ui.form.on(\"Sales Invoice\", {\n\tcustomer: function(frm, cdt, cdn) {\n\t\tif (frm.doc.codigo_tipo_documento){\n\t\t\tfrappe.call({\n\t\t\t\ttype: \"GET\",\n\t\t\t\tmethod: \"nubefact_integration.nubefact_integration.doctype.tipos_de_transaccion_sunat.tipos_de_transaccion_sunat.get_tipo_transaccion\",\n\t\t\t\targs: {\n\t\t\t\t\tcustomer: frm.doc.customer\n\t\t\t\t},\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"tipo_transaccion_sunat\", r.message.descripcion);\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_transaccion_sunat\", r.message.codigo);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t\telse {\n\t\t\tfrappe.model.set_value(cdt, cdn, \"tipo_transaccion_sunat\", null);\n\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_transaccion_sunat\", null);\n\t\t}\n\t}\n});\nfrappe.ui.form.on(\"Sales Invoice\", {\n\tcontingencia: function(frm, cdt, cdn) {\n\t\tif (frm.doc.codigo_comprobante == 1){\n\t\t\tif (frm.doc.contingencia){\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"naming_series\", \"FV-001-.######\");\n\t\t\t}\n\t\t\telse{\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"naming_series\", \"F001-.#######\");\n\t\t\t}\n\t\t}\n\t\telse if (frm.doc.codigo_comprobante == 3){\n\t\t\tif (frm.doc.contingencia){\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"naming_series\", \"BV-001-.######\");\n\t\t\t}\n\t\t\telse{\n\t\t\t\tfrappe.model.set_value(cdt, cdn, \"naming_series\", \"B001-.#######\");\n\t\t\t}\n\t\t}\n\t}\n});\nfrappe.ui.form.on('Sales Invoice', {\n    validate: function(frm, cdt, cdn) {\n    \tif (frm.doc.__islocal != 1){\n    \t\tfrappe.call({\n\t\t\t\tmethod: \"nubefact_integration.nubefact_integration.facturacion_electronica.send_document\",\n\t\t\t\targs: {\n\t\t\t\t\t'invoice': frm.doc.name\n\t\t\t\t},\n\t\t\t\tcallback: function (data) {\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"estado_sunat\", (data.message.aceptada_por_sunat) ? (\"Aceptado\") : (\"Rechazado\"));\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"respuesta_sunat\", data.message.sunat_descripcion);\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_qr_sunat\", data.message.cadena_para_codigo_qr);\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_barras_sunat\", data.message.codigo_de_barras);\n\t\t\t\t\tfrappe.model.set_value(cdt, cdn, \"codigo_hash_sunat\", data.message.codigo_hash);\n\t\t        }\n\t\t\t})\n    \t}\n    }\n});", 
   "script_type": "Client"
  }
 ]
