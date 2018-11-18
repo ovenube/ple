@@ -61,7 +61,7 @@ ple.libro_electronico_de_compras.check_mandatory_to_set_button = function(frm) {
 		frm.fields_dict.get_data.$input.removeClass("btn-primary");
 		frm.fields_dict.get_empty_data.$input.removeClass("btn-primary");
 	}
-};
+}
 
 
 ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
@@ -89,6 +89,14 @@ frappe.ui.form.on("Libro Electronico de Compras", "get_data", function(frm) {
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year
+		},
+		callback: function (r){
+			if (r.message){
+				$(location).attr('href', "/api/method/ple.ple_peru.utils.send_file_to_client?"+
+				"file="+r.message.archivo+
+				"&tipo="+r.message.tipo+
+				"&nombre="+r.message.nombre);
+			}
 		}
 	});
 });
@@ -103,6 +111,14 @@ frappe.ui.form.on("Libro Electronico de Compras", "get_empty_data", function(frm
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year
+		},
+		callback: function (r){
+			if (r.message){
+				$(location).attr('href', "/api/method/ple.ple_peru.utils.send_file_to_client?"+
+				"file="+r.message.archivo+
+				"&tipo="+r.message.tipo+
+				"&nombre="+r.message.nombre);
+			}
 		}
 	});
 });

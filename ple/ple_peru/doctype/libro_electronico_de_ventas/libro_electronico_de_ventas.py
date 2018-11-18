@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 import frappe
 import frappe.desk.reportview
 
-from ple.ple_peru.utils import Utils
+from ple.ple_peru.utils import Utils, to_file
 
 
 class LibroElectronicodeVentas(Utils):
@@ -103,4 +103,5 @@ class LibroElectronicodeVentas(Utils):
         data = self.get_sales_invoices(year, periodo)
         codigo_periodo = self.ple_name(year, periodo)
         nombre = "LE" + str(ruc) + codigo_periodo + '00140100' + '00' + '1' + ('1' if data else '0') + '1' + '1'
-        self.send_txt_to_client(data, nombre, tipo)
+        nombre = nombre + ".txt"
+        return to_file(data, tipo, nombre)

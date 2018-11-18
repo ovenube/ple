@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 
-from ple.ple_peru.utils import Utils
+from ple.ple_peru.utils import Utils, to_file
 
 
 class LibroElectronicoDiario(Utils):
@@ -156,4 +156,5 @@ class LibroElectronicoDiario(Utils):
 			nombre = "LE" + str(ruc) + codigo_periodo + '00050300' + '00' + '1' + '1' + '1' + '1'
 		else:
 			nombre = "LE" + str(ruc) + codigo_periodo + '00050100' + '00' + '1' + '1' + '1' + '1'
-		self.send_txt_to_client(data, nombre, tipo, primer)
+		nombre = nombre + ".txt"
+		return to_file(data, tipo, nombre, primer)

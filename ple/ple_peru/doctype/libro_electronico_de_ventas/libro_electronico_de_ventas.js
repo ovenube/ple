@@ -59,6 +59,14 @@ frappe.ui.form.on("Libro Electronico de Ventas", "get_data", function(frm) {
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year
+		},
+		callback: function (r){
+			if (r.message){
+				$(location).attr('href', "/api/method/ple.ple_peru.utils.send_file_to_client?"+
+				"file="+r.message.archivo+
+				"&tipo="+r.message.tipo+
+				"&nombre="+r.message.nombre);
+			}
 		}
 	});
 });
