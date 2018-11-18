@@ -3,25 +3,111 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.utils import cstr
+from erpnext.setup.doctype.naming_series.naming_series import NamingSeries
 import codecs
 
 
-@frappe.whitelist()
-def send_txt_to_client(data, nombre, tipo, primer=None):
-	file = to_txt(data, tipo, nombre, primer)
-	data = read_txt(file)
-	frappe.response['result'] = cstr(data)
-	frappe.response['type'] = 'txt'
-	frappe.response['doctype'] = nombre
+class Utils(NamingSeries):
+	def get_series(self):
+		sales_series = self.get_options("Sales Invoice")
+		purchase_series = self.get_options("Purchase Invoice")
+		sales_prefix = []
+		sales = ""
+		purchase_prefix = []
+		purchase = ""
+		for series in sales_series:
+			tipo = series[:2]
+			if not tipo in sales_prefix:
+				sales_prefix.append(tipo + "%")
+		for series in purchase_series:
+			tipo = series[:2]
+			if not tipo in purchase_prefix:
+				purchase_prefix.append(tipo)
+		sales = " OR ".join(map(str, sales_prefix))
+		purchase = " OR ".join(map(str, purchase_prefix))
+		return sales, purchase
 
 
-@frappe.whitelist()
-def send_csv_to_client(data, nombre, tipo):
-	file = to_csv(data, tipo, nombre)
-	data = read_txt(file)
-	frappe.response['result'] = cstr(data)
-	frappe.response['type'] = 'csv'
-	frappe.response['doctype'] = nombre
+	def send_txt_to_client(self, data, nombre, tipo, primer=None):
+		file = to_txt(data, tipo, nombre, primer)
+		data = read_txt(file)
+		frappe.response['result'] = cstr(data)
+		frappe.response['type'] = 'txt'
+		frappe.response['doctype'] = nombre
+
+
+	def send_csv_to_client(self, data, nombre, tipo):
+		file = to_csv(data, tipo, nombre)
+		data = read_txt(file)
+		frappe.response['result'] = cstr(data)
+		frappe.response['type'] = 'csv'
+		frappe.response['doctype'] = nombre
+
+	def get_dates(self, year, periodo):
+		if periodo=='Enero':
+			from_date=year+'-01-01'
+			to_date=year+'-01-31'
+		elif periodo=='Febrero':
+			from_date=year+'-02-01'
+			to_date=year+'-02-29'
+		elif periodo=='Marzo':
+			from_date=year+'-03-01'
+			to_date=year+'-03-31'
+		elif periodo=='Abril':
+			from_date=year+'-04-01'
+			to_date=year+'-04-30'
+		elif periodo=='Mayo':
+			from_date=year+'-05-01'
+			to_date=year+'-05-29'
+		elif periodo=='Junio':
+			from_date=year+'-06-01'
+			to_date=year+'-06-30'
+		elif periodo=='Julio':
+			from_date=year+'-07-01'
+			to_date=year+'-07-31'
+		elif periodo=='Agosto':
+			from_date=year+'-08-01'
+			to_date=year+'-08-31'
+		elif periodo=='Setiembre':
+			from_date=year+'-09-01'
+			to_date=year+'-09-30'
+		elif periodo=='Octubre':
+			from_date=year+'-10-10'
+			to_date=year+'-10-31'
+		elif periodo=='Noviembre':
+			from_date=year+'-11-01'
+			to_date=year+'-11-30'
+		elif periodo=='Diciembre':
+			from_date=year+'-12-01'
+			to_date=year+'-12-31'
+		return from_date, to_date
+
+	def ple_name(self, year, periodo):
+		if periodo == 'Enero':
+			codigo_periodo = year + "01"
+		elif periodo == 'Febrero':
+			codigo_periodo = year + "02"
+		elif periodo == 'Marzo':
+			codigo_periodo = year + "03"
+		elif periodo == 'Abril':
+			codigo_periodo = year + "04"
+		elif periodo == 'Mayo':
+			codigo_periodo = year + "05"
+		elif periodo == 'Junio':
+			codigo_periodo = year + "06"
+		elif periodo == 'Julio':
+			codigo_periodo = year + "07"
+		elif periodo == 'Agosto':
+			codigo_periodo = year + "08"
+		elif periodo == 'Setiembre':
+			codigo_periodo = year + "09"
+		elif periodo == 'Octubre':
+			codigo_periodo = year + "610"
+		elif periodo == 'Noviembre':
+			codigo_periodo = year + "11"
+		elif periodo == 'Diciembre':
+			codigo_periodo = year + "12"
+		return codigo_periodo
 
 
 def to_txt(data, tipo, nombre, primer=None):
@@ -142,7 +228,6 @@ def to_txt(data, tipo, nombre, primer=None):
 				str(row['haber'])+"|"+
 				row['estructurado']+"|"+
 				str(row['estado']+"|\n"))
-
 	return archivo
 
 
@@ -374,7 +459,6 @@ def to_csv(data, tipo, nombre, primer=None):
 					str(row['haber'])+","+
 					row['estructurado']+","+
 					str(row['estado']+"\n"))
-
 	return archivo
 
 

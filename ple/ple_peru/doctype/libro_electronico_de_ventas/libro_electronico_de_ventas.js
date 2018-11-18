@@ -52,8 +52,13 @@ ple.libro_electronico_de_ventas.check_mandatory_to_fetch = function(doc) {
 }
 frappe.ui.form.on("Libro Electronico de Ventas", "get_data", function(frm) {
 	ple.libro_electronico_de_ventas.check_mandatory_to_fetch(frm.doc);
-	$(location).attr('href', "/api/method/ple.ple_peru.doctype.libro_electronico_de_ventas.libro_electronico_de_ventas.export_libro_de_ventas?"+
-		"year="+frm.doc.year+
-		"&periodo="+frm.doc.periodo+
-		"&ruc="+frm.doc.ruc);
+	frappe.call({
+		method: "export_libro_ventas",
+		doc: frm.doc,
+		args: {
+			'periodo': frm.doc.periodo,
+			'ruc': frm.doc.ruc,
+			'year': frm.doc.year
+		}
+	});
 });

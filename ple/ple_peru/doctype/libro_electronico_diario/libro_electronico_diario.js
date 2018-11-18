@@ -20,7 +20,7 @@ frappe.ui.form.on('Libro Electronico Diario', 'ruc', function(frm) {
 	ple.libro_electronico_diario.check_mandatory_to_set_button(frm);
 	
 });
-frappe.ui.form.on('Libro Electronico Diario', 'company', function(frm) {
+frappe.ui.form.on('Libro Electronico Diario', 'company', function(frm, cdt, cdn) {
 	frappe.call({
 		 	"method": "frappe.client.get",
             args: {
@@ -36,7 +36,7 @@ frappe.ui.form.on('Libro Electronico Diario', 'company', function(frm) {
                 }
             }
         });
-	ple.libro_electronico_diario.check_mandatory_to_set_button(frm,cdt,cdn);
+	ple.libro_electronico_diario.check_mandatory_to_set_button(frm, cdt, cdn);
 });
 ple.libro_electronico_diario.check_mandatory_to_set_button = function(frm) {
 	if (frm.doc.periodo && frm.doc.ruc) {
@@ -59,9 +59,14 @@ ple.libro_electronico_diario.check_mandatory_to_fetch = function(doc) {
 }
 frappe.ui.form.on("Libro Electronico Diario", "get_data", function(frm) {
 	ple.libro_electronico_diario.check_mandatory_to_fetch(frm.doc);
-	$(location).attr('href', "/api/method/ple.ple_peru.doctype.libro_electronico_diario.libro_electronico_diario.export_libro_diario?"+
-		"periodo="+frm.doc.periodo+
-		"&ruc="+frm.doc.ruc+
-		"&year="+frm.doc.year+
-		"&primer="+frm.doc.primer_libro);
+	frappe.call({
+		method: "export_libro_diario",
+		doc: frm.doc,
+		args: {
+			'periodo': frm.doc.periodo,
+			'ruc': frm.doc.ruc,
+			'year': frm.doc.year,
+			'primer': frm.doc.primer_libro
+		}
+	})
 });
