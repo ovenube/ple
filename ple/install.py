@@ -55,6 +55,9 @@ def import_data():
 
 def create_dirs():
     my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "libros")
+    distutils.dir_util.mkpath(path)
+    my_path = os.path.join(my_path, "libros/")
     path = os.path.join(my_path, "compras")
     distutils.dir_util.mkpath(path)
     path = os.path.join(my_path, "ventas")
