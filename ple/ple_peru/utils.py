@@ -5,6 +5,7 @@ import frappe
 from frappe.utils import cstr
 from erpnext.setup.doctype.naming_series.naming_series import NamingSeries
 import codecs
+import os
 
 
 class Utils(NamingSeries):
@@ -103,7 +104,8 @@ def send_file_to_client(file, tipo, nombre):
 
 
 def to_file(data, tipo, nombre, primer=None):
-	archivo = tipo + "/" + nombre
+	my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+	archivo = os.path.join(my_path, tipo + "/" + nombre)
 	exported_file = codecs.open(archivo, "w", encoding='utf-8')
 	nombre, ext = nombre.split(".")
 	if tipo == "compras":

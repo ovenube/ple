@@ -8,6 +8,7 @@ import distutils.dir_util
 
 def after_install():
     import_data()
+    create_dirs()
 
 def import_data():
     my_path = os.path.abspath(os.path.dirname(__file__))

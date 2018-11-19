@@ -65,8 +65,7 @@ frappe.ui.form.on("Libro Electronico Mayor", "get_data", function(frm) {
 		args: {
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
-			'year': frm.doc.year,
-			'primer': frm.doc.primer_libro
+			'year': frm.doc.year
 		},
 		callback: function (r){
 			if (r.message){

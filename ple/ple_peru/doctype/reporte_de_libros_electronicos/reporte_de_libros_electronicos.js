@@ -74,9 +74,21 @@ ple.reporte_de_libros_electronicos.check_mandatory_to_fetch = function(doc) {
 }
 frappe.ui.form.on("Reporte de Libros Electronicos", "get_data", function(frm) {
 	ple.reporte_de_libros_electronicos.check_mandatory_to_fetch(frm.doc);
-	$(location).attr('href', "/api/method/ple.ple_peru.doctype.reporte_de_libros_electronicos.reporte_de_libros_electronicos.export_reporte_libros?"+
-		"year="+frm.doc.year+
-		"&periodo="+frm.doc.periodo+
-		"&tipo="+frm.doc.tipo_libro+
-		"&ruc="+frm.doc.ruc);
+	frappe.call({
+		method: "export_reporte_libros",
+		doc: frm.doc,
+		args: {
+			'periodo': frm.doc.periodo,
+			'ruc': frm.doc.ruc,
+			'year': frm.doc.year
+		},
+		callback: function (r){
+			if (r.message){
+				$(location).attr('href', "/api/method/ple.ple_peru.utils.send_file_to_client?"+
+				"file="+r.message.archivo+
+				"&tipo="+r.message.tipo+
+				"&nombre="+r.message.nombre);
+			}
+		}
+	});
 });

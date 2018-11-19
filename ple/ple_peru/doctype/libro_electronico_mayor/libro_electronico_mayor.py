@@ -7,7 +7,7 @@ import frappe
 from ple.ple_peru.utils import Utils, to_file
 
 class LibroElectronicoMayor(Utils):
-	def get_account(self, year, periodo):
+	def get_account_mayor(self, year, periodo):
 		account_list = []
 		from_date, to_date = self.get_dates(year, periodo)
 		sales, purchase = self.get_series()
@@ -123,7 +123,7 @@ class LibroElectronicoMayor(Utils):
 
 	def export_libro_mayor(self, year, periodo, ruc):
 		tipo = "mayor"
-		data = self.get_account(year, periodo)
+		data = self.get_account_mayor(year, periodo)
 		codigo_periodo = self.ple_name(year, periodo)
 		nombre = "LE" + str(ruc) + codigo_periodo + '00060100' + '00' + '1' + '1' + '1' + '1'
 		nombre = nombre + ".txt"
