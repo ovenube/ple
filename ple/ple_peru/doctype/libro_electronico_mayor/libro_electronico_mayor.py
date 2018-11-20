@@ -43,7 +43,7 @@ class LibroElectronicoMayor(Utils):
 				where company_name=company) as tipo_documento,
 				IF(against_voucher like '""" + purchase + """',
 										(select 
-											codigo_tipo_comprobante 
+											tipo_comprobante 
 										from
 											`tabPurchase Invoice`where name=against_voucher),
 										(select 
