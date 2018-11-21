@@ -16,11 +16,11 @@ class LibroElectronicodeCompras(Utils):
 
 		purchase_invoices = frappe.db.sql("""select      
 				CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00') as periodo,
-				SUBSTRING(journal_entry.parent,4) as cuo,
-				CONCAT('M',journal_entry.idx) as correlativo_asiento,
+				REPLACE(purchase_invoice.name, '-', '') as cuo,
+				'M2' as correlativo_asiento,
 				DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
 				DATE_FORMAT(IFNULL(bill_expiration_date,posting_date),'%d/%m/%Y') as fecha_cancelacion,
-				tipo_comprobante as tipo_comprobante,
+				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
 				REPLACE(REPLACE(REPLACE(CONCAT('0',SUBSTRING(IFNULL(bill_series,'0000'),-3)),'A',"0"),"T","0"),"O","0") as serie_comprobante,
 				"" as codigo_dua,
 				SUBSTRING(IF(REPLACE(REPLACE(bill_no,"-",""),'S/N','01')<999,CONCAT('0000',REPLACE(REPLACE(bill_no,"-",""),'S/N','01')),REPLACE(REPLACE(bill_no,"-",""),'S/N','01')),-4) as numero_comprobante,
@@ -38,8 +38,8 @@ class LibroElectronicodeCompras(Utils):
 				"" as monto_isc,
 				"" as otros_conceptos,			
 				grand_total as valor_adquisicion,
-				currency as moneda,
-				'1.000'  as tipo_cambio,
+				IF(currency = 'SOL', 'PEN', currency) as moneda,
+				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
 				IF(is_return,(SELECT bill_date FROM `tabPurchase Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
 				IF(is_return,(SELECT codigo_comprobante FROM `tabPurchase Invoice` WHERE name=return_against),"") as tipo_devolucion,
 				IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
@@ -58,9 +58,6 @@ class LibroElectronicodeCompras(Utils):
 				'0' as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice
-			left join
-				`tabJournal Entry Account` journal_entry
-			on journal_entry.reference_name = purchase_invoice.name
 			where bill_expiration_date > '"""+str(from_date)+"""' 
 			and bill_expiration_date < '"""+str(to_date)+"""' 
 			order by bill_expiration_date""", as_dict=True)

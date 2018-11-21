@@ -17,11 +17,11 @@ class LibroElectronicodeVentas(Utils):
 
         sales_invoices = frappe.db.sql("""select
 				CONCAT(DATE_FORMAT(due_date,'%Y%m'),'00') as periodo,
-				IFNULL(SUBSTRING(journal_entry.parent,4),'0') as cuo,
-				IFNULL(CONCAT('M',journal_entry.idx),'M1') as correlativo_asiento,
+				REPLACE(sales_invoice.name, '-', '') as cuo,
+				'M1' as correlativo_asiento,
 				DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_emision,
 				DATE_FORMAT(due_date,'%d/%m/%Y') as fecha_cancelacion,
-				codigo_comprobante as tipo_comprobante,
+				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
 				SUBSTRING(sales_invoice.name,4,4) as serie_comprobante,
 				SUBSTRING(sales_invoice.name,9) as numero_comprobante,
 				"" as resumen_diario,
@@ -40,8 +40,8 @@ class LibroElectronicodeVentas(Utils):
 				"" as impuesto_arroz,	
 				"" as otros_conceptos,		
 				grand_total as valor_adquisicion,
-				currency as moneda,
-				'1.000' as tipo_cambio,
+				IF(currency = 'SOL', 'PEN', currency) as moneda,
+				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3) as tipo_cambio,
 				IF(is_return,(SELECT due_date FROM `tabSales Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
 				IF(is_return,(SELECT codigo_comprobante FROM `tabSales Invoice` WHERE name=return_against),"") as tipo_devolucion,
 				IF(is_return,SUBSTRING((SELECT name FROM `tabSales Invoice` WHERE name=return_against),4,3),"") as serie_devolucion,
@@ -51,10 +51,7 @@ class LibroElectronicodeVentas(Utils):
 				'1' as indicador_pago,
 				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=due_date,'7','1')) as anotacion
 			from
-				`tabSales Invoice` sales_invoice
-			left join
-				`tabJournal Entry Account` journal_entry
-			on journal_entry.reference_name = sales_invoice.name
+				`tabSales Invoice` as sales_invoice
 			where due_date > '""" + str(from_date) + """' 
 			and due_date < '""" + str(to_date) + """' 
 			order by due_date""", as_dict=True)
