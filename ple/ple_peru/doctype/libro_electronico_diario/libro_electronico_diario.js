@@ -66,7 +66,7 @@ frappe.ui.form.on("Libro Electronico Diario", "get_data", function(frm) {
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year,
-			'primer': frm.doc.primer_libro
+			'primer': frm.doc.primer_libro  ? "1" : "0"
 		},
 		callback: function (r){
 			if (r.message){

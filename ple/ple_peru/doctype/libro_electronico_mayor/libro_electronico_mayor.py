@@ -11,7 +11,6 @@ class LibroElectronicoMayor(Utils):
 		account_list = []
 		from_date, to_date = self.get_dates(year, periodo)
 
-
 		account = frappe.db.sql("""select
 					CONCAT(DATE_FORMAT(gl.posting_date,'%Y%m'),'00') as periodo,
 					REPLACE(voucher_no, '-', '') as cuo,
