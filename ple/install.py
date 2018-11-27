@@ -53,6 +53,45 @@ def import_data():
             doc.descripcion_tipo_pago = val[1]
             doc.insert()
 
+    path = os.path.join(my_path, "catalogo_de_existencias.csv")
+    with open(path, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=str(','))
+        for idx, val in enumerate(reader):
+            if idx == 0:
+                continue  # If csv have first row with headers
+
+            # Do something with your data
+            doc = frappe.new_doc('Catalogo de Existencias')
+            doc.codigo_catalogo = val[0]
+            doc.descripcion_catalogo = val[1]
+            doc.insert()
+
+    path = os.path.join(my_path, "tipos_de_existencia.csv")
+    with open(path, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=str(','))
+        for idx, val in enumerate(reader):
+            if idx == 0:
+                continue  # If csv have first row with headers
+
+            # Do something with your data
+            doc = frappe.new_doc('Tipos de Existencia')
+            doc.codigo_tipos_existencia = val[0]
+            doc.descripcion_tipos_existencia = val[1]
+            doc.insert()
+
+    path = os.path.join(my_path, "tipos_de_operaciones.csv")
+    with open(path, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=str(','))
+        for idx, val in enumerate(reader):
+            if idx == 0:
+                continue  # If csv have first row with headers
+
+            # Do something with your data
+            doc = frappe.new_doc('Tipos de Operaciones')
+            doc.codigo_tipos_operacion = val[0]
+            doc.descripcion_tipos_operacion = val[1]
+            doc.insert()
+
 def create_dirs():
     my_path = os.path.abspath(os.path.dirname(__file__))
     path = os.path.join(my_path, "libros")

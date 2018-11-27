@@ -5,9 +5,21 @@ Código Tipo de Comprobante,Nombre Tipo de Comprobante,Descripción Tipo de Comp
 3,Boleta de Venta,
 7,Nota de crédito,
 8,Nota de débito,
+9,Guía de remisión - Remitente,
 12,Ticket o cinta emitido por máquina registradora,
+13,Documentos emitidos por las empresas del sistema financiero y de seguros, Documentos emitidos por las empresas del sistema financiero y de seguros y por las cooperativas de ahorro y crédito no autorizadas a captar recursos del público que se encuentren bajo el control de la Superintendencia de Banca Seguros y AFP.
 14,Recibo de servicios públicos,Recibo por servicios públicos de suministro de energía eléctrica agua teléfono telex y telegréficos y otros servicios complementarios que se incluyan en el recibo de servicio público
 15,Boletos de transporte terrestre y ferroviario local,Boletos emitidos por el servicio de transporte terrestre regular urbano de pasajeros y el ferroviario público de pasajeros prestado en vía férrea local.
 16,Boletos de transporte terrestre nacional no electrónico,Boletos de viaje emitidos por las empresas de transporte nacional de pasajeros siempre que cuenten con la autorización de la autoridad competente en las rutas autorizadas. Vía terrestre o ferroviario público no emitido por medios electrónicos (BVME)
 18,Documentos emitidos por las AFP,Documento emitido por las Administradoras Privadas de Fondo de Pensiones que se encuentran bajo la supervisión de la Superintendencia de Banca
+20,Comprobante de Retención,
+21,Conocimiento de embarque por el servicio de transporte de carga marítima,
+22,Comprobante por Operaciones No Habituales,
+31,Guía de Remisión - Transportista,
+37,Documentos que emitan los concesionarios del servicio de revisiones técnicas vehiculares,Documentos que emitan los concesionarios del servicio de revisiones técnicas vehiculares por la prestación de dicho servicio
+40,Comprobante de Percepción,
+41,Comprobante de Percepción - Venta interna,
 45,Documentos de instituciones educativas culturales por actividades no gravadas,Documentos emitidos por centros educativos y culturales universidades asociaciones y fundaciones en lo referente a actividades no gravadas con tributos administrados por la SUNAT.
+50,Declaración Única de Aduanas - Importación definitiva,
+52,Despacho Simplificado - Importación Simplificada,
+53,Declaración de Mensajería o Courier,

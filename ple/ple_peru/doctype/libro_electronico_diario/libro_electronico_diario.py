@@ -15,8 +15,8 @@ class LibroElectronicoDiario(Utils):
 		if primer == "1":
 			account = frappe.db.sql("""select
 					DATE_FORMAT(NOW(),'%Y%m%d') as periodo,
-					SUBSTRING(account_name,1,POSITION('-' in name)-2) as codigo_asiento,
-					SUBSTRING(account_name,POSITION('-' in name)+2) as descripcion_asiento,
+					SUBSTRING(name,1,POSITION('-' in name)-2) as codigo_asiento,
+					SUBSTRING(name,POSITION('-' in name)+2) as descripcion_asiento,
 					'01' as codigo_plan,
 					'PLAN CONTABLE GENERAL EMPRESARIAL' as descripcion_plan,
 					"" as codigo_cuenta,
@@ -24,7 +24,7 @@ class LibroElectronicoDiario(Utils):
 					'1' as indicador_cuenta
 				from
 					`tabAccount`
-				where SUBSTRING(account_name,1,POSITION('-' in name)-1) > 100""", as_dict=True)
+				where SUBSTRING(name,1,POSITION('-' in name)-1) > 100""", as_dict=True)
 
 			for d in account:
 				account_list.append({
