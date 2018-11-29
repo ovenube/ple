@@ -13,6 +13,7 @@ def after_install():
 def import_data():
     my_path = os.path.abspath(os.path.dirname(__file__))
     my_path = os.path.join(my_path, "imports/")
+
     path = os.path.join(my_path, "tipos_de_comprobante.csv")
     with open(path, 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=str(','))
@@ -90,6 +91,19 @@ def import_data():
             doc = frappe.new_doc('Tipos de Operaciones')
             doc.codigo_tipos_operacion = val[0]
             doc.descripcion_tipos_operacion = val[1]
+            doc.insert()
+
+    path = os.path.join(my_path, "unidades_de_medida.csv")
+    with open(path, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=str(','))
+        for idx, val in enumerate(reader):
+            if idx == 0:
+                continue  # If csv have first row with headers
+
+            # Do something with your data
+            doc = frappe.new_doc('Unidades de Medida')
+            doc.codigo_unidad_medida = val[0]
+            doc.descripcion_unidad_medida = val[1]
             doc.insert()
 
 def create_dirs():

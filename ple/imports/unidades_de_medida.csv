@@ -1,0 +1,64 @@
+﻿Código Unidad de Medida,Descripción Unidad de Medida
+BX,CAJA
+GRM,GRAMO                                                 
+4A,BOBINAS                                               
+BE,FARDO                                                 
+BG,BOLSA                                                 
+BJ,BALDE                                                 
+BLL,BARRILES                                              
+BO,BOTELLAS                                              
+C62,PIEZAS                                                
+CA,LATAS                                                 
+CEN,CIENTO DE UNIDADES                                    
+CJ,CONOS                                                 
+CMK,CENTIMETRO CUADRADO                                   
+CMQ,CENTIMETRO CUBICO                                     
+CMT,CENTIMETRO LINEAL                                     
+CT,CARTONES                                              
+CY,CILINDRO                                              
+DR,TAMBOR                                                
+DZN,DOCENA                                                
+DZP,DOCENA POR 10**6                                      
+FOT,PIES                                                  
+FTK,PIES CUADRADOS                                        
+FTQ,PIES CUBICOS                                          
+GLI,"GALON INGLES (4,545956L)"
+GLL,"US GALON (3,7843 L)"
+GRO,GRUESA                                                
+HLT,HECTOLITRO                                            
+INH,PULGADAS                                              
+KGM,KILOGRAMO                                             
+KT,KIT                                                   
+KTM,KILOMETRO                                             
+KWH,KILOVATIO HORA                                        
+LBR,LIBRAS                                                
+LEF,HOJA                                                  
+LTN,TONELADA LARGA                                        
+LTR,LITRO                                                 
+MGM,MILIGRAMOS                                            
+MLL,MILLARES                                              
+MLT,MILILITRO                                             
+MMK,MILIMETRO CUADRADO                                    
+MMQ,MILIMETRO CUBICO                                      
+MMT,MILIMETRO                                             
+MTK,METRO CUADRADO                                        
+MTQ,METRO CUBICO                                          
+MTR,METRO                                                 
+MWH,MEGAWATT HORA                                         
+N°,DESCRIPCIÓN
+NIU,UNIDAD (BIENES)                                      
+ONZ,ONZAS                                                 
+PF,PALETAS                                               
+PG,PLACAS                                                
+PK,PAQUETE                                               
+PR,PAR                                                   
+RM,RESMA                                                 
+SET,JUEGO                                                 
+ST,PLIEGO                                                
+STN,TONELADA CORTA                                        
+TNE,TONELADAS                                             
+TU,TUBOS                                                 
+UM,MILLON DE UNIDADES                                    
+YDK,YARDA CUADRADA                                        
+YRD,YARDA                                                 
+ZZ,UNIDAD (SERVICIOS) 

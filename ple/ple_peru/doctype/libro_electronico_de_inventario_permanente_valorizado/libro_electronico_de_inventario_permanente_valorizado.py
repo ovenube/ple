@@ -14,12 +14,25 @@ class LibroElectronicodeInventarioPermanenteValorizado(Utils):
 		inventories = frappe.db.sql("""select
 					CONCAT(DATE_FORMAT(due_date,'%Y%m'),'00') as periodo,
 					REPLACE(inventory.voucher_no, '-', '') as cuo,
-					'M1' as correlativo_asiento,
-					warehouse as almacen,
-					'9' as codigo_catalogo,
-					IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
-					SUBSTRING(inventory.name,4,4) as serie_comprobante,
-					SUBSTRING(inventory.name,9) as numero_comprobante,
+					CONCAT('M', IF(voucher_type = 'Stock Entry', 
+					(SELECT 
+						COUNT(name)
+					FROM
+						`tabStock Ledger Entry` as stock_1
+					WHERE stock_1.voucher_no = stock.voucher_no
+					AND SUBSTRING(stock_1.account, 1, 2) <= SUBSTRING(stock.account, 1, 2)),
+					(SELECT 
+						COUNT(name)
+					FROM
+						`tabStock Ledger Entry` as stock_1
+					WHERE stock_1.voucher_no = stock.voucher_no
+					AND SUBSTRING(stock_1.account, 1, 2) >= SUBSTRING(stock.account, 1, 2)))) as correlativo_asiento,
+					(SELECT codigo_almacen_sunat FROM `tabWarehouse` as wh WHERE wh.company=stock.company AND wh.name=stock.warehouse) as almacen,
+					comp.codigo_catalogo_existencias as codigo_catalogo,
+					pro.codigo_tipo_existencia,
+					IF(pro.codigo_sunat, pro.codigo_sunat, pro.name) as codigo_producto,
+					IF(comp.codigo_catalogo_existencias='9',"",pro.codigo_sunat) as codigo_sunat,
+					DATE_FORMAT(stock.posting_date,'%d/%m/%Y') as fecha_emision,
 					"" as resumen_diario,
 					IF(base_net_total>700,codigo_tipo_documento,IF(ISNULL(tax_id),"",IFNULL(codigo_tipo_documento,""))) as tipo_documento,
 					IF(codigo_tipo_documento=7,IF(SUBSTRING(REPLACE(tax_id,"-",""),-12)="",tax_id, SUBSTRING(REPLACE(tax_id,"-",""),-12)),IF(base_net_total>700,tax_id,IF(ISNULL(tax_id),"",tax_id))) as numero_documento,
@@ -47,8 +60,12 @@ class LibroElectronicodeInventarioPermanenteValorizado(Utils):
 					'1' as indicador_pago,
 					IF(inventory.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=due_date,'7','1')) as anotacion
 				from
-					`tabSales Invoice` as inventory
-				where due_date > '""" + str(from_date) + """' 
+					`tabStock Ledger Entry` as stock,
+					`tabCompany` as comp,
+					`tabItem` as pro
+				where comp.name = stock.company
+				and pro.name = stock.item_code
+				and due_date > '""" + str(from_date) + """' 
 				and due_date < '""" + str(to_date) + """' 
 				order by due_date""", as_dict=True)
 

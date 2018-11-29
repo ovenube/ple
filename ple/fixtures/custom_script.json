@@ -79,5 +79,23 @@
   "name": "Stock Entry-Client", 
   "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');", 
   "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Delivery Note", 
+  "modified": "2018-11-27 18:07:38.471250", 
+  "name": "Delivery Note-Client", 
+  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "UOM", 
+  "modified": "2018-11-29 14:51:35.174065", 
+  "name": "UOM-Client", 
+  "script": "cur_frm.add_fetch('unidad_medida_sunat', 'codigo_unidad_medida', 'codigo_sunat');", 
+  "script_type": "Client"
  }
 ]
