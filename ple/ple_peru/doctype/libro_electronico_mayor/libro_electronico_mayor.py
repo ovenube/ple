@@ -33,11 +33,11 @@ class LibroElectronicoMayor(Utils):
 					IF(gl.account_currency = 'SOL', 'PEN', gl.account_currency) as tipo_moneda,
 					IF(voucher_type = 'Purchase Invoice',
 											(select 
-												IF(LENGTH(`codigo_tipo_documento`) = 1, CONCAT('0', `codigo_tipo_documento`), `codigo_tipo_documento`)
+												`codigo_tipo_documento`
 											from
 												`tabPurchase Invoice`where name=voucher_no),
 											(select 
-												IF(LENGTH(`codigo_tipo_documento`) = 1, CONCAT('0', `codigo_tipo_documento`), `codigo_tipo_documento`) 
+												`codigo_tipo_documento`
 											from 
 												`tabSales Invoice`
 											where name=voucher_no)) as codigo_documento,
@@ -53,11 +53,11 @@ class LibroElectronicoMayor(Utils):
 											where name=voucher_no)) as tax_id,
 					IF(voucher_type = 'Purchase Invoice',
 											(select 
-												codigo_comprobante 
+												IF(LENGTH(codigo_comprobante) = 1, CONCAT('0', codigo_comprobante), codigo_comprobante)
 											from
 												`tabPurchase Invoice`where name=voucher_no),
 											(select 
-												codigo_comprobante 
+												IF(LENGTH(codigo_comprobante) = 1, CONCAT('0', codigo_comprobante), codigo_comprobante) 
 											from 
 												`tabSales Invoice`
 											where name=voucher_no)) as codigo_comprobante,
@@ -79,8 +79,8 @@ class LibroElectronicoMayor(Utils):
 					DATE_FORMAT(gl.posting_date,'%d/%m/%Y') as fecha_emision,
 					gl.remarks as glosa,
 					'' as glosa_referencial,
-					ROUND(gl.debit_in_account_currency, 2) as debe,
-					ROUND(gl.credit_in_account_currency, 2) as haber,
+					IF(gl.debit_in_account_currency = 0, '0.00', ROUND(gl.debit_in_account_currency, 2)) as debe,
+					IF(gl.credit_in_account_currency = 0, '0.00', ROUND(gl.credit_in_account_currency, 2)) as haber,
 					IF(voucher_type = 'Purchase Invoice',
 						 CONCAT('080100&',
 										(select
