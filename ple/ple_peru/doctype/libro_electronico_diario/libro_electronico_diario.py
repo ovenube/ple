@@ -60,11 +60,11 @@ class LibroElectronicoDiario(Utils):
 					IF(gl.account_currency = 'SOL', 'PEN', gl.account_currency) as tipo_moneda,
 					IF(voucher_type = 'Purchase Invoice',
 											(select 
-												`codigo_tipo_documento`
+												IF(LENGTH(`codigo_tipo_documento`) = 1, CONCAT('0', `codigo_tipo_documento`), `codigo_tipo_documento`)
 											from
 												`tabPurchase Invoice`where name=voucher_no),
 											(select 
-												`codigo_tipo_documento` 
+												IF(LENGTH(`codigo_tipo_documento`) = 1, CONCAT('0', `codigo_tipo_documento`), `codigo_tipo_documento`) 
 											from 
 												`tabSales Invoice`
 											where name=voucher_no)) as codigo_documento,
@@ -106,8 +106,8 @@ class LibroElectronicoDiario(Utils):
 					DATE_FORMAT(gl.posting_date,'%d/%m/%Y') as fecha_emision,
 					gl.remarks as glosa,
 					'' as glosa_referencial,
-					gl.debit_in_account_currency as debe,
-					gl.credit_in_account_currency as haber,
+					ROUND(gl.debit_in_account_currency, 2) as debe,
+					ROUND(gl.credit_in_account_currency, 2) as haber,
 					IF(voucher_type = 'Purchase Invoice',
 						 CONCAT('080100&',
 										(select
