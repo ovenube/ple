@@ -194,58 +194,62 @@ def to_file(data, tipo, nombre, primer=None):
 		if primer == "1":
 			for row in data:
 				exported_file.write(
-				row['periodo']+"|"+
-				row['codigo_asiento']+"|"+
-				row['descripcion_asiento']+"|"+
-				row['codigo_plan']+"|"+
-				row['descripcion_plan']+"|"+
-				row['codigo_cuenta']+"|"+
-				row['descripcion_cuenta']+"|"+
-				row['indicador_cuenta']+"|\n")
+					row['periodo']+"|"+
+					row['codigo_asiento']+"|"+
+					row['descripcion_asiento']+"|"+
+					row['codigo_plan']+"|"+
+					row['descripcion_plan']+"|"+
+					row['codigo_cuenta']+"|"+
+					row['descripcion_cuenta']+"|"+
+					row['indicador_cuenta']+"|\n")
 		else:
 			for row in data:
 				exported_file.write(
-				row['periodo']+"|"+
-				row['cuo']+"|"+
-				row['correlativo_asiento']+"|"+
-				row['codigo_asiento']+"|"+
-				row['cuo_ue']+"|"+
-				row['centro_costo']+"|"+
-				row['tipo_moneda']+"|"+
-				row['tipo_documento']+"|"+
-				row['codigo_comprobante']+"|"+
-				row['serie_comprobante']+"|"+
-				row['numero_comprobante']+"|"+
-				str(row['fecha_contable'])+"|"+
-				str(row['fecha_emision'])+"|"+
-				str(row['fecha_vencimiento'])+"|"+
-				row['glosa']+"|"+
-				str(row['debe'])+"|"+
-				str(row['haber'])+"|"+
-				row['estructurado']+"|"+
-				str(row['estado']+"|\n"))
+					row['periodo']+"|"+
+					row['cuo']+"|"+
+					row['correlativo_asiento']+"|"+
+					row['codigo_asiento']+"|"+
+					row['cuo_ue']+"|"+
+					row['centro_costo']+"|"+
+					row['tipo_moneda']+"|"+
+					row['tipo_documento']+"|"+
+					row['tax_id'] + "|" +
+					row['codigo_comprobante']+"|"+
+					row['serie_comprobante']+"|"+
+					row['numero_comprobante']+"|"+
+					str(row['fecha_contable'])+"|"+
+					str(row['fecha_vencimiento'])+"|"+
+					str(row['fecha_emision']) + "|" +
+					row['glosa']+"|"+
+					row['glosa_referencial'] + "|" +
+					str(row['debe'])+"|"+
+					str(row['haber'])+"|"+
+					row['estructurado']+"|"+
+					str(row['estado']+"|\n"))
 	elif tipo == "mayor":
 		for row in data:
 			exported_file.write(
-			row['periodo']+"|"+
-			row['cuo']+"|"+
-			row['correlativo_asiento']+"|"+
-			row['codigo_asiento']+"|"+
-			row['cuo_ue']+"|"+
-			row['centro_costo']+"|"+
-			row['tipo_moneda']+"|"+
-			row['tipo_documento']+"|"+
-			row['codigo_comprobante']+"|"+
-			row['serie_comprobante']+"|"+
-			row['numero_comprobante']+"|"+
-			str(row['fecha_contable'])+"|"+
-			str(row['fecha_emision'])+"|"+
-			str(row['fecha_vencimiento'])+"|"+
-			row['glosa']+"|"+
-			str(row['debe'])+"|"+
-			str(row['haber'])+"|"+
-			row['estructurado']+"|"+
-			str(row['estado']+"|\n"))
+				row['periodo'] + "|" +
+				row['cuo'] + "|" +
+				row['correlativo_asiento'] + "|" +
+				row['codigo_asiento'] + "|" +
+				row['cuo_ue'] + "|" +
+				row['centro_costo'] + "|" +
+				row['tipo_moneda'] + "|" +
+				row['tipo_documento'] + "|" +
+				row['tax_id'] + "|" +
+				row['codigo_comprobante'] + "|" +
+				row['serie_comprobante'] + "|" +
+				row['numero_comprobante'] + "|" +
+				str(row['fecha_contable']) + "|" +
+				str(row['fecha_vencimiento']) + "|" +
+				str(row['fecha_emision']) + "|" +
+				row['glosa'] + "|" +
+				row['glosa_referencial'] + "|" +
+				str(row['debe']) + "|" +
+				str(row['haber']) + "|" +
+				row['estructurado'] + "|" +
+				str(row['estado'] + "|\n"))
 	return {"archivo": archivo, "tipo": ext, "nombre": nombre}
 
 

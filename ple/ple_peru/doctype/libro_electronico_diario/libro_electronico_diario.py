@@ -68,11 +68,16 @@ class LibroElectronicoDiario(Utils):
 											from 
 												`tabSales Invoice`
 											where name=voucher_no)) as codigo_documento,
-					(select 
-						tax_id 
-					from 
-						`tabCompany` 
-					where company_name=company) as tipo_documento,
+					IF(voucher_type = 'Purchase Invoice',
+											(select 
+												`tax_id`
+											from
+												`tabPurchase Invoice`where name=voucher_no),
+											(select 
+												`tax_id` 
+											from 
+												`tabSales Invoice`
+											where name=voucher_no)) as tax_id,
 					IF(voucher_type = 'Purchase Invoice',
 											(select 
 												codigo_comprobante 
@@ -100,6 +105,7 @@ class LibroElectronicoDiario(Utils):
 					DATE_FORMAT(gl.posting_date,'%d/%m/%Y') as fecha_vencimiento,
 					DATE_FORMAT(gl.posting_date,'%d/%m/%Y') as fecha_emision,
 					gl.remarks as glosa,
+					'' as glosa_referencial,
 					gl.debit_in_account_currency as debe,
 					gl.credit_in_account_currency as haber,
 					IF(voucher_type = 'Purchase Invoice',
@@ -138,14 +144,16 @@ class LibroElectronicoDiario(Utils):
 					'cuo_ue': d.cuo_ue,
 					'centro_costo': d.centro_costo,
 					'tipo_moneda': d.tipo_moneda,
-					'tipo_documento': d.tipo_documento,
+					'tipo_documento': d.codigo_documento,
+					'tax_id': d.tax_id,
 					'codigo_comprobante': d.codigo_comprobante,
 					'serie_comprobante': d.serie_comprobante,
 					'numero_comprobante': d.numero_comprobante,
 					'fecha_contable': d.fecha_contable,
-					'fecha_emision': d.fecha_emision,
 					'fecha_vencimiento': d.fecha_vencimiento,
+					'fecha_emision': d.fecha_emision,
 					'glosa': d.glosa,
+					'glosa_referencial': d.glosa_referencial,
 					'debe': d.debe,
 					'haber': d.haber,
 					'estructurado': d.estructurado,
