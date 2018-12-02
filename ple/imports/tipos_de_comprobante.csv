@@ -1,11 +1,11 @@
 Código Tipo de Comprobante,Nombre Tipo de Comprobante,Descripción Tipo de Comprobante
-0,Otros,
-1,Factura,
-2,Recibo por Honorarios,
-3,Boleta de Venta,
-7,Nota de crédito,
-8,Nota de débito,
-9,Guía de remisión - Remitente,
+00,Otros,
+01,Factura,
+02,Recibo por Honorarios,
+03,Boleta de Venta,
+07,Nota de crédito,
+08,Nota de débito,
+09,Guía de remisión - Remitente,
 12,Ticket o cinta emitido por máquina registradora,
 13,Documentos emitidos por las empresas del sistema financiero y de seguros, Documentos emitidos por las empresas del sistema financiero y de seguros y por las cooperativas de ahorro y crédito no autorizadas a captar recursos del público que se encuentren bajo el control de la Superintendencia de Banca Seguros y AFP.
 14,Recibo de servicios públicos,Recibo por servicios públicos de suministro de energía eléctrica agua teléfono telex y telegréficos y otros servicios complementarios que se incluyan en el recibo de servicio público

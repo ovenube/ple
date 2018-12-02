@@ -95,6 +95,7 @@ class Utils(NamingSeries):
 			codigo_periodo = year + "12"
 		return codigo_periodo
 
+
 @frappe.whitelist()
 def send_file_to_client(file, tipo, nombre):
 	data = read_txt(file)
@@ -112,120 +113,120 @@ def to_file(data, tipo, nombre, primer=None):
 	if tipo == "compras":
 		for row in data:
 			exported_file.write(
-				row['periodo']+'|'+
-				row['cuo']+'|'+
-				row['correlativo_asiento']+'|'+
-				str(row['fecha_emision'])+'|'+
-				str(row['fecha_cancelacion'])+'|'+
-				row['codigo_tipo_comprobante']+'|'+
-				row['serie_comprobante']+'|'+
-				row['codigo_DUA']+'|'+
-				row['numero_comprobante']+'|'+
-				row['resumen_diario']+'|'+
-				row['tipo_documento']+'|'+
-				row['numero_documento']+'|'+
-				row['nombre_proveedor']+'|'+
-				str(row['base_imponible'])+'|'+
-				str(row['monto_impuesto'])+'|'+
-				row['base_imponible_exportacion']+'|'+
-				row['monto_impuesto_exportacion']+'|'+
-				row['base_imponible_no_gravada']+'|'+
-				row['monto_impuesto_no_gravada']+'|'+
-				row['valor_adquisicion_no_gravada']+'|'+
-				row['monto_isc']+'|'+
-				row['otros_conceptos']+'|'+
-				str(row['valor_adquisicion'])+'|'+
-				row['moneda']+'|'+
-				str(row['tipo_cambio'])+'|'+
-				row['fecha_inicial_devolucion']+'|'+
-				row['tipo_devolucion']+'|'+
-				row['serie_devolucion']+'|'+
-				row['dua']+'|'+
-				row['numero_devolucion']+'|'+
-				row['fecha_devolucion']+'|'+
-				row['detraccion']+'|'+
-				row['marca_detraccion']+'|'+
-				row['clasificacion_items']+'|'+
-				row['contrato']+'|'+
-				row['error_1']+'|'+
-				row['error_2']+'|'+
-				row['error_3']+'|'+
-				row['error_4']+'|'+
-				str(row['indicador_pago'])+'|'+
-				str(row['anotacion']+'|\n'))
+				row['periodo'] + '|' +
+				row['cuo'] + '|' +
+				row['correlativo_asiento'] + '|' +
+				str(row['fecha_emision']) + '|' +
+				str(row['fecha_cancelacion']) + '|' +
+				row['codigo_tipo_comprobante'] + '|' +
+				row['serie_comprobante'] + '|' +
+				row['codigo_DUA'] + '|' +
+				row['numero_comprobante'] + '|' +
+				row['resumen_diario'] + '|' +
+				row['tipo_documento'] + '|' + 
+				row['numero_documento'] + '|' + 
+				row['nombre_proveedor'] + '|' + 
+				str(row['base_imponible']) + '|' + 
+				str(row['monto_impuesto']) + '|' + 
+				row['base_imponible_exportacion'] + '|' + 
+				row['monto_impuesto_exportacion'] + '|' + 
+				row['base_imponible_no_gravada'] + '|' + 
+				row['monto_impuesto_no_gravada'] + '|' + 
+				row['valor_adquisicion_no_gravada'] + '|' + 
+				row['monto_isc'] + '|' + 
+				row['otros_conceptos'] + '|' + 
+				str(row['valor_adquisicion']) + '|' + 
+				row['moneda'] + '|' + 
+				str(row['tipo_cambio']) + '|' + 
+				row['fecha_inicial_devolucion'] + '|' + 
+				row['tipo_devolucion'] + '|' + 
+				row['serie_devolucion'] + '|' + 
+				row['dua'] + '|' + 
+				row['numero_devolucion'] + '|' + 
+				row['fecha_devolucion'] + '|' + 
+				row['detraccion'] + '|' + 
+				row['marca_detraccion'] + '|' + 
+				row['clasificacion_items'] + '|' + 
+				row['contrato'] + '|' + 
+				row['error_1'] + '|' + 
+				row['error_2'] + '|' + 
+				row['error_3'] + '|' + 
+				row['error_4'] + '|' + 
+				str(row['indicador_pago']) + '|' + 
+				str(row['anotacion'] + '|\n'))
 	elif tipo == "ventas":
 		for row in data:
 			exported_file.write(
-				row['periodo']+"|"+
-				row['cuo']+"|"+
-				row['correlativo_asiento']+"|"+
-				str(row['fecha_emision'])+"|"+
-				str(row['fecha_cancelacion'])+"|"+
-				row['codigo_tipo_comprobante']+"|"+
-				row['serie_comprobante']+"|"+
-				row['numero_comprobante']+"|"+
-				row['resumen_diario']+"|"+
-				row['tipo_documento']+"|"+
-				row['numero_documento']+"|"+
-				row['nombre_cliente']+"|"+
-				row['valor_exportacion']+"|"+
-				str(row['base_imponible'])+"|"+
-				row['descuento']+"|"+
-				str(row['monto_impuesto'])+"|"+
-				row['descuento_igv']+"|"+
-				row['total_exonerado']+"|"+
-				row['total_inafecto']+"|"+
-				row['monto_isc']+"|"+
-				row['base_arroz']+"|"+
-				row['impuesto_arroz']+"|"+
-				row['otros_conceptos']+"|"+
-				str(row['valor_adquisicion'])+"|"+
-				row['moneda']+"|"+
-				str(row['tipo_cambio'])+"|"+
-				str(row['fecha_inicial_devolucion'])+"|"+
-				str(row['tipo_devolucion'])+"|"+
-				str(row['serie_devolucion'])+"|"+
-				str(row['dua'])+"|"+
-				row['contrato']+"|"+
-				row['error_1']+"|"+
-				str(row['indicador_pago'])+"|"+
-				str(row['anotacion']+"|\n"))
+				row['periodo'] + "|" + 
+				row['cuo'] + "|" + 
+				row['correlativo_asiento'] + "|" + 
+				str(row['fecha_emision']) + "|" + 
+				str(row['fecha_cancelacion']) + "|" + 
+				row['codigo_tipo_comprobante'] + "|" + 
+				row['serie_comprobante'] + "|" + 
+				row['numero_comprobante'] + "|" + 
+				row['resumen_diario'] + "|" + 
+				row['tipo_documento'] + "|" + 
+				row['numero_documento'] + "|" + 
+				row['nombre_cliente'] + "|" + 
+				row['valor_exportacion'] + "|" + 
+				str(row['base_imponible']) + "|" + 
+				row['descuento'] + "|" + 
+				str(row['monto_impuesto']) + "|" + 
+				row['descuento_igv'] + "|" + 
+				row['total_exonerado'] + "|" + 
+				row['total_inafecto'] + "|" + 
+				row['monto_isc'] + "|" + 
+				row['base_arroz'] + "|" + 
+				row['impuesto_arroz'] + "|" + 
+				row['otros_conceptos'] + "|" + 
+				str(row['valor_adquisicion']) + "|" + 
+				row['moneda'] + "|" + 
+				str(row['tipo_cambio']) + "|" + 
+				str(row['fecha_inicial_devolucion']) + "|" + 
+				str(row['tipo_devolucion']) + "|" + 
+				str(row['serie_devolucion']) + "|" + 
+				str(row['dua']) + "|" + 
+				row['contrato'] + "|" + 
+				row['error_1'] + "|" + 
+				str(row['indicador_pago']) + "|" + 
+				str(row['anotacion'] + "|\n"))
 	elif tipo == "diario":
 		if primer == "1":
 			for row in data:
 				exported_file.write(
-					row['periodo']+"|"+
-					row['codigo_asiento']+"|"+
-					row['descripcion_asiento']+"|"+
-					row['codigo_plan']+"|"+
-					row['descripcion_plan']+"|"+
-					row['codigo_cuenta']+"|"+
-					row['descripcion_cuenta']+"|"+
-					row['indicador_cuenta']+"|\n")
+					row['periodo'] + "|" + 
+					row['codigo_asiento'] + "|" + 
+					row['descripcion_asiento'] + "|" + 
+					row['codigo_plan'] + "|" + 
+					row['descripcion_plan'] + "|" + 
+					row['codigo_cuenta'] + "|" + 
+					row['descripcion_cuenta'] + "|" + 
+					row['indicador_cuenta'] + "|\n")
 		else:
 			for row in data:
 				exported_file.write(
-					row['periodo']+"|"+
-					row['cuo']+"|"+
-					row['correlativo_asiento']+"|"+
-					row['codigo_asiento']+"|"+
-					row['cuo_ue']+"|"+
-					row['centro_costo']+"|"+
-					row['tipo_moneda']+"|"+
-					row['tipo_documento']+"|"+
+					row['periodo'] + "|" +
+					row['cuo'] + "|" +
+					row['correlativo_asiento'] + "|" +
+					row['codigo_asiento'] + "|" +
+					row['cuo_ue'] + "|" +
+					row['centro_costo'] + "|" +
+					row['tipo_moneda'] + "|" +
+					row['tipo_documento'] + "|" +
 					row['tax_id'] + "|" +
-					row['codigo_comprobante']+"|"+
-					row['serie_comprobante']+"|"+
-					row['numero_comprobante']+"|"+
-					str(row['fecha_contable'])+"|"+
-					str(row['fecha_vencimiento'])+"|"+
+					row['codigo_comprobante'] + "|" +
+					row['serie_comprobante'] + "|" +
+					row['numero_comprobante'] + "|" +
+					str(row['fecha_contable']) + "|" +
+					str(row['fecha_vencimiento']) + "|" +
 					str(row['fecha_emision']) + "|" +
-					row['glosa']+"|"+
+					row['glosa'] + "|" +
 					row['glosa_referencial'] + "|" +
-					str(row['debe'])+"|"+
-					str(row['haber'])+"|"+
-					row['estructurado']+"|"+
-					str(row['estado']+"|\n"))
+					str(row['debe']) + "|" +
+					str(row['haber']) + "|" +
+					row['estructurado'] + "|" +
+					str(row['estado'] + "|\n"))
 	elif tipo == "mayor":
 		for row in data:
 			exported_file.write(
@@ -250,6 +251,35 @@ def to_file(data, tipo, nombre, primer=None):
 				str(row['haber']) + "|" +
 				row['estructurado'] + "|" +
 				str(row['estado'] + "|\n"))
+	elif tipo == "inventario":
+		for row in data:
+			exported_file.write(
+				row['periodo'] + "|"+
+				row['cuo'] + "|" +
+				row['correlativo_asiento'] + "|" +
+				row['almacen'] + "|" +
+				row['codigo_catalogo'] + "|" +
+				row['codigo_tipo_existencia'] + "|" +
+				row['codigo_producto'] + "|" +
+				row['codigo_sunat'] + "|" +
+				str(row['fecha_emision']) + "|" +
+				row['codigo_comprobante'] + "|" +
+				row['serie_comprobante'] + "|" +
+				row['correlativo_comprobante'] + "|" +
+				row['codigo_operacion'] + "|" +
+				row['descripcion_producto'] + "|" +
+				row['uom'] + "|" +
+				row['codigo_valuacion'] + "|" +
+				str(row['cantidad']) + "|" +
+				str(row['costo_unitario']) + "|" +
+				str(row['costo_total']) + "|" +
+				str(row['cantidad_retirado']) + "|" +
+				str(row['costo_unitario_retirado']) + "|" +
+				str(row['costo_total_retirado']) + "|" +
+				str(row['saldo_final']) + "|" +
+				str(row['costo_unitario_saldo_final']) + "|" +
+				str(row['costo_total_saldo_final']) + "|" +
+				str(row['anotacion'] + "|\n"))
 	return {"archivo": archivo, "tipo": ext, "nombre": nombre}
 
 
