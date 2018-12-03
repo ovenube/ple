@@ -2,6 +2,15 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
+  "dt": "Purchase Receipt", 
+  "modified": "2018-12-02 21:31:30.538195", 
+  "name": "Purchase Receipt-Client", 
+  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');\nfunction filter_operacion(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_operacion\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Operaciones\", \"codigo_tipos_operacion\", \"in\", [\"02\", \"04\", \"06\"]]]\n\t\t};\n\t});\n}\nfunction filter_comprobantes(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_comprobante\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Comprobante\", \"codigo_tipo_comprobante\", \"in\", [\"31\"]]]\n\t\t};\n\t});\n}\nfrappe.ui.form.on(\"Purchase Receipt\", {\n\tonload: function(frm, cdt, cdn){\n\t\tfilter_operacion(frm, cdt, cdn);\n\t\tfilter_comprobantes(frm, cdt, cdn);\n\t}\n});", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
   "dt": "Supplier", 
   "modified": "2018-10-23 16:29:52.428273", 
   "name": "Supplier-Client", 
@@ -75,18 +84,18 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Stock Entry", 
-  "modified": "2018-11-27 17:27:59.892377", 
+  "modified": "2018-12-02 21:07:46.369454", 
   "name": "Stock Entry-Client", 
-  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');", 
+  "script": "cur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');\nfunction filter_operacion(frm, cdt, cdn){\n\tif (frm.doc.purpose == \"Material Issue\"){\n\t\tcur_frm.set_query(\"tipo_operacion\", function(){\n\t\t\treturn {\n\t\t\t\t\"filters\": [\n\t\t\t\t\t[\"Tipos de Operaciones\", \"codigo_tipos_operacion\", \"in\", [\"12\", \"13\", \"14\", \"15\", \"28\"]]]\n\t\t\t}\n\t\t});\n\t}\n\telse {\n\t\tfrm.toggle_display(\"tipo_operacion\", false);\n\t\tfrm.toggle_display(\"codigo_tipo_operacion\", false);\n\t\tfrm.toggle_display(\"sb_sunat\", false);\n\t\tfrappe.model.set_value(cdt, cdn, \"codigo_tipo_operacion\", \"00\");\n\t}\n}\nfrappe.ui.form.on(\"Stock Entry\", {\n\tonload: function(frm, cdt, cdn){\n\t\tfilter_operacion(frm, cdt, cdn);\n\t}\n});\nfrappe.ui.form.on(\"Stock Entry\", {\n\tpurpose: function(frm, cdt, cdn){\n\t\tfilter_operacion(frm, cdt, cdn);\n\t}\n});\n", 
   "script_type": "Client"
  }, 
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Delivery Note", 
-  "modified": "2018-11-27 18:07:38.471250", 
+  "modified": "2018-12-02 21:29:07.546299", 
   "name": "Delivery Note-Client", 
-  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');", 
+  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');\nfunction filter_operacion(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_operacion\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Operaciones\", \"codigo_tipos_operacion\", \"in\", [\"01\", \"03\", \"05\"]]]\n\t\t};\n\t});\n}\nfunction filter_comprobantes(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_comprobante\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Comprobante\", \"codigo_tipo_comprobante\", \"in\", [\"09\"]]]\n\t\t};\n\t});\n}\nfrappe.ui.form.on(\"Delivery Note\", {\n\tonload: function(frm, cdt, cdn){\n\t\tfilter_operacion(frm, cdt, cdn);\n\t\tfilter_comprobantes(frm, cdt, cdn);\n\t}\n});", 
   "script_type": "Client"
  }, 
  {
