@@ -12,9 +12,9 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Supplier", 
-  "modified": "2018-10-23 16:29:52.428273", 
+  "modified": "2018-12-24 15:44:07.536995", 
   "name": "Supplier-Client", 
-  "script": "cur_frm.add_fetch('nombre_tipo_documento', 'codigo_tipo_documento', 'codigo_tipo_documento');", 
+  "script": "cur_frm.add_fetch('nombre_tipo_documento', 'codigo_tipo_documento', 'codigo_tipo_documento');\ncur_frm.add_fetch('nombre_tipo_transporte', 'codigo_tipo_transporte', 'codigo_tipo_transporte');", 
   "script_type": "Client"
  }, 
  {
@@ -93,9 +93,9 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Delivery Note", 
-  "modified": "2018-12-02 21:29:07.546299", 
+  "modified": "2018-12-24 16:34:50.808726", 
   "name": "Delivery Note-Client", 
-  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');\nfunction filter_operacion(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_operacion\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Operaciones\", \"codigo_tipos_operacion\", \"in\", [\"01\", \"03\", \"05\"]]]\n\t\t};\n\t});\n}\nfunction filter_comprobantes(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_comprobante\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Comprobante\", \"codigo_tipo_comprobante\", \"in\", [\"09\"]]]\n\t\t};\n\t});\n}\nfrappe.ui.form.on(\"Delivery Note\", {\n\tonload: function(frm, cdt, cdn){\n\t\tfilter_operacion(frm, cdt, cdn);\n\t\tfilter_comprobantes(frm, cdt, cdn);\n\t}\n});", 
+  "script": "cur_frm.add_fetch('tipo_comprobante', 'codigo_tipo_comprobante', 'codigo_tipo_comprobante');\ncur_frm.add_fetch('tipo_operacion', 'codigo_tipos_operacion', 'codigo_tipo_operacion');\ncur_frm.add_fetch('company_address', 'ubigeo', 'ubigeo');\nfunction filter_operacion(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_operacion\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Operaciones\", \"codigo_tipos_operacion\", \"in\", [\"01\", \"03\", \"05\"]]]\n\t\t};\n\t});\n}\nfunction filter_comprobantes(frm, cdt, cdn){\n\tcur_frm.set_query(\"tipo_comprobante\", function(){\n\t\treturn {\n\t\t\t\"filters\": [\n\t\t\t\t[\"Tipos de Comprobante\", \"codigo_tipo_comprobante\", \"in\", [\"09\"]]]\n\t\t};\n\t});\n}\nfrappe.ui.form.on(\"Delivery Note\", {\n\tonload: function(frm, cdt, cdn){\n\t\tfilter_operacion(frm, cdt, cdn);\n\t\tfilter_comprobantes(frm, cdt, cdn);\n\t}\n});", 
   "script_type": "Client"
  }, 
  {
@@ -105,6 +105,15 @@
   "modified": "2018-11-29 14:51:35.174065", 
   "name": "UOM-Client", 
   "script": "cur_frm.add_fetch('unidad_medida_sunat', 'codigo_unidad_medida', 'codigo_sunat');", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Driver", 
+  "modified": "2018-12-24 10:58:16.139227", 
+  "name": "Driver-Client", 
+  "script": "cur_frm.add_fetch('tipo_documento_identidad', 'codigo_tipo_documento', 'codigo_documento_identidad');", 
   "script_type": "Client"
  }
 ]
