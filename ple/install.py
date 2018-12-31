@@ -24,8 +24,8 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Tipos de Comprobante')
             doc.codigo_tipo_comprobante = val[0]
-            doc.nombre_tipo_comprobante = val[1]
-            doc.descripcion_tipo_comprobante = val[2]
+            doc.nombre_tipo_comprobante = val[1].decode('utf-8')
+            doc.descripcion_tipo_comprobante = val[2].decode('utf-8')
             doc.insert()
 
     path = os.path.join(my_path, "tipos_de_documento_de_identidad.csv")
@@ -38,7 +38,7 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Tipos de Documento de Identidad')
             doc.codigo_tipo_documento = val[0]
-            doc.descripcion_tipo_documento = val[1]
+            doc.descripcion_tipo_documento = val[1].decode('utf-8')
             doc.insert()
 
     path = os.path.join(my_path, "tipos_de_pago.csv")
@@ -51,7 +51,7 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Tipos de Pago')
             doc.codigo_tipo_pago = val[0]
-            doc.descripcion_tipo_pago = val[1]
+            doc.descripcion_tipo_pago = val[1].decode('utf-8')
             doc.insert()
 
     path = os.path.join(my_path, "catalogo_de_existencias.csv")
@@ -64,7 +64,7 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Catalogo de Existencias')
             doc.codigo_catalogo = val[0]
-            doc.descripcion_catalogo = val[1]
+            doc.descripcion_catalogo = val[1].decode('utf-8')
             doc.insert()
 
     path = os.path.join(my_path, "tipos_de_existencia.csv")
@@ -77,7 +77,7 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Tipos de Existencia')
             doc.codigo_tipos_existencia = val[0]
-            doc.descripcion_tipos_existencia = val[1]
+            doc.descripcion_tipos_existencia = val[1].decode('utf-8')
             doc.insert()
 
     path = os.path.join(my_path, "tipos_de_operaciones.csv")
@@ -90,7 +90,7 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Tipos de Operaciones')
             doc.codigo_tipos_operacion = val[0]
-            doc.descripcion_tipos_operacion = val[1]
+            doc.descripcion_tipos_operacion = val[1].decode('utf-8')
             doc.insert()
 
     path = os.path.join(my_path, "unidades_de_medida.csv")
@@ -103,7 +103,7 @@ def import_data():
             # Do something with your data
             doc = frappe.new_doc('Unidades de Medida')
             doc.codigo_unidad_medida = val[0]
-            doc.descripcion_unidad_medida = val[1]
+            doc.descripcion_unidad_medida = val[1].decode('utf-8')
             doc.insert()
 
 def create_dirs():
