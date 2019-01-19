@@ -10,16 +10,7 @@ app_color = "grey"
 app_email = "carlos_jcez@hotmail.com"
 app_version = "1.0.0"
 app_license = "MIT"
-fixtures = [
-    {"dt": "Custom Field", "filters": [
-        ["dt", "in", ("Sales Invoice", "Purchase Invoice", "Delivery Note", "Supplier", "Driver", "Purchase Receipt",
-                      "Stock Entry", "UOM", "Company", "Item", "Fees", "Fee Structure", "Student", "Customer")]
-    ]},
-    {"dt": "Custom Script", "filters": [
-        ["dt", "in", ("Sales Invoice", "Purchase Invoice", "Delivery Note", "Supplier", "Driver", "Purchase Receipt",
-                      "Stock Entry", "UOM", "Company", "Item", "Fees", "Fee Structure", "Student", "Customer")]
-    ]}
-]
+fixtures = ["Custom Field", "Custom Script"]
 
 # Includes in <head>
 # ------------------
