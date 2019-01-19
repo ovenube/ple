@@ -58,9 +58,9 @@ class LibroElectronicodeCompras(Utils):
 				'0' as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice
-			where bill_expiration_date > '"""+str(from_date)+"""' 
-			and bill_expiration_date < '"""+str(to_date)+"""' 
-			order by bill_expiration_date""", as_dict=True)
+			where bill_date > '"""+str(from_date)+"""' 
+			and bill_date < '"""+str(to_date)+"""' 
+			order by bill_date""", as_dict=True)
 
 		for d in purchase_invoices:
 			purchase_invoice_list.append({

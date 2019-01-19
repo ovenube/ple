@@ -28,44 +28,43 @@ class Utils(NamingSeries):
 		purchase = " OR ".join(map(str, purchase_prefix))
 		return sales, purchase
 
-
 	def get_dates(self, year, periodo):
-		if periodo=='Enero':
-			from_date=year+'-01-01'
-			to_date=year+'-01-31'
-		elif periodo=='Febrero':
-			from_date=year+'-02-01'
-			to_date=year+'-02-29'
-		elif periodo=='Marzo':
-			from_date=year+'-03-01'
-			to_date=year+'-03-31'
-		elif periodo=='Abril':
-			from_date=year+'-04-01'
-			to_date=year+'-04-30'
-		elif periodo=='Mayo':
-			from_date=year+'-05-01'
-			to_date=year+'-05-29'
-		elif periodo=='Junio':
-			from_date=year+'-06-01'
-			to_date=year+'-06-30'
-		elif periodo=='Julio':
-			from_date=year+'-07-01'
-			to_date=year+'-07-31'
-		elif periodo=='Agosto':
-			from_date=year+'-08-01'
-			to_date=year+'-08-31'
-		elif periodo=='Setiembre':
-			from_date=year+'-09-01'
-			to_date=year+'-09-30'
-		elif periodo=='Octubre':
-			from_date=year+'-10-10'
-			to_date=year+'-10-31'
-		elif periodo=='Noviembre':
-			from_date=year+'-11-01'
-			to_date=year+'-11-30'
-		elif periodo=='Diciembre':
-			from_date=year+'-12-01'
-			to_date=year+'-12-31'
+		if periodo == 'Enero':
+			from_date = year+'-01-01'
+			to_date = year+'-01-31'
+		elif periodo == 'Febrero':
+			from_date = year+'-02-01'
+			to_date = year+'-02-29'
+		elif periodo == 'Marzo':
+			from_date = year+'-03-01'
+			to_date = year+'-03-31'
+		elif periodo == 'Abril':
+			from_date = year+'-04-01'
+			to_date = year+'-04-30'
+		elif periodo == 'Mayo':
+			from_date = year+'-05-01'
+			to_date = year+'-05-29'
+		elif periodo == 'Junio':
+			from_date = year+'-06-01'
+			to_date = year+'-06-30'
+		elif periodo == 'Julio':
+			from_date = year+'-07-01'
+			to_date = year+'-07-31'
+		elif periodo == 'Agosto':
+			from_date = year+'-08-01'
+			to_date = year+'-08-31'
+		elif periodo == 'Setiembre':
+			from_date = year+'-09-01'
+			to_date = year+'-09-30'
+		elif periodo == 'Octubre':
+			from_date = year+'-10-10'
+			to_date = year+'-10-31'
+		elif periodo == 'Noviembre':
+			from_date = year+'-11-01'
+			to_date = year+'-11-30'
+		elif periodo == 'Diciembre':
+			from_date = year+'-12-01'
+			to_date = year+'-12-31'
 		return from_date, to_date
 
 	def ple_name(self, year, periodo):
