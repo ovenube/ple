@@ -111,6 +111,9 @@ def to_file(data, tipo, nombre, primer=None):
 	nombre, ext = nombre.split(".")
 	if tipo == "compras":
 		for row in data:
+			for key, value in row.items():
+				if value is None:
+					row[key] = ""
 			exported_file.write(
 				row['periodo'] + '|' +
 				row['cuo'] + '|' +
@@ -155,6 +158,9 @@ def to_file(data, tipo, nombre, primer=None):
 				str(row['anotacion'] + '|\n'))
 	elif tipo == "ventas":
 		for row in data:
+			for key, value in row.items():
+				if value is None:
+					row[key] = ""
 			exported_file.write(
 				row['periodo'] + "|" + 
 				row['cuo'] + "|" + 
@@ -204,6 +210,9 @@ def to_file(data, tipo, nombre, primer=None):
 					row['indicador_cuenta'] + "|\n")
 		else:
 			for row in data:
+				for key, value in row.items():
+					if value is None:
+						row[key] = ""
 				print row
 				exported_file.write(
 					row['periodo'] + "|" +
@@ -213,9 +222,9 @@ def to_file(data, tipo, nombre, primer=None):
 					row['cuo_ue'] + "|" +
 					row['centro_costo'] + "|" +
 					row['tipo_moneda'] + "|" +
-					row['tipo_documento'] if row['tipo_documento'] is not None else "" + "|" +
-					row['tax_id'] if row['tax_id'] is not None else "" + "|" +
-					row['codigo_comprobante'] if row['codigo_comprobante'] is not None else "" + "|" +
+					row['tipo_documento'] + "|" +
+					row['tax_id'] + "|" +
+					row['codigo_comprobante'] + "|" +
 					row['serie_comprobante'] + "|" +
 					row['numero_comprobante'] + "|" +
 					str(row['fecha_contable']) + "|" +
@@ -225,10 +234,13 @@ def to_file(data, tipo, nombre, primer=None):
 					row['glosa_referencial'] + "|" +
 					str(row['debe']) + "|" +
 					str(row['haber']) + "|" +
-					row['estructurado'] if row['estructurado'] is not None else "" + "|" +
+					row['estructurado'] + "|" +
 					str(row['estado'] + "|\n"))
 	elif tipo == "mayor":
 		for row in data:
+			for key, value in row.items():
+				if value is None:
+					row[key] = ""
 			exported_file.write(
 				row['periodo'] + "|" +
 				row['cuo'] + "|" +
@@ -253,6 +265,9 @@ def to_file(data, tipo, nombre, primer=None):
 				str(row['estado'] + "|\n"))
 	elif tipo == "inventario":
 		for row in data:
+			for key, value in row.items():
+				if value is None:
+					row[key] = ""
 			exported_file.write(
 				row['periodo'] + "|"+
 				row['cuo'] + "|" +
