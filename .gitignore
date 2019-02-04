@@ -2,6 +2,10 @@
 *.pyc
 *.egg-info
 *.swp
+*.pdf
+*.xml
+*.rtf
+*.txt
+*.csv
 tags
 ple/docs/current
-ple/libros

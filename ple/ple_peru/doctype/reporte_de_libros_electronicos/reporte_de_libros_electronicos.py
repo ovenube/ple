@@ -3,26 +3,45 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-from ple.ple_peru.doctype.libro_electronico_de_compras.libro_electronico_de_compras import LibroElectronicodeCompras
-from ple.ple_peru.doctype.libro_electronico_de_ventas.libro_electronico_de_ventas import LibroElectronicodeVentas
-from ple.ple_peru.doctype.libro_electronico_diario.libro_electronico_diario import LibroElectronicoDiario
-from ple.ple_peru.doctype.libro_electronico_mayor.libro_electronico_mayor import LibroElectronicoMayor
-from ple.ple_peru.utils import to_file
 
-class ReportedeLibrosElectronicos(LibroElectronicodeVentas, LibroElectronicodeCompras, LibroElectronicoDiario, LibroElectronicoMayor):
-	def get_data(self, year, periodo, tipo):
-		if tipo == "Ventas":
-			return self.get_sales_invoices(year, periodo)
-		elif tipo == "Compras":
-			return self.get_purchase_invoices(year, periodo)
-		elif tipo == "Diario":
-			return self.get_account(year, periodo)
-		elif tipo == "Mayor":
-			return self.get_account_mayor(year, periodo)
+import os
+import frappe
+import datetime
 
-	def export_reporte_libros(self, year, periodo, tipo):
-		codigo_periodo = ""
-		data = self.get_data(year, periodo, tipo)
-		nombre = "Libro Electronico de " + tipo + " - " + codigo_periodo + ".csv"
-		to_file(data, nombre, tipo)
+from platform import python_version
+from pyreportjasper import JasperPy
+from ple.ple_peru.utils import Utils
+
+class ReportedeLibrosElectronicos(Utils):
+	def make_report(self, year, periodo, tipo):
+		from_date, to_date = self.get_dates(year, periodo)
+		reporte = make_jasper_report("LE_"+ tipo, from_date, to_date, tipo)
+		print reporte
+
+
+def make_jasper_report(reporte, from_date, to_date, tipo):
+	from_date = datetime.datetime.strptime(from_date, '%Y-%m-%d').strftime('%d/%m/%Y')
+	to_date = datetime.datetime.strptime(to_date, '%Y-%m-%d').strftime('%d/%m/%Y')
+	my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+	my_path = os.path.abspath(os.path.join(my_path, os.pardir))
+	input_file = os.path.dirname(my_path) + "/jasper_reports/" + reporte + ".jrxml"
+	output = os.path.dirname(my_path) + '/reportes/' + tipo.lower()
+	con = {
+		'driver': 'mysql',
+		'username': frappe.conf.get("db_name"),
+		'password': frappe.conf.get("db_password"),
+		'host': 'localhost',
+		'database': frappe.conf.get("db_name"),
+		'port': '3306'
+	}
+	jasper = JasperPy()
+	jasper.process(
+        input_file,
+        output_file=output,
+        format_list=["pdf", "rtf", "xml"],
+        parameters={'from_date': from_date, 'to_date': to_date},
+        db_connection=con,
+        locale='en_US'  # LOCALE Ex.:(en_US, de_GE)
+    )
+	return output
 

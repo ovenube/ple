@@ -2,6 +2,8 @@
 // For license information, please see license.txt
 frappe.provide("ple.libro_electronico_de_ventas");
 
+cur_frm.add_fetch('company', 'tax_id', 'ruc');
+
 frappe.ui.form.on('Libro Electronico de Ventas', {
 	refresh: function(frm) {
 
@@ -17,22 +19,6 @@ frappe.ui.form.on('Libro Electronico de Ventas', 'ruc', function(frm) {
 });
 frappe.ui.form.on('Libro Electronico de Ventas', 'company', function(frm) {
 	ple.libro_electronico_de_ventas.check_mandatory_to_set_button(frm);
-	frappe.call({
-		 	"method": "frappe.client.get",
-            args: {
-                doctype: "Company",
-                name: frm.doc.company
-            },
-            callback: function (data) {
-                if (data.message.company_name == null) {
-                    
-                }
-                else{
-                	frappe.model.set_value(frm.doctype, frm.docname, "ruc", data.message.tax_id);
-                }
-            }
-        });
-	
 });
 ple.libro_electronico_de_ventas.check_mandatory_to_set_button = function(frm) {
 	if (frm.doc.periodo && frm.doc.ruc) {

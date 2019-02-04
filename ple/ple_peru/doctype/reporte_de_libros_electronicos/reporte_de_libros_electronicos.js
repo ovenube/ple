@@ -2,6 +2,8 @@
 // For license information, please see license.txt
 frappe.provide("ple.reporte_de_libros_electronicos");
 
+cur_frm.add_fetch('company', 'tax_id', 'ruc');
+
 frappe.ui.form.on('Reporte de Libros Electronicos', {
 	refresh: function(frm) {
 
@@ -28,22 +30,6 @@ frappe.ui.form.on('Reporte de Libros Electronicos', 'ruc', function(frm) {
 	
 });
 frappe.ui.form.on('Reporte de Libros Electronicos', 'company', function(frm) {
-	
-	frappe.call({
-		 	"method": "frappe.client.get",
-            args: {
-                doctype: "Company",
-                name: frm.doc.company
-            },
-            callback: function (data) {
-                if (data.message.company == null) {
-                    
-                }
-                else{
-                	frappe.model.set_value(frm.doctype, frm.docname, "ruc", data.message.tax_id);
-                }
-            }
-        });
 	ple.reporte_de_libros_electronicos.check_mandatory_to_set_button(frm);
 	
 });
@@ -75,20 +61,12 @@ ple.reporte_de_libros_electronicos.check_mandatory_to_fetch = function(doc) {
 frappe.ui.form.on("Reporte de Libros Electronicos", "get_data", function(frm) {
 	ple.reporte_de_libros_electronicos.check_mandatory_to_fetch(frm.doc);
 	frappe.call({
-		method: "export_reporte_libros",
+		method: "make_report",
 		doc: frm.doc,
 		args: {
 			'periodo': frm.doc.periodo,
-			'ruc': frm.doc.ruc,
+			'tipo': frm.doc.tipo_libro,
 			'year': frm.doc.year
-		},
-		callback: function (r){
-			if (r.message){
-				$(location).attr('href', "/api/method/ple.ple_peru.utils.send_file_to_client?"+
-				"file="+r.message.archivo+
-				"&tipo="+r.message.tipo+
-				"&nombre="+r.message.nombre);
-			}
 		}
 	});
 });

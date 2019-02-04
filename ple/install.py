@@ -8,7 +8,6 @@ import distutils.dir_util
 
 def after_install():
     import_data()
-    create_dirs()
 
 def import_data():
     my_path = os.path.abspath(os.path.dirname(__file__))
@@ -105,19 +104,4 @@ def import_data():
             doc.codigo_unidad_medida = val[0]
             doc.descripcion_unidad_medida = val[1].decode('utf-8')
             doc.insert()
-
-def create_dirs():
-    my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "libros")
-    distutils.dir_util.mkpath(path)
-    my_path = os.path.join(my_path, "libros/")
-    path = os.path.join(my_path, "compras")
-    distutils.dir_util.mkpath(path)
-    path = os.path.join(my_path, "ventas")
-    distutils.dir_util.mkpath(path)
-    path = os.path.join(my_path, "diario")
-    distutils.dir_util.mkpath(path)
-    path = os.path.join(my_path, "mayor")
-    distutils.dir_util.mkpath(path)
-    path = os.path.join(my_path, "inventario")
-    distutils.dir_util.mkpath(path)
+            
