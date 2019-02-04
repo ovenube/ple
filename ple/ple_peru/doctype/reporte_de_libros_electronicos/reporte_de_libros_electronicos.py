@@ -25,7 +25,7 @@ def make_jasper_report(reporte, from_date, to_date, tipo):
 	my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 	my_path = os.path.abspath(os.path.join(my_path, os.pardir))
 	input_file = os.path.dirname(my_path) + "/jasper_reports/" + reporte + ".jrxml"
-	output = os.path.dirname(my_path) + '/reportes/' + tipo.lower()
+	output = os.path.dirname(my_path) + '/reportes/' + tipo.lower() + "_" + str(datetime.datetime.now())
 	con = {
 		'driver': 'mysql',
 		'username': frappe.conf.get("db_name"),
@@ -44,4 +44,3 @@ def make_jasper_report(reporte, from_date, to_date, tipo):
         locale='en_US'  # LOCALE Ex.:(en_US, de_GE)
     )
 	return output
-
