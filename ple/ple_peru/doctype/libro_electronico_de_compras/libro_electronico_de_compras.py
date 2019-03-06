@@ -60,6 +60,7 @@ class LibroElectronicodeCompras(Utils):
 				`tabPurchase Invoice` purchase_invoice
 			where bill_date > '"""+str(from_date)+"""' 
 			and bill_date < '"""+str(to_date)+"""' 
+			and docstatus = 1
 			order by bill_date""", as_dict=True)
 
 		for d in purchase_invoices:
