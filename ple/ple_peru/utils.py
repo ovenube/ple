@@ -34,7 +34,7 @@ class Utils(NamingSeries):
 			to_date = year+'-01-31'
 		elif periodo == 'Febrero':
 			from_date = year+'-02-01'
-			to_date = year+'-02-29'
+			to_date = year+'-02-28'
 		elif periodo == 'Marzo':
 			from_date = year+'-03-01'
 			to_date = year+'-03-31'
@@ -43,7 +43,7 @@ class Utils(NamingSeries):
 			to_date = year+'-04-30'
 		elif periodo == 'Mayo':
 			from_date = year+'-05-01'
-			to_date = year+'-05-29'
+			to_date = year+'-05-31'
 		elif periodo == 'Junio':
 			from_date = year+'-06-01'
 			to_date = year+'-06-30'
@@ -133,8 +133,8 @@ def to_file(data, tipo, nombre, primer=None):
 				row['base_imponible_exportacion'] + '|' + 
 				row['monto_impuesto_exportacion'] + '|' + 
 				row['base_imponible_no_gravada'] + '|' + 
-				row['monto_impuesto_no_gravada'] + '|' + 
-				row['valor_adquisicion_no_gravada'] + '|' + 
+				str(row['monto_impuesto_no_gravada']) + '|' + 
+				str(row['valor_adquisicion_no_gravada']) + '|' + 
 				row['monto_isc'] + '|' + 
 				row['otros_conceptos'] + '|' + 
 				str(row['valor_adquisicion']) + '|' + 
@@ -213,7 +213,6 @@ def to_file(data, tipo, nombre, primer=None):
 				for key, value in row.items():
 					if value is None:
 						row[key] = ""
-				print row
 				exported_file.write(
 					row['periodo'] + "|" +
 					row['cuo'] + "|" +

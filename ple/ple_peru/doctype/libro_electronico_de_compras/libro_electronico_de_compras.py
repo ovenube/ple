@@ -25,16 +25,16 @@ class LibroElectronicodeCompras(Utils):
 				"" as codigo_dua,
 				SUBSTRING(IF(REPLACE(REPLACE(bill_no,"-",""),'S/N','01')<999,CONCAT('0000',REPLACE(REPLACE(bill_no,"-",""),'S/N','01')),REPLACE(REPLACE(bill_no,"-",""),'S/N','01')),-4) as numero_comprobante,
 				"" as resumen_diario,
-				codigo_tipo_documento as tipo_documento,
+				IF(LENGTH(codigo_tipo_documento)=2,SUBSTRING(codigo_tipo_documento,2),codigo_tipo_documento) as tipo_documento,
 				tax_id as numero_documento,
 				supplier_name as nombre_proveedor,
-				base_net_total as base_imponible,
-				taxes_and_charges_added as monto_impuesto,
+				IF(total_taxes_and_charges=0, 0, net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
+				total_taxes_and_charges as monto_impuesto,
 				"" as base_imponible_exportacion,
 				"" as monto_impuesto_exportacion,
 				"" as base_imponible_no_gravada,
 				"" as monto_impuesto_no_gravada,
-				"" as valor_adquisicion_no_gravada,
+				IF(total_taxes_and_charges=0, grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
 				"" as otros_conceptos,			
 				grand_total as valor_adquisicion,
@@ -61,7 +61,62 @@ class LibroElectronicodeCompras(Utils):
 			where bill_date > '"""+str(from_date)+"""' 
 			and bill_date < '"""+str(to_date)+"""' 
 			and docstatus = 1
+			and tdx_c_checkspot = 0
 			order by bill_date""", as_dict=True)
+
+		purchase_invoices_detraction = frappe.db.sql("""select      
+				CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00') as periodo,
+				REPLACE(purchase_invoice.name, '-', '') as cuo,
+				'M2' as correlativo_asiento,
+				DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
+				DATE_FORMAT(IFNULL(bill_expiration_date,posting_date),'%d/%m/%Y') as fecha_cancelacion,
+				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
+				REPLACE(REPLACE(REPLACE(CONCAT('0',SUBSTRING(IFNULL(bill_series,'0000'),-3)),'A',"0"),"T","0"),"O","0") as serie_comprobante,
+				"" as codigo_dua,
+				SUBSTRING(IF(REPLACE(REPLACE(bill_no,"-",""),'S/N','01')<999,CONCAT('0000',REPLACE(REPLACE(bill_no,"-",""),'S/N','01')),REPLACE(REPLACE(bill_no,"-",""),'S/N','01')),-4) as numero_comprobante,
+				"" as resumen_diario,
+				IF(LENGTH(codigo_tipo_documento)=2,SUBSTRING(codigo_tipo_documento,2),codigo_tipo_documento) as tipo_documento,
+				tax_id as numero_documento,
+				supplier_name as nombre_proveedor,
+				IF(total_taxes_and_charges=0, 0, net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
+				total_taxes_and_charges as monto_impuesto,
+				"" as base_imponible_exportacion,
+				"" as monto_impuesto_exportacion,
+				"" as base_imponible_no_gravada,
+				"" as monto_impuesto_no_gravada,
+				IF(total_taxes_and_charges=0, grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
+				"" as monto_isc,
+				"" as otros_conceptos,			
+				grand_total as valor_adquisicion,
+				IF(currency = 'SOL', 'PEN', currency) as moneda,
+				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
+				IF(is_return,(SELECT bill_date FROM `tabPurchase Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
+				IF(is_return,(SELECT codigo_comprobante FROM `tabPurchase Invoice` WHERE name=return_against),"") as tipo_devolucion,
+				IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
+				"" as dua,
+				IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
+				IF(is_return,posting_date,"") as fecha_devolucion,
+				DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%d/%m/%Y') as detraccion,
+				det.`tdx_c_figv_constancia` as marca_detraccion,
+				"" as clasificacion_items,
+				"" as contrato,
+				"" as error_1,
+				"" as error_2,
+				"" as error_3,
+				"" as error_4,
+				'1' as indicador_pago,
+				'0' as anotacion
+			from
+				`tabPurchase Invoice` purchase_invoice,
+				`tabFiscalizacion del IGV Compra` det
+			where det.parent = purchase_invoice.name
+			and det.`tdx_c_figv_fechaconstancia` > '"""+str(from_date)+"""' 
+			and det.`tdx_c_figv_fechaconstancia` < '"""+str(to_date)+"""' 
+			and purchase_invoice.docstatus = 1
+			order by det.`tdx_c_figv_fechaconstancia`
+		""", as_dict=True)
+
+		purchase_invoices += purchase_invoices_detraction
 
 		for d in purchase_invoices:
 			purchase_invoice_list.append({
