@@ -4,7 +4,6 @@
 
 from __future__ import unicode_literals
 import frappe
-import frappe.desk.reportview
 
 from ple.ple_peru.utils import Utils, to_file
 
@@ -15,17 +14,17 @@ class LibroElectronicodeCompras(Utils):
 		from_date, to_date = self.get_dates(year, periodo)
 
 		purchase_invoices = frappe.db.sql("""select      
-				CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00') as periodo,
+				CONCAT(DATE_FORMAT(IFNULL(posting_date,bill_date),'%Y%m'),'00') as periodo,
 				REPLACE(purchase_invoice.name, '-', '') as cuo,
 				'M2' as correlativo_asiento,
 				DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
 				DATE_FORMAT(IFNULL(bill_expiration_date,posting_date),'%d/%m/%Y') as fecha_cancelacion,
 				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
-				REPLACE(REPLACE(REPLACE(CONCAT('0',SUBSTRING(IFNULL(bill_series,'0000'),-3)),'A',"0"),"T","0"),"O","0") as serie_comprobante,
+				bill_series as serie_comprobante,
 				"" as codigo_dua,
-				bill_series as numero_comprobante,
+				bill_no as numero_comprobante,
 				"" as resumen_diario,
-				bill_no as tipo_documento,
+				IF(LENGTH(codigo_tipo_documento)=2,SUBSTRING(codigo_tipo_documento,2),codigo_tipo_documento) as tipo_documento,
 				tax_id as numero_documento,
 				supplier_name as nombre_proveedor,
 				IF(total_taxes_and_charges=0, 0, net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
@@ -55,14 +54,15 @@ class LibroElectronicodeCompras(Utils):
 				"" as error_3,
 				"" as error_4,
 				'1' as indicador_pago,
-				'0' as anotacion
+				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','6'))) as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice
-			where bill_date > '"""+str(from_date)+"""' 
-			and bill_date < '"""+str(to_date)+"""' 
+			where posting_date >= '"""+str(from_date)+"""' 
+			and posting_date <= '"""+str(to_date)+"""' 
 			and docstatus = 1
 			and tdx_c_checkspot = 0
-			order by bill_date""", as_dict=True)
+			and codigo_comprobante!='2'
+			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select      
 				CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00') as periodo,
@@ -105,14 +105,15 @@ class LibroElectronicodeCompras(Utils):
 				"" as error_3,
 				"" as error_4,
 				'1' as indicador_pago,
-				'0' as anotacion
+				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','6'))) as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice,
 				`tabFiscalizacion del IGV Compra` det
 			where det.parent = purchase_invoice.name
-			and det.`tdx_c_figv_fechaconstancia` > '"""+str(from_date)+"""' 
-			and det.`tdx_c_figv_fechaconstancia` < '"""+str(to_date)+"""' 
+			and det.`tdx_c_figv_fechaconstancia` >= '"""+str(from_date)+"""' 
+			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date)+"""' 
 			and purchase_invoice.docstatus = 1
+			and codigo_comprobante!='2'
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 

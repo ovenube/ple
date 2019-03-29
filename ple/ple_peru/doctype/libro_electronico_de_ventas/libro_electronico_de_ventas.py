@@ -52,8 +52,8 @@ class LibroElectronicodeVentas(Utils):
 				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=due_date,'7','1')) as anotacion
 			from
 				`tabSales Invoice` as sales_invoice
-			where due_date > '""" + str(from_date) + """' 
-			and due_date < '""" + str(to_date) + """' 
+			where due_date >= '""" + str(from_date) + """' 
+			and due_date <= '""" + str(to_date) + """' 
 			order by due_date""", as_dict=True)
 
         for d in sales_invoices:

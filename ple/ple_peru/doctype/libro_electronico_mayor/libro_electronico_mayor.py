@@ -104,8 +104,8 @@ class LibroElectronicoMayor(Utils):
 				from 
 					`tabGL Entry` gl
 				where SUBSTRING(account,1,POSITION('-' in account)-1) > 100
-				and posting_date > '""" + str(from_date) + """' 
-				and posting_date < '""" + str(to_date) + """' 
+				and posting_date >= '""" + str(from_date) + """' 
+				and posting_date <= '""" + str(to_date) + """' 
 				order by posting_date""", as_dict=True)
 
 		for d in account:

@@ -68,8 +68,8 @@ class LibroElectronicodeInventarioPermanenteValorizado(Utils):
 					`tabItem` as pro
 				where comp.name = stock.company
 				and pro.name = stock.item_code
-				and posting_date > '""" + str(from_date) + """' 
-				and posting_date < '""" + str(to_date) + """' 
+				and posting_date >= '""" + str(from_date) + """' 
+				and posting_date <= '""" + str(to_date) + """' 
 				order by posting_date""", as_dict=True)
 
 		for d in inventories:
