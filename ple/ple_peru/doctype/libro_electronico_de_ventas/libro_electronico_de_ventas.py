@@ -53,7 +53,8 @@ class LibroElectronicodeVentas(Utils):
 			from
 				`tabSales Invoice` as sales_invoice
 			where due_date >= '""" + str(from_date) + """' 
-			and due_date <= '""" + str(to_date) + """' 
+			and due_date <= '""" + str(to_date) + """'
+            and docstatus != 0
 			order by due_date""", as_dict=True)
 
         for d in sales_invoices:
