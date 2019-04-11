@@ -145,9 +145,9 @@ def to_file(data, tipo, nombre, primer=None):
 				row['serie_devolucion'] + '|' + 
 				row['dua'] + '|' + 
 				row['numero_devolucion'] + '|' + 
-				row['fecha_devolucion'] + '|' + 
-				row['detraccion'] + '|' + 
-				row['marca_detraccion'] + '|' + 
+				row['fecha_detraccion'] + '|' + 
+				row['constancia_detraccion'] + '|' + 
+				row['marca_retencion'] + '|' + 
 				row['clasificacion_items'] + '|' + 
 				row['contrato'] + '|' + 
 				row['error_1'] + '|' + 

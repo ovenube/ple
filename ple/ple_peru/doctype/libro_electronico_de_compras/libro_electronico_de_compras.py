@@ -44,9 +44,9 @@ class LibroElectronicodeCompras(Utils):
 				IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
 				"" as dua,
 				IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
-				IF(is_return,posting_date,"") as fecha_devolucion,
-				"" as detraccion,
-				"" as marca_detraccion,
+				"" as fecha_detraccion,
+				"" as constancia_detraccion,
+                "" as marca_retencion,
 				"" as clasificacion_items,
 				"" as contrato,
 				"" as error_1,
@@ -62,6 +62,7 @@ class LibroElectronicodeCompras(Utils):
 			and docstatus = 1
 			and tdx_c_checkspot = 0
 			and codigo_comprobante!='2'
+            and codigo_comprobante!='3'
 			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select      
@@ -95,9 +96,9 @@ class LibroElectronicodeCompras(Utils):
 				IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
 				"" as dua,
 				IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
-				IF(is_return,posting_date,"") as fecha_devolucion,
-				DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%d/%m/%Y') as detraccion,
-				det.`tdx_c_figv_constancia` as marca_detraccion,
+				DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%d/%m/%Y') as fecha_detraccion,
+				det.`tdx_c_figv_constancia` as constancia_detraccion,                
+                "" as marca_retencion,
 				"" as clasificacion_items,
 				"" as contrato,
 				"" as error_1,
@@ -114,6 +115,7 @@ class LibroElectronicodeCompras(Utils):
 			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date)+"""' 
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='2'
+            and codigo_comprobante!='3'
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 
@@ -151,9 +153,9 @@ class LibroElectronicodeCompras(Utils):
 				'serie_devolucion': d.serie_devolucion,
 				'dua': d.dua,
 				'numero_devolucion': d.numero_devolucion,
-				'fecha_devolucion': d.fecha_devolucion,
-				'detraccion': d.detraccion,
-				'marca_detraccion': d.marca_detraccion,
+				'fecha_detraccion': d.fecha_detraccion,
+				'constancia_detraccion': d.constancia_detraccion,
+				'marca_retencion': d.marca_retencion,
 				'clasificacion_items': d.clasificacion_items,
 				'contrato': d.contrato,
 				'error_1': d.error_1,
