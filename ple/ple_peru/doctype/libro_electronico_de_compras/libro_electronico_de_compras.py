@@ -66,7 +66,7 @@ class LibroElectronicodeCompras(Utils):
 			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select      
-				CONCAT(DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`),'%Y%m'),'00') as periodo,
+				CONCAT(DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%Y%m'),'00') as periodo,
 				REPLACE(purchase_invoice.name, '-', '') as cuo,
 				'M2' as correlativo_asiento,
 				DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
@@ -87,7 +87,7 @@ class LibroElectronicodeCompras(Utils):
 				"" as monto_impuesto_no_gravada,
 				IF(total_taxes_and_charges=0, grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
-				"" as otros_conceptos,			
+				"" as otros_conceptos,
 				grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
@@ -97,7 +97,7 @@ class LibroElectronicodeCompras(Utils):
 				"" as dua,
 				IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
 				DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%d/%m/%Y') as fecha_detraccion,
-				det.`tdx_c_figv_constancia` as constancia_detraccion,                
+				det.`tdx_c_figv_constancia` as constancia_detraccion,
                 "" as marca_retencion,
 				"" as clasificacion_items,
 				"" as contrato,
