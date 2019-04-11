@@ -66,7 +66,7 @@ class LibroElectronicodeCompras(Utils):
 			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select      
-				CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00') as periodo,
+				CONCAT(DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`),'%Y%m'),'00') as periodo,
 				REPLACE(purchase_invoice.name, '-', '') as cuo,
 				'M2' as correlativo_asiento,
 				DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
