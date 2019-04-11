@@ -61,8 +61,8 @@ class LibroElectronicodeCompras(Utils):
 			and posting_date <= '"""+str(to_date)+"""' 
 			and docstatus = 1
 			and tdx_c_checkspot = 0
-			and codigo_comprobante!='2'
-            and codigo_comprobante!='3'
+			and codigo_comprobante!='02'
+            and codigo_comprobante!='03'
 			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select      
@@ -114,8 +114,8 @@ class LibroElectronicodeCompras(Utils):
 			and det.`tdx_c_figv_fechaconstancia` >= '"""+str(from_date)+"""' 
 			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date)+"""' 
 			and purchase_invoice.docstatus = 1
-			and codigo_comprobante!='2'
-            and codigo_comprobante!='3'
+			and codigo_comprobante!='02'
+            and codigo_comprobante!='03'
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 
