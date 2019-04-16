@@ -16,7 +16,6 @@ class ReportedeLibrosElectronicos(Utils):
 	def make_report(self, year, periodo, tipo):
 		from_date, to_date = self.get_dates(year, periodo)
 		reporte = make_jasper_report("LE_"+ tipo, from_date, to_date, tipo)
-		print reporte
 
 
 def make_jasper_report(reporte, from_date, to_date, tipo):
@@ -30,7 +29,7 @@ def make_jasper_report(reporte, from_date, to_date, tipo):
 		'driver': 'mysql',
 		'username': frappe.conf.get("db_name"),
 		'password': frappe.conf.get("db_password"),
-		'host': 'localhost',
+		'host': frappe.conf.get("db_host"),
 		'database': frappe.conf.get("db_name"),
 		'port': '3306'
 	}
