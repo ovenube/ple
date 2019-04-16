@@ -2,6 +2,24 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
+  "dt": "Asset Repair", 
+  "modified": "2019-02-27 19:57:12.208063", 
+  "name": "Asset Repair-Client", 
+  "script": "cur_frm.add_fetch('codigo','comportamiento','comportamiento');\ncur_frm.add_fetch('codigo','tipo_fluido','tipo_fluido');\n\ncur_frm.add_fetch('producto','item_name','nombre');\ncur_frm.add_fetch('producto','brand','marca');", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Expense Claim", 
+  "modified": "2019-03-08 11:45:50.830115", 
+  "name": "Expense Claim-Client", 
+  "script": "cur_frm.add_fetch('tdx_c_codigoproveedor', 'supplier_name', 'tdx_c_proveedor');", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
   "dt": "Purchase Order", 
   "modified": "2018-12-11 22:43:04.765354", 
   "name": "Purchase Order-Client", 
