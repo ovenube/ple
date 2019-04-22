@@ -4,6 +4,8 @@
 
 from __future__ import unicode_literals
 import frappe
+import datetime
+from datetime import timedelta 
 
 from ple.ple_peru.utils import Utils, to_file
 
@@ -12,6 +14,8 @@ class LibroElectronicodeCompras(Utils):
 	def get_purchase_invoices(self, year, periodo):
 		purchase_invoice_list = []
 		from_date, to_date = self.get_dates(year, periodo)
+		to_date_obj = datetime.datetime.strptime(to_date, '%Y-%m-%d')
+		to_date_obj = to_date_obj + timedelta(days=5)
 
 		purchase_invoices = frappe.db.sql("""select      
 				CONCAT(DATE_FORMAT(IFNULL(posting_date,bill_date),'%Y%m'),'00') as periodo,
@@ -106,13 +110,13 @@ class LibroElectronicodeCompras(Utils):
 				"" as error_3,
 				"" as error_4,
 				'1' as indicador_pago,
-				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','6'))) as anotacion
+				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date_obj.date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date_obj.date)+"""','1','6'))) as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice,
 				`tabFiscalizacion del IGV Compra` det
 			where det.parent = purchase_invoice.name
 			and det.`tdx_c_figv_fechaconstancia` >= '"""+str(from_date)+"""' 
-			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date)+"""' 
+			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_obj.date)+"""' 
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
             and codigo_comprobante!='03'
