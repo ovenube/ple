@@ -87,19 +87,13 @@ class LibroElectronicoMayor(Utils):
 											CONCAT(DATE_FORMAT(IFNULL(bill_expiration_date,bill_date),'%Y%m'),'00&', REPLACE(voucher_no, '-', ''), '&','M2')
 										from
 											`tabPurchase Invoice` purchase_invoice
-										left join
-														`tabJournal Entry Account` journal_entry
-										on journal_entry.reference_name = purchase_invoice.name
 										where purchase_invoice.name=voucher_no)),
 						 (IF(voucher_type = 'Sales Invoice', CONCAT('140100&',
 										(select
 											CONCAT(DATE_FORMAT(due_date,'%Y%m'),'00&', REPLACE(voucher_no, '-', ''),'&', 'M1')
 										from
 											`tabSales Invoice` sales_invoice
-										left join
-											`tabJournal Entry Account` journal_entry
-												on journal_entry.reference_name = sales_invoice.name
-												where sales_invoice.name=voucher_no)),''))) as estructurado,
+										where sales_invoice.name=voucher_no)),''))) as estructurado,
 					'1' as estado
 				from 
 					`tabGL Entry` gl
