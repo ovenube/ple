@@ -31,23 +31,23 @@ class LibroElectronicodeCompras(Utils):
 				IF(LENGTH(codigo_tipo_documento)=2,SUBSTRING(codigo_tipo_documento,2),codigo_tipo_documento) as tipo_documento,
 				tax_id as numero_documento,
 				supplier_name as nombre_proveedor,
-				IF(total_taxes_and_charges=0, 0, net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
-				total_taxes_and_charges as monto_impuesto,
+				IF(base_total_taxes_and_charges=0 OR codigo_comprobante='03', 0, base_net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
+				IF(codigo_comprobante!='03',total_taxes_and_charges,0) as monto_impuesto,
 				"" as base_imponible_exportacion,
 				"" as monto_impuesto_exportacion,
 				"" as base_imponible_no_gravada,
 				"" as monto_impuesto_no_gravada,
-				IF(total_taxes_and_charges=0, grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
+				IF(base_total_taxes_and_charges=0, base_grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
 				"" as otros_conceptos,			
-				grand_total as valor_adquisicion,
+				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
-				IF(is_return,(SELECT bill_date FROM `tabPurchase Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
-				IF(is_return,(SELECT codigo_comprobante FROM `tabPurchase Invoice` WHERE name=return_against),"") as tipo_devolucion,
-				IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as fecha_inicial_devolucion,
+				IF(is_return,(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as tipo_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_series FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as serie_devolucion,
 				"" as dua,
-				IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_no FROM `tabPurchase Invoice` as purchase_return WHERE name=purchase_invoice.return_against),"") as numero_devolucion,
 				"" as fecha_detraccion,
 				"" as constancia_detraccion,
                 "" as marca_retencion,
@@ -66,7 +66,6 @@ class LibroElectronicodeCompras(Utils):
 			and docstatus = 1
 			and tdx_c_checkspot = 0
 			and codigo_comprobante!='02'
-            and codigo_comprobante!='03'
 			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select      
@@ -83,23 +82,23 @@ class LibroElectronicodeCompras(Utils):
 				IF(LENGTH(codigo_tipo_documento)=2,SUBSTRING(codigo_tipo_documento,2),codigo_tipo_documento) as tipo_documento,
 				tax_id as numero_documento,
 				supplier_name as nombre_proveedor,
-				IF(total_taxes_and_charges=0, 0, net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
-				total_taxes_and_charges as monto_impuesto,
+				IF(base_total_taxes_and_charges=0 OR codigo_comprobante='03', 0, base_net_total - IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as base_imponible,
+				IF(codigo_comprobante!='03',total_taxes_and_charges,0) as monto_impuesto,
 				"" as base_imponible_exportacion,
 				"" as monto_impuesto_exportacion,
 				"" as base_imponible_no_gravada,
 				"" as monto_impuesto_no_gravada,
-				IF(total_taxes_and_charges=0, grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
+				IF(base_total_taxes_and_charges=0, base_grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
-				"" as otros_conceptos,
-				grand_total as valor_adquisicion,
+				"" as otros_conceptos,			
+				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
-				IF(is_return,(SELECT bill_date FROM `tabPurchase Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
-				IF(is_return,(SELECT codigo_comprobante FROM `tabPurchase Invoice` WHERE name=return_against),"") as tipo_devolucion,
-				IF(is_return,(SELECT bill_series FROM `tabPurchase Invoice` WHERE name=return_against),"") as serie_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as fecha_inicial_devolucion,
+				IF(is_return,(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as tipo_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_series FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as serie_devolucion,
 				"" as dua,
-				IF(is_return,(SELECT bill_no FROM `tabPurchase Invoice` WHERE name=return_against),"") as numero_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_no FROM `tabPurchase Invoice` as purchase_return WHERE name=purchase_invoice.return_against),"") as numero_devolucion,
 				DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%d/%m/%Y') as fecha_detraccion,
 				det.`tdx_c_figv_constancia` as constancia_detraccion,
                 "" as marca_retencion,
@@ -119,7 +118,6 @@ class LibroElectronicodeCompras(Utils):
 			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_obj.date)+"""' 
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
-            and codigo_comprobante!='03'
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 
