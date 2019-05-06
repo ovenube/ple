@@ -43,9 +43,9 @@ class LibroElectronicodeCompras(Utils):
 				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
-				IF(is_return,(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as fecha_inicial_devolucion,
-				IF(is_return,(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as tipo_devolucion,
-				IF(is_return,(SELECT purchase_return.bill_series FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as serie_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),IF(purchase_invoice.codigo_comprobante='08',(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.debit_note_against),"")) as fecha_inicial_devolucion,
+				IF(is_return,(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),IF(purchase_invoice.codigo_comprobante='08',(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.debit_note_against),"")) as tipo_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_series FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),IF(purchase_invoice.codigo_comprobante='08',(SELECT purchase_return.bill_series FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.debit_note_against),"")) as serie_devolucion,
 				"" as dua,
 				IF(is_return,(SELECT purchase_return.bill_no FROM `tabPurchase Invoice` as purchase_return WHERE name=purchase_invoice.return_against),"") as numero_devolucion,
 				"" as fecha_detraccion,
@@ -65,6 +65,7 @@ class LibroElectronicodeCompras(Utils):
 			and posting_date <= '"""+str(to_date)+"""' 
 			and docstatus = 1
 			and tdx_c_checkspot = 0
+			and is_factoring != 1
 			and codigo_comprobante!='02'
 			order by posting_date""", as_dict=True)
 
@@ -94,9 +95,9 @@ class LibroElectronicodeCompras(Utils):
 				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
-				IF(is_return,(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as fecha_inicial_devolucion,
-				IF(is_return,(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as tipo_devolucion,
-				IF(is_return,(SELECT purchase_return.bill_series FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),"") as serie_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),IF(purchase_invoice.codigo_comprobante='08',(SELECT purchase_return.bill_date FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.debit_note_against),"")) as fecha_inicial_devolucion,
+				IF(is_return,(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),IF(purchase_invoice.codigo_comprobante='08',(SELECT purchase_return.codigo_comprobante FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.debit_note_against),"")) as tipo_devolucion,
+				IF(is_return,(SELECT purchase_return.bill_series FROM `tabPurchase Invoice`as purchase_return WHERE purchase_return.name=purchase_invoice.return_against),IF(purchase_invoice.codigo_comprobante='08',(SELECT purchase_return.bill_series FROM `tabPurchase Invoice` as purchase_return WHERE purchase_return.name=purchase_invoice.debit_note_against),"")) as serie_devolucion,
 				"" as dua,
 				IF(is_return,(SELECT purchase_return.bill_no FROM `tabPurchase Invoice` as purchase_return WHERE name=purchase_invoice.return_against),"") as numero_devolucion,
 				DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%d/%m/%Y') as fecha_detraccion,
@@ -118,6 +119,7 @@ class LibroElectronicodeCompras(Utils):
 			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_obj.date)+"""' 
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
+			and is_factoring != 1
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 
