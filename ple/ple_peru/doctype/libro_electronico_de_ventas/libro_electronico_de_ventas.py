@@ -31,7 +31,7 @@ class LibroElectronicodeVentas(Utils):
 				"" as valor_exportacion,
 				base_net_total as base_imponible,
 				"" as descuento,
-				total_taxes_and_charges as monto_impuesto,
+				base_total_taxes_and_charges as monto_impuesto,
 				"" as descuento_igv,
 				"" as total_exonerado,
 				"" as total_inafecto,
