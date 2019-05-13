@@ -143,7 +143,7 @@ def to_file(data, tipo, nombre, primer=None):
 				row['fecha_inicial_devolucion'] + '|' + 
 				row['tipo_devolucion'] + '|' + 
 				row['serie_devolucion'] + '|' + 
-				row['dua'] + '|' + 
+				row['numero_devolucion'] + '|' + 
 				row['numero_devolucion'] + '|' + 
 				row['fecha_detraccion'] + '|' + 
 				row['constancia_detraccion'] + '|' + 
@@ -191,7 +191,7 @@ def to_file(data, tipo, nombre, primer=None):
 				str(row['fecha_inicial_devolucion']) + "|" + 
 				str(row['tipo_devolucion']) + "|" + 
 				str(row['serie_devolucion']) + "|" + 
-				str(row['dua']) + "|" + 
+				str(row['numero_devolucion']) + "|" + 
 				row['contrato'] + "|" + 
 				row['error_1'] + "|" + 
 				str(row['indicador_pago']) + "|" + 
