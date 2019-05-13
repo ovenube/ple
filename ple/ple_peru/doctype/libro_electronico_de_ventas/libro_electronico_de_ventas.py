@@ -16,11 +16,11 @@ class LibroElectronicodeVentas(Utils):
         from_date, to_date = self.get_dates(year, periodo)
 
         sales_invoices = frappe.db.sql("""select
-				CONCAT(DATE_FORMAT(due_date,'%Y%m'),'00') as periodo,
+				CONCAT(DATE_FORMAT(posting_date,'%Y%m'),'00') as periodo,
 				REPLACE(sales_invoice.name, '-', '') as cuo,
 				'M1' as correlativo_asiento,
 				DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_emision,
-				DATE_FORMAT(due_date,'%d/%m/%Y') as fecha_cancelacion,
+				DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_cancelacion,
 				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
 				SUBSTRING(sales_invoice.name,4,4) as serie_comprobante,
 				SUBSTRING(sales_invoice.name,9) as numero_comprobante,
@@ -37,25 +37,25 @@ class LibroElectronicodeVentas(Utils):
 				"" as total_inafecto,
 				"" as monto_isc,
 				"" as base_arroz,
-				"" as impuesto_arroz,	
-				"" as otros_conceptos,		
-				grand_total as valor_adquisicion,
+				"" as impuesto_arroz,
+				"" as otros_conceptos,
+				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3) as tipo_cambio,
-				IF(is_return,(SELECT due_date FROM `tabSales Invoice` WHERE name=return_against),"") as fecha_inicial_devolucion,
-				IF(is_return,(SELECT codigo_comprobante FROM `tabSales Invoice` WHERE name=return_against),"") as tipo_devolucion,
-				IF(is_return,SUBSTRING((SELECT name FROM `tabSales Invoice` WHERE name=return_against),4,3),"") as serie_devolucion,
-				IF(is_return,SUBSTRING((SELECT name FROM `tabSales Invoice` WHERE name=return_against),8),"")  as dua,
+				IF(is_return,(SELECT sales_return.posting_date FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),"") as fecha_inicial_devolucion,
+				IF(is_return,sales_invoice.codigo_nota_credito,"") as tipo_devolucion,
+				IF(is_return,SUBSTRING((SELECT sales_return.name FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),4,3),"") as serie_devolucion,
+				IF(is_return,SUBSTRING((SELECT sales_return.name FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),8),"")  as numero_devolucion,
 				"" as contrato,
 				"" as error_1,
 				'1' as indicador_pago,
-				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=due_date,'7','1')) as anotacion
+				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=posting_date,'7','1')) as anotacion
 			from
 				`tabSales Invoice` as sales_invoice
-			where due_date >= '""" + str(from_date) + """' 
-			and due_date <= '""" + str(to_date) + """'
+			where posting_date  >= '""" + str(from_date) + """' 
+			and posting_date  <= '""" + str(to_date) + """'
             and docstatus != 0
-			order by due_date""", as_dict=True)
+			order by posting_date""", as_dict=True)
 
         for d in sales_invoices:
             sales_invoice_list.append({
@@ -88,7 +88,7 @@ class LibroElectronicodeVentas(Utils):
                 'fecha_inicial_devolucion': d.fecha_inicial_devolucion,
                 'tipo_devolucion': d.tipo_devolucion,
                 'serie_devolucion': d.serie_devolucion,
-                'dua': d.dua,
+                'numero_devolucion': d.numero_devolucion,
                 'contrato': d.contrato,
                 'error_1': d.error_1,
                 'indicador_pago': d.indicador_pago,
