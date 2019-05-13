@@ -14,8 +14,8 @@ class LibroElectronicodeCompras(Utils):
 	def get_purchase_invoices(self, year, periodo):
 		purchase_invoice_list = []
 		from_date, to_date = self.get_dates(year, periodo)
-		to_date_obj = datetime.datetime.strptime(to_date, '%Y-%m-%d')
-		to_date_obj = to_date_obj + timedelta(days=5)
+		to_date_detraction = datetime.datetime.strptime(to_date, '%Y-%m-%d')
+		to_date_detraction = to_date_detraction + timedelta(days=5)
 
 		purchase_invoices = frappe.db.sql("""select      
 				CONCAT(DATE_FORMAT(IFNULL(posting_date,bill_date),'%Y%m'),'00') as periodo,
@@ -39,7 +39,7 @@ class LibroElectronicodeCompras(Utils):
 				"" as monto_impuesto_no_gravada,
 				IF(base_total_taxes_and_charges=0, base_grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
-				"" as otros_conceptos,			
+				"" as otros_conceptos,
 				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
@@ -61,16 +61,16 @@ class LibroElectronicodeCompras(Utils):
 				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date)+"""','1','6'))) as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice
-			where posting_date >= '"""+str(from_date)+"""' 
-			and posting_date <= '"""+str(to_date)+"""' 
+			where posting_date >= '"""+str(from_date)+"""'
+			and posting_date <= '"""+str(to_date)+"""'
 			and docstatus = 1
 			and tdx_c_checkspot = 0
 			and is_factoring != 1
 			and codigo_comprobante!='02'
 			order by posting_date""", as_dict=True)
 
-		purchase_invoices_detraction = frappe.db.sql("""select      
-				CONCAT(DATE_FORMAT(det.`tdx_c_figv_fechaconstancia`,'%Y%m'),'00') as periodo,
+		purchase_invoices_detraction = frappe.db.sql("""select
+				CONCAT(DATE_FORMAT('"""+str(from_date)+"""','%Y%m'),'00') as periodo,
 				REPLACE(purchase_invoice.name, '-', '') as cuo,
 				'M2' as correlativo_asiento,
 				DATE_FORMAT(IFNULL(bill_date,posting_date),'%d/%m/%Y') as fecha_emision,
@@ -91,7 +91,7 @@ class LibroElectronicodeCompras(Utils):
 				"" as monto_impuesto_no_gravada,
 				IF(base_total_taxes_and_charges=0, base_grand_total, IF(inafected_taxes_and_charges=0, 0, inafected_taxes_and_charges)) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
-				"" as otros_conceptos,			
+				"" as otros_conceptos,
 				base_grand_total as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3)  as tipo_cambio,
@@ -110,13 +110,13 @@ class LibroElectronicodeCompras(Utils):
 				"" as error_3,
 				"" as error_4,
 				'1' as indicador_pago,
-				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date_obj.date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date_obj.date)+"""','1','6'))) as anotacion
+				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date_detraction.date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date)+"""' AND bill_date<='"""+str(to_date_detraction.date)+"""','1','6'))) as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice,
 				`tabFiscalizacion del IGV Compra` det
 			where det.parent = purchase_invoice.name
 			and det.`tdx_c_figv_fechaconstancia` >= '"""+str(from_date)+"""' 
-			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_obj.date)+"""' 
+			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_detraction.date)+"""' 
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
 			and is_factoring != 1
