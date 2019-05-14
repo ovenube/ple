@@ -43,7 +43,7 @@ class LibroElectronicodeVentas(Utils):
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
 				SUBSTRING(conversion_rate,1,POSITION('.' in conversion_rate)+3) as tipo_cambio,
 				IF(is_return,(SELECT DATE_FORMAT(sales_return.posting_date,'%d/%m/%Y') FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),"") as fecha_inicial_devolucion,
-				IF(is_return,sales_invoice.codigo_nota_credito,"") as tipo_devolucion,
+				IF(is_return,(SELECT sales_return.codigo_comprobante FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),"") as tipo_devolucion,
 				IF(is_return,SUBSTRING((SELECT sales_return.name FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),4,4),"") as serie_devolucion,
 				IF(is_return,SUBSTRING((SELECT sales_return.name FROM `tabSales Invoice` as sales_return WHERE sales_return.name=sales_invoice.return_against),9),"")  as numero_devolucion,
 				"" as contrato,
