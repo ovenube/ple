@@ -106,7 +106,7 @@ def send_file_to_client(file, tipo, nombre):
 def to_file(data, tipo, nombre, primer=None):
 	my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 	my_path = os.path.join(my_path, "libros/")
-	archivo = os.path.join(my_path, tipo + "/" + nombre)
+	archivo = os.path.join(my_path, tipo + "/" +nombre)
 	exported_file = codecs.open(archivo, "w", encoding='utf-8')
 	nombre, ext = nombre.split(".")
 	if tipo == "compras":
@@ -125,36 +125,36 @@ def to_file(data, tipo, nombre, primer=None):
 				row['codigo_DUA'] + '|' +
 				row['numero_comprobante'] + '|' +
 				row['resumen_diario'] + '|' +
-				row['tipo_documento'] + '|' + 
-				row['numero_documento'] + '|' + 
-				row['nombre_proveedor'] + '|' + 
-				str(row['base_imponible']) + '|' + 
-				str(row['monto_impuesto']) + '|' + 
-				row['base_imponible_exportacion'] + '|' + 
-				row['monto_impuesto_exportacion'] + '|' + 
-				row['base_imponible_no_gravada'] + '|' + 
-				str(row['monto_impuesto_no_gravada']) + '|' + 
-				str(row['valor_adquisicion_no_gravada']) + '|' + 
-				row['monto_isc'] + '|' + 
-				row['otros_conceptos'] + '|' + 
-				str(row['valor_adquisicion']) + '|' + 
-				row['moneda'] + '|' + 
-				str(row['tipo_cambio']) + '|' + 
-				row['fecha_inicial_devolucion'] + '|' + 
-				row['tipo_devolucion'] + '|' + 
-				row['serie_devolucion'] + '|' + 
-				row['numero_devolucion'] + '|' + 
-				row['numero_devolucion'] + '|' + 
-				row['fecha_detraccion'] + '|' + 
-				row['constancia_detraccion'] + '|' + 
-				row['marca_retencion'] + '|' + 
-				row['clasificacion_items'] + '|' + 
-				row['contrato'] + '|' + 
-				row['error_1'] + '|' + 
-				row['error_2'] + '|' + 
-				row['error_3'] + '|' + 
-				row['error_4'] + '|' + 
-				str(row['indicador_pago']) + '|' + 
+				row['tipo_documento'] + '|' +
+				row['numero_documento'] + '|' +
+				row['nombre_proveedor'] + '|' +
+				str(row['base_imponible']) + '|' +
+				str(row['monto_impuesto']) + '|' +
+				row['base_imponible_exportacion'] + '|' +
+				row['monto_impuesto_exportacion'] + '|' +
+				row['base_imponible_no_gravada'] + '|' +
+				str(row['monto_impuesto_no_gravada']) + '|' +
+				str(row['valor_adquisicion_no_gravada']) + '|' +
+				row['monto_isc'] + '|' +
+				row['otros_conceptos'] + '|' +
+				str(row['valor_adquisicion']) + '|' +
+				row['moneda'] + '|' +
+				str(row['tipo_cambio']) + '|' +
+				row['fecha_inicial_devolucion'] + '|' +
+				row['tipo_devolucion'] + '|' +
+				row['serie_devolucion'] + '|' +
+				row['numero_devolucion'] + '|' +
+				row['numero_devolucion'] + '|' +
+				row['fecha_detraccion'] + '|' +
+				row['constancia_detraccion'] + '|' +
+				row['marca_retencion'] + '|' +
+				row['clasificacion_items'] + '|' +
+				row['contrato'] + '|' +
+				row['error_1'] + '|' +
+				row['error_2'] + '|' +
+				row['error_3'] + '|' +
+				row['error_4'] + '|' +
+				str(row['indicador_pago']) + '|' +
 				str(row['anotacion'] + '|\n'))
 	elif tipo == "ventas":
 		for row in data:
@@ -162,51 +162,51 @@ def to_file(data, tipo, nombre, primer=None):
 				if value is None:
 					row[key] = ""
 			exported_file.write(
-				row['periodo'] + "|" + 
-				row['cuo'] + "|" + 
-				row['correlativo_asiento'] + "|" + 
-				str(row['fecha_emision']) + "|" + 
-				str(row['fecha_cancelacion']) + "|" + 
-				row['codigo_tipo_comprobante'] + "|" + 
-				row['serie_comprobante'] + "|" + 
-				row['numero_comprobante'] + "|" + 
-				row['resumen_diario'] + "|" + 
-				row['tipo_documento'] + "|" + 
-				row['numero_documento'] + "|" + 
-				row['nombre_cliente'] + "|" + 
-				row['valor_exportacion'] + "|" + 
-				str(row['base_imponible']) + "|" + 
-				row['descuento'] + "|" + 
-				str(row['monto_impuesto']) + "|" + 
-				row['descuento_igv'] + "|" + 
-				row['total_exonerado'] + "|" + 
-				row['total_inafecto'] + "|" + 
-				row['monto_isc'] + "|" + 
-				row['base_arroz'] + "|" + 
-				row['impuesto_arroz'] + "|" + 
-				row['otros_conceptos'] + "|" + 
-				str(row['valor_adquisicion']) + "|" + 
-				row['moneda'] + "|" + 
-				str(row['tipo_cambio']) + "|" + 
-				str(row['fecha_inicial_devolucion']) + "|" + 
-				str(row['tipo_devolucion']) + "|" + 
-				str(row['serie_devolucion']) + "|" + 
-				str(row['numero_devolucion']) + "|" + 
-				row['contrato'] + "|" + 
-				row['error_1'] + "|" + 
-				str(row['indicador_pago']) + "|" + 
+				row['periodo'] + "|" +
+				row['cuo'] + "|" +
+				row['correlativo_asiento'] + "|" +
+				str(row['fecha_emision']) + "|" +
+				str(row['fecha_cancelacion']) + "|" +
+				row['codigo_tipo_comprobante'] + "|" +
+				row['serie_comprobante'] + "|" +
+				row['numero_comprobante'] + "|" +
+				row['resumen_diario'] + "|" +
+				row['tipo_documento'] + "|" +
+				row['numero_documento'] + "|" +
+				row['nombre_cliente'] + "|" +
+				row['valor_exportacion'] + "|" +
+				str(row['base_imponible']) + "|" +
+				row['descuento'] + "|" +
+				str(row['monto_impuesto']) + "|" +
+				row['descuento_igv'] + "|" +
+				row['total_exonerado'] + "|" +
+				row['total_inafecto'] + "|" +
+				row['monto_isc'] + "|" +
+				row['base_arroz'] + "|" +
+				row['impuesto_arroz'] + "|" +
+				row['otros_conceptos'] + "|" +
+				str(row['valor_adquisicion']) + "|" +
+				row['moneda'] + "|" +
+				str(row['tipo_cambio']) + "|" +
+				str(row['fecha_inicial_devolucion']) + "|" +
+				str(row['tipo_devolucion']) + "|" +
+				str(row['serie_devolucion']) + "|" +
+				str(row['numero_devolucion']) + "|" +
+				row['contrato'] + "|" +
+				row['error_1'] + "|" +
+				str(row['indicador_pago']) + "|" +
 				str(row['anotacion'] + "|\n"))
 	elif tipo == "diario":
 		if primer == "1":
 			for row in data:
 				exported_file.write(
-					row['periodo'] + "|" + 
-					row['codigo_asiento'] + "|" + 
-					row['descripcion_asiento'] + "|" + 
-					row['codigo_plan'] + "|" + 
-					row['descripcion_plan'] + "|" + 
-					row['codigo_cuenta'] + "|" + 
-					row['descripcion_cuenta'] + "|" + 
+					row['periodo'] + "|" +
+					row['codigo_asiento'] + "|" +
+					row['descripcion_asiento'] + "|" +
+					row['codigo_plan'] + "|" +
+					row['descripcion_plan'] + "|" +
+					row['codigo_cuenta'] + "|" +
+					row['descripcion_cuenta'] + "|" +
 					row['indicador_cuenta'] + "|\n")
 		else:
 			for row in data:
