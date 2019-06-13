@@ -19,7 +19,7 @@ class LibroElectronicodeCompras(Utils):
 		to_date_detraction = datetime.datetime.strptime(to_date, '%Y-%m-%d')
 		to_date_detraction = to_date_detraction + timedelta(days=5)
 
-		purchase_invoices = frappe.db.sql("""select      
+		purchase_invoices = frappe.db.sql("""(select      
 				CONCAT(DATE_FORMAT(IFNULL(posting_date,bill_date),'%Y%m'),'00') as periodo,
 				REPLACE(purchase_invoice.name, '-', '') as cuo,
 				'M2' as correlativo_asiento,
@@ -69,7 +69,7 @@ class LibroElectronicodeCompras(Utils):
 			and tdx_c_checkspot = 0
 			and is_factoring != 1
 			and codigo_comprobante!='02'
-			order by posting_date""", as_dict=True)
+			order by posting_date)""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select
 				CONCAT(DATE_FORMAT('"""+str(from_date)+"""','%Y%m'),'00') as periodo,
@@ -112,13 +112,13 @@ class LibroElectronicodeCompras(Utils):
 				"" as error_3,
 				"" as error_4,
 				'1' as indicador_pago,
-				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date_detraction.date)+"""' AND bill_date<='"""+str(to_date_detraction.date)+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date_detraction.date)+"""' AND bill_date<='"""+str(to_date_detraction.date)+"""','1','6'))) as anotacion
+				IF(is_return,(SELECT IF(bill_date>='"""+str(from_date_detraction.strftime('%Y-%m-%d'))+"""' AND bill_date<='"""+str(to_date_detraction.strftime('%Y-%m-%d'))+"""','1','9') FROM `tabPurchase Invoice` WHERE name=return_against),IF(total_taxes_and_charges=0,'0',IF(bill_date>='"""+str(from_date_detraction.strftime('%Y-%m-%d'))+"""' AND bill_date<='"""+str(to_date_detraction.strftime('%Y-%m-%d'))+"""','1','6'))) as anotacion
 			from
 				`tabPurchase Invoice` purchase_invoice,
 				`tabFiscalizacion del IGV Compra` det
 			where det.parent = purchase_invoice.name
-			and det.`tdx_c_figv_fechaconstancia` >= '"""+str(from_date_detraction.date)+"""' 
-			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_detraction.date)+"""' 
+			and det.`tdx_c_figv_fechaconstancia` >= '"""+str(from_date_detraction.strftime('%Y-%m-%d'))+"""' 
+			and det.`tdx_c_figv_fechaconstancia` <= '"""+str(to_date_detraction.strftime('%Y-%m-%d'))+"""' 
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
 			and is_factoring != 1
