@@ -4,9 +4,10 @@ from __future__ import unicode_literals
 import frappe
 from frappe.utils import cstr
 from erpnext.setup.doctype.naming_series.naming_series import NamingSeries
+import datetime
+from datetime import timedelta 
 import codecs
 import os
-
 
 class Utils(NamingSeries):
 	def get_series(self):
@@ -87,13 +88,31 @@ class Utils(NamingSeries):
 		elif periodo == 'Setiembre':
 			codigo_periodo = year + "09"
 		elif periodo == 'Octubre':
-			codigo_periodo = year + "610"
+			codigo_periodo = year + "10"
 		elif periodo == 'Noviembre':
 			codigo_periodo = year + "11"
 		elif periodo == 'Diciembre':
 			codigo_periodo = year + "12"
 		return codigo_periodo
 
+	def get_work_days(self, current_date, num_work_days):
+		holidays = []
+		i = 0
+		first_date = datetime.date(datetime.date.today().year, 1, 1)
+		last_date = datetime.date(datetime.date.today().year, 12, 31)
+		holidays_lists = frappe.get_all("Holiday List", filters={
+			'from_date': first_date,
+			'to_date': last_date
+		})
+		for holidays_list_name in holidays_lists:
+			holidays_list = frappe.get_doc('Holiday List', holidays_list_name.name)
+			for holiday in holidays_list.holidays:
+				holidays.append(holiday)			
+		while (i < num_work_days):
+			current_date = current_date + timedelta(days=1)
+			if not (current_date.strftime('%Y-%m-%d') in holidays or current_date.weekday() == 5 or current_date.weekday() == 6):
+				i += 1
+		return current_date
 
 @frappe.whitelist()
 def send_file_to_client(file, tipo, nombre):
@@ -101,7 +120,6 @@ def send_file_to_client(file, tipo, nombre):
 	frappe.response['result'] = cstr(data)
 	frappe.response['type'] = tipo
 	frappe.response['doctype'] = nombre
-
 
 def to_file(data, tipo, nombre, primer=None):
 	my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -334,7 +352,6 @@ def to_file(data, tipo, nombre, primer=None):
 				str(row['costo_total_saldo_final']) + "|" +
 				str(row['anotacion'] + "|\n"))
 	return {"archivo": archivo, "tipo": ext, "nombre": nombre}
-
 
 def read_txt(file):
 	data = ""

@@ -9,15 +9,14 @@ from datetime import timedelta
 
 from ple.ple_peru.utils import Utils, to_file
 
-
 class LibroElectronicodeCompras(Utils):
 	def get_purchase_invoices(self, year, periodo):
 		purchase_invoice_list = []
 		from_date, to_date = self.get_dates(year, periodo)
 		from_date_detraction = datetime.datetime.strptime(from_date, '%Y-%m-%d')
-		from_date_detraction = from_date_detraction + timedelta(days=5)
+		from_date_detraction = self.get_work_days(from_date_detraction, 5)
 		to_date_detraction = datetime.datetime.strptime(to_date, '%Y-%m-%d')
-		to_date_detraction = to_date_detraction + timedelta(days=5)
+		to_date_detraction = self.get_work_days(to_date_detraction, 5)
 
 		purchase_invoices = frappe.db.sql("""(select      
 				CONCAT(DATE_FORMAT(IFNULL(posting_date,bill_date),'%Y%m'),'00') as periodo,
@@ -173,7 +172,6 @@ class LibroElectronicodeCompras(Utils):
 				})
 		return purchase_invoice_list
 
-
 	def export_libro_compras(self, year, periodo, ruc):
 		tipo = "compras"
 		data = self.get_purchase_invoices(year, periodo)
@@ -181,7 +179,6 @@ class LibroElectronicodeCompras(Utils):
 		nombre = "LE"+str(ruc)+codigo_periodo+'00080100'+'00'+'1'+ ('1' if data else '0') +'1'+'1'
 		nombre = nombre + ".txt"
 		return to_file(data, tipo, nombre)
-
 
 	def export_libro_compras_vacio(self, year, periodo, ruc):
 		tipo = "compras"
