@@ -8,7 +8,7 @@ app_description = "App para la elaboracion de libros electronicos SUNAT PERU"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "carlos_jcez@hotmail.com"
-app_version = "1.0.0"
+app_version = "1.2.0"
 app_license = "MIT"
 fixtures = ["Custom Field", "Custom Script"]
 
