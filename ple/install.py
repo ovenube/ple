@@ -28,7 +28,7 @@ def import_data():
                 doc.descripcion_tipo_comprobante = val[2].decode('utf-8')
                 doc.insert()
     except:
-        print "Tipos de Comprobante ya migrado"
+        print("Tipos de Comprobante ya migrado")
 
     try:
         path = os.path.join(my_path, "tipos_de_documento_de_identidad.csv")
@@ -44,7 +44,7 @@ def import_data():
                 doc.descripcion_tipo_documento = val[1].decode('utf-8')
                 doc.insert()
     except:
-        print "Tipos de Documento de Identidad ya migrado"
+        print("Tipos de Documento de Identidad ya migrado")
 
     try:
         path = os.path.join(my_path, "tipos_de_pago.csv")
@@ -60,7 +60,7 @@ def import_data():
                 doc.descripcion_tipo_pago = val[1].decode('utf-8')
                 doc.insert()
     except:
-        print "Tipos de Pago ya migrado"
+        print("Tipos de Pago ya migrado")
 
     try:
         path = os.path.join(my_path, "catalogo_de_existencias.csv")
@@ -76,7 +76,7 @@ def import_data():
                 doc.descripcion_catalogo = val[1].decode('utf-8')
                 doc.insert()
     except:
-        print "Catalogo de Existencias ya migrado"
+        print("Catalogo de Existencias ya migrado")
 
     try:
         path = os.path.join(my_path, "tipos_de_existencia.csv")
@@ -92,7 +92,7 @@ def import_data():
                 doc.descripcion_tipos_existencia = val[1].decode('utf-8')
                 doc.insert()
     except:
-        print "Tipos de Existencia ya migrado"
+        print("Tipos de Existencia ya migrado")
 
     try:
         path = os.path.join(my_path, "tipos_de_operaciones.csv")
@@ -108,7 +108,7 @@ def import_data():
                 doc.descripcion_tipos_operacion = val[1].decode('utf-8')
                 doc.insert()
     except:
-        print "Tipos de Operaciones ya migrado"
+        print("Tipos de Operaciones ya migrado")
 
     try:
         path = os.path.join(my_path, "unidades_de_medida.csv")
@@ -124,5 +124,5 @@ def import_data():
                 doc.descripcion_unidad_medida = val[1].decode('utf-8')
                 doc.insert()
     except:
-        print "Unidades de Medida ya migrado"
+        print("Unidades de Medida ya migrado")
             
