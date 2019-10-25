@@ -65,6 +65,7 @@ frappe.ui.form.on("Libro Electronico de Compras", "get_data", function(frm) {
 		method: "export_libro_compras",
 		doc: frm.doc,
 		args: {
+			'company': frm.doc.company,
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year

@@ -341,6 +341,7 @@ class PLECompras(Utils):
 
 	def get_purchase_invoices(self):
 		from_date, to_date = self.get_dates(self.filters.year, self.filters.month)
+		company = self.filters.company
 		from_date_detraction = datetime.datetime.strptime(from_date, '%Y-%m-%d')
 		from_date_detraction = self.get_work_days(from_date_detraction, 5)
 		to_date_detraction = datetime.datetime.strptime(to_date, '%Y-%m-%d')
@@ -395,6 +396,7 @@ class PLECompras(Utils):
 				and tdx_c_checkspot = 0
 				and is_factoring != 1
 				and codigo_comprobante!='02'
+				and company = '"""+company+"""'
 				order by posting_date)""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select
@@ -448,6 +450,7 @@ class PLECompras(Utils):
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
 			and is_factoring != 1
+			and company = '"""+company+"""'
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 

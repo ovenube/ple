@@ -57,6 +57,7 @@ frappe.ui.form.on("Libro Electronico de Inventario Permanente Valorizado", "get_
 		method: "export_libro_inventario",
 		doc: frm.doc,
 		args: {
+			'company': frm.doc.company,
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year

@@ -8,7 +8,7 @@ from ple.ple_peru.utils import Utils, to_file
 
 
 class LibroElectronicoDiarioSimplificado(Utils):
-	def get_account(self, year, periodo, primer=None):
+	def get_account(self, company, year, periodo, primer=None):
 		account_list = []
 		from_date, to_date = self.get_dates(year, periodo)
 
@@ -24,7 +24,8 @@ class LibroElectronicoDiarioSimplificado(Utils):
 					'1' as indicador_cuenta
 				from
 					`tabAccount`
-				where SUBSTRING(name,1,POSITION('-' in name)-1) > 100""", as_dict=True)
+				where SUBSTRING(name,1,POSITION('-' in name)-1) > 100
+				and company = '"""+company+"'", as_dict=True)
 
 			for d in account:
 				account_list.append({
@@ -127,6 +128,7 @@ class LibroElectronicoDiarioSimplificado(Utils):
 				where SUBSTRING(account,1,POSITION('-' in account)-1) > 100
 				and posting_date >= '""" + str(from_date) + """' 
 				and posting_date <= '""" + str(to_date) + """' 
+				and company = '"""+company+"""'
 				order by posting_date""", as_dict=True)
 
 			for d in account:
@@ -155,9 +157,9 @@ class LibroElectronicoDiarioSimplificado(Utils):
 				})
 		return account_list
 
-	def export_libro_diario_simplificado(self, year, periodo, ruc, primer):
+	def export_libro_diario_simplificado(self, company, year, periodo, ruc, primer):
 		tipo = "diario_simplificado"
-		data = self.get_account(year, periodo, primer)
+		data = self.get_account(company, year, periodo, primer)
 		codigo_periodo = self.ple_name(year, periodo)
 		if primer == "1":
 			nombre = "LE" + str(ruc) + codigo_periodo + '00050400' + '00' + '1' + '1' + '1' + '1'

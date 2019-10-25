@@ -10,7 +10,7 @@ from datetime import timedelta
 from ple.ple_peru.utils import Utils, to_file
 
 class LibroElectronicodeCompras(Utils):
-	def get_purchase_invoices(self, year, periodo):
+	def get_purchase_invoices(self, company, year, periodo):
 		purchase_invoice_list = []
 		from_date, to_date = self.get_dates(year, periodo)
 		from_date_detraction = datetime.datetime.strptime(from_date, '%Y-%m-%d')
@@ -68,6 +68,7 @@ class LibroElectronicodeCompras(Utils):
 			and tdx_c_checkspot = 0
 			and is_factoring != 1
 			and codigo_comprobante!='02'
+			and company = '"""+company+"""'
 			order by posting_date)""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select
@@ -121,6 +122,7 @@ class LibroElectronicodeCompras(Utils):
 			and purchase_invoice.docstatus = 1
 			and codigo_comprobante!='02'
 			and is_factoring != 1
+			and company = '"""+company+"""'
 			order by det.`tdx_c_figv_fechaconstancia`
 		""", as_dict=True)
 
@@ -172,9 +174,9 @@ class LibroElectronicodeCompras(Utils):
 				})
 		return purchase_invoice_list
 
-	def export_libro_compras(self, year, periodo, ruc):
+	def export_libro_compras(self, company,  year, periodo, ruc):
 		tipo = "compras"
-		data = self.get_purchase_invoices(year, periodo)
+		data = self.get_purchase_invoices(company, year, periodo)
 		codigo_periodo = self.ple_name(year, periodo)
 		nombre = "LE"+str(ruc)+codigo_periodo+'00080100'+'00'+'1'+ ('1' if data else '0') +'1'+'1'
 		nombre = nombre + ".txt"

@@ -50,6 +50,7 @@ frappe.ui.form.on("Libro Electronico Diario Simplificado", "get_data", function(
 		method: "export_libro_diario_simplificado",
 		doc: frm.doc,
 		args: {
+			'company': frm.doc.company,
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year,

@@ -8,7 +8,7 @@ from ple.ple_peru.utils import Utils, to_file
 from ple.ple_peru.doctype.tipos_de_operaciones.tipos_de_operaciones import get_operacion
 
 class LibroElectronicodeInventarioPermanenteValorizado(Utils):
-	def get_inventory(self, year, periodo):
+	def get_inventory(self, company, year, periodo):
 		inventory_list = []
 		from_date, to_date = self.get_dates(year, periodo)
 
@@ -70,6 +70,7 @@ class LibroElectronicodeInventarioPermanenteValorizado(Utils):
 				and pro.name = stock.item_code
 				and posting_date >= '""" + str(from_date) + """' 
 				and posting_date <= '""" + str(to_date) + """' 
+				and company = '"""+company+"""'
 				order by posting_date""", as_dict=True)
 
 		for d in inventories:
@@ -103,9 +104,9 @@ class LibroElectronicodeInventarioPermanenteValorizado(Utils):
 			})
 		return inventory_list
 
-	def export_libro_inventario(self, year, periodo, ruc):
+	def export_libro_inventario(self, company, year, periodo, ruc):
 		tipo = "inventario"
-		data = self.get_inventory(year, periodo)
+		data = self.get_inventory(company, year, periodo)
 		codigo_periodo = self.ple_name(year, periodo)
 		nombre = "LE" + str(ruc) + codigo_periodo + '00130100' + '00' + '1' + ('1' if data else '0') + '1' + '1'
 		nombre = nombre + ".txt"

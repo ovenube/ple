@@ -50,6 +50,7 @@ frappe.ui.form.on("Libro Electronico Mayor", "get_data", function(frm) {
 		method: "export_libro_mayor",
 		doc: frm.doc,
 		args: {
+			'company': frm.doc.company,
 			'periodo': frm.doc.periodo,
 			'ruc': frm.doc.ruc,
 			'year': frm.doc.year

@@ -11,7 +11,7 @@ from ple.ple_peru.utils import Utils, to_file
 
 
 class LibroElectronicodeVentas(Utils):
-    def get_sales_invoices(self, year, periodo):
+    def get_sales_invoices(self, company, year, periodo):
         sales_invoice_list = []
         from_date, to_date = self.get_dates(year, periodo)
 
@@ -55,6 +55,7 @@ class LibroElectronicodeVentas(Utils):
 			where posting_date  >= '""" + str(from_date) + """' 
 			and posting_date  <= '""" + str(to_date) + """'
             and docstatus != 0
+            and company = '"""+company+"""'
 			order by posting_date""", as_dict=True)
 
         for d in sales_invoices:
@@ -96,9 +97,9 @@ class LibroElectronicodeVentas(Utils):
             })
         return sales_invoice_list
 
-    def export_libro_ventas(self, year, periodo, ruc):
+    def export_libro_ventas(self, company, year, periodo, ruc):
         tipo = "ventas"
-        data = self.get_sales_invoices(year, periodo)
+        data = self.get_sales_invoices(company, year, periodo)
         codigo_periodo = self.ple_name(year, periodo)
         nombre = "LE" + str(ruc) + codigo_periodo + '00140100' + '00' + '1' + ('1' if data else '0') + '1' + '1'
         nombre = nombre + ".txt"
