@@ -10,21 +10,26 @@ frappe.ui.form.on('Libro Electronico Diario', {
 
 	}
 });
+
 frappe.ui.form.on('Libro Electronico Diario', 'year', function(frm) {
 	ple.libro_electronico_diario.check_mandatory_to_set_button(frm);
 	
 });
+
 frappe.ui.form.on('Libro Electronico Diario', 'periodo', function(frm) {
 	ple.libro_electronico_diario.check_mandatory_to_set_button(frm);
 	
 });
+
 frappe.ui.form.on('Libro Electronico Diario', 'ruc', function(frm) {
 	ple.libro_electronico_diario.check_mandatory_to_set_button(frm);
 	
 });
+
 frappe.ui.form.on('Libro Electronico Diario', 'company', function(frm, cdt, cdn) {
 	ple.libro_electronico_diario.check_mandatory_to_set_button(frm, cdt, cdn);
 });
+
 ple.libro_electronico_diario.check_mandatory_to_set_button = function(frm) {
 	if (frm.doc.periodo && frm.doc.ruc) {
 		frm.fields_dict.get_data.$input.addClass("btn-primary");
@@ -32,7 +37,8 @@ ple.libro_electronico_diario.check_mandatory_to_set_button = function(frm) {
 	else{
 		frm.fields_dict.get_data.$input.removeClass("btn-primary");
 	}
-}
+};
+
 ple.libro_electronico_diario.check_mandatory_to_fetch = function(doc) {
 	$.each(["periodo"], function(i, field) {
 		if(!doc[frappe.model.scrub(field)]) frappe.throw(__("Please select {0} first", [field]));
@@ -43,7 +49,8 @@ ple.libro_electronico_diario.check_mandatory_to_fetch = function(doc) {
 	$.each(["year"], function(i, field) {
 		if(!doc[frappe.model.scrub(field)]) frappe.throw(__("Please select {0} first", [field]));
 	});
-}
+};
+
 frappe.ui.form.on("Libro Electronico Diario", "get_data", function(frm) {
 	ple.libro_electronico_diario.check_mandatory_to_fetch(frm.doc);
 	frappe.call({
@@ -64,5 +71,5 @@ frappe.ui.form.on("Libro Electronico Diario", "get_data", function(frm) {
 				"&nombre="+r.message.nombre);
 			}
 		}
-	})
+	});
 });

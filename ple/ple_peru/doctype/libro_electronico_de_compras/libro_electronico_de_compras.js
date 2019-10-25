@@ -40,7 +40,7 @@ ple.libro_electronico_de_compras.check_mandatory_to_set_button = function(frm) {
 		frm.fields_dict.get_data.$input.removeClass("btn-primary");
 		frm.fields_dict.get_empty_data.$input.removeClass("btn-primary");
 	}
-}
+};
 
 
 ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
@@ -56,7 +56,7 @@ ple.libro_electronico_de_compras.check_mandatory_to_fetch = function(doc) {
 	$.each(["ruc"], function(i, field) {
 		if(!doc[frappe.model.scrub(field)]) frappe.throw(__("Please select {0} first", [field]));
 	});
-}
+};
 
 
 frappe.ui.form.on("Libro Electronico de Compras", "get_data", function(frm) {
