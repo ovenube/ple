@@ -18,7 +18,7 @@ class LibroElectronicodeCompras(Utils):
 		to_date_detraction = datetime.datetime.strptime(to_date, '%Y-%m-%d')
 		to_date_detraction = self.get_work_days(to_date_detraction, 5)
 
-		purchase_invoices = frappe.db.sql("""(select      
+		purchase_invoices = frappe.db.sql("""select      
 				CONCAT(DATE_FORMAT(IFNULL(posting_date,bill_date),'%Y%m'),'00') as periodo,
 				REPLACE(purchase_invoice.name, '-', '') as cuo,
 				'M2' as correlativo_asiento,
@@ -69,7 +69,7 @@ class LibroElectronicodeCompras(Utils):
 			and is_factoring != 1
 			and codigo_comprobante!='02'
 			and company = '"""+company+"""'
-			order by posting_date)""", as_dict=True)
+			order by posting_date""", as_dict=True)
 
 		purchase_invoices_detraction = frappe.db.sql("""select
 				CONCAT(DATE_FORMAT('"""+str(from_date)+"""','%Y%m'),'00') as periodo,
