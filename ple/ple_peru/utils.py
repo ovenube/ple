@@ -58,7 +58,7 @@ class Utils(NamingSeries):
 			from_date = year+'-09-01'
 			to_date = year+'-09-30'
 		elif periodo == 'Octubre':
-			from_date = year+'-10-10'
+			from_date = year+'-10-01'
 			to_date = year+'-10-31'
 		elif periodo == 'Noviembre':
 			from_date = year+'-11-01'
