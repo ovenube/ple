@@ -5,10 +5,12 @@ from frappe import _
 def get_data():
 	return [
 		{
-			"module_name": "PLE-PERU",
-			"color": "grey",
-			"icon": "octicon octicon-file-directory",
+			"module_name": "PLE",
+			"category": "Modules",
+			"label": _("PLE PERU"),
+			"color": "#3498db",
+			"icon": "octicon octicon-repo",
 			"type": "module",
-			"label": _("PLE-PERU")
+			"description": "Programa de Libros Electronicos"
 		}
 	]
