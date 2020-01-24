@@ -24,8 +24,8 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Tipos de Comprobante')
                 doc.codigo_tipo_comprobante = val[0]
-                doc.nombre_tipo_comprobante = val[1].decode('utf-8')
-                doc.descripcion_tipo_comprobante = val[2].decode('utf-8')
+                doc.nombre_tipo_comprobante = val[1]
+                doc.descripcion_tipo_comprobante = val[2]
                 doc.insert()
     except:
         print("Tipos de Comprobante ya migrado")
@@ -41,7 +41,7 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Tipos de Documento de Identidad')
                 doc.codigo_tipo_documento = val[0]
-                doc.descripcion_tipo_documento = val[1].decode('utf-8')
+                doc.descripcion_tipo_documento = val[1]
                 doc.insert()
     except:
         print("Tipos de Documento de Identidad ya migrado")
@@ -57,7 +57,7 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Tipos de Pago')
                 doc.codigo_tipo_pago = val[0]
-                doc.descripcion_tipo_pago = val[1].decode('utf-8')
+                doc.descripcion_tipo_pago = val[1]
                 doc.insert()
     except:
         print("Tipos de Pago ya migrado")
@@ -73,7 +73,7 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Catalogo de Existencias')
                 doc.codigo_catalogo = val[0]
-                doc.descripcion_catalogo = val[1].decode('utf-8')
+                doc.descripcion_catalogo = val[1]
                 doc.insert()
     except:
         print("Catalogo de Existencias ya migrado")
@@ -89,7 +89,7 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Tipos de Existencia')
                 doc.codigo_tipos_existencia = val[0]
-                doc.descripcion_tipos_existencia = val[1].decode('utf-8')
+                doc.descripcion_tipos_existencia = val[1]
                 doc.insert()
     except:
         print("Tipos de Existencia ya migrado")
@@ -105,7 +105,7 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Tipos de Operaciones')
                 doc.codigo_tipos_operacion = val[0]
-                doc.descripcion_tipos_operacion = val[1].decode('utf-8')
+                doc.descripcion_tipos_operacion = val[1]
                 doc.insert()
     except:
         print("Tipos de Operaciones ya migrado")
@@ -121,7 +121,7 @@ def import_data():
                 # Do something with your data
                 doc = frappe.new_doc('Unidades de Medida')
                 doc.codigo_unidad_medida = val[0]
-                doc.descripcion_unidad_medida = val[1].decode('utf-8')
+                doc.descripcion_unidad_medida = val[1]
                 doc.insert()
     except:
         print("Unidades de Medida ya migrado")
