@@ -22,19 +22,19 @@ class LibroElectronicodeVentas(Utils):
 				DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_emision,
 				DATE_FORMAT(posting_date,'%d/%m/%Y') as fecha_cancelacion,
 				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
-				SUBSTRING(sales_invoice.name,4,4) as serie_comprobante,
-				SUBSTRING(sales_invoice.name,9) as numero_comprobante,
+				SUBSTRING_INDEX(SUBSTRING_INDEX(sales_invoice.name, '-', 2), '-', -1) as serie_comprobante,
+				SUBSTRING_INDEX(sales_invoice.name, '-', -1) as numero_comprobante,
 				"" as resumen_diario,
 				IF(base_net_total>700,codigo_tipo_documento,IF(ISNULL(tax_id),"",IFNULL(codigo_tipo_documento,""))) as tipo_documento,
 				IF(codigo_tipo_documento=7,IF(SUBSTRING(REPLACE(tax_id,"-",""),-12)="",tax_id, SUBSTRING(REPLACE(tax_id,"-",""),-12)),IF(base_net_total>700,tax_id,IF(ISNULL(tax_id),"",tax_id))) as numero_documento,
 				IF(base_net_total>700,customer_name,IF(ISNULL(tax_id),"",IF(customer_name='Clientes Varios',customer_boleta_name,customer_name))) as nombre_cliente,
 				"" as valor_exportacion,
-				ROUND(base_net_total, 2) as base_imponible,
+				IF(base_total_taxes_and_charges != 0, ROUND(base_net_total, 2), "") as base_imponible,
 				"" as descuento,
 				ROUND(base_total_taxes_and_charges, 2) as monto_impuesto,
 				"" as descuento_igv,
-				"" as total_exonerado,
-				"" as total_inafecto,
+				ROUND(total_amount_free, 2) as total_exonerado,
+				IF(base_total_taxes_and_charges != 0, "", base_grand_total) as total_inafecto,
 				"" as monto_isc,
 				"" as base_arroz,
 				"" as impuesto_arroz,
@@ -57,6 +57,51 @@ class LibroElectronicodeVentas(Utils):
             and docstatus != 0
             and company = '"""+company+"""'
 			order by posting_date""", as_dict=True)
+
+        fees = frappe.db.sql("""select
+				CONCAT(DATE_FORMAT(IF(is_return, fecha_nota_credito, fecha_comprobante),'%Y%m'),'00') as periodo,
+				REPLACE(fees.name, '-', '') as cuo,
+				'M1' as correlativo_asiento,
+				DATE_FORMAT(IF(is_return, fecha_nota_credito, fecha_comprobante),'%d/%m/%Y') as fecha_emision,
+				DATE_FORMAT(IF(is_return, fecha_nota_credito, fecha_comprobante),'%d/%m/%Y') as fecha_cancelacion,
+				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as tipo_comprobante,
+				SUBSTRING_INDEX(SUBSTRING_INDEX(numero_comprobante, '-', 2), '-', -1) as serie_comprobante,
+				SUBSTRING_INDEX(numero_comprobante, '-', -1) as numero_comprobante,
+				"" as resumen_diario,
+				codigo_tipo_documento as tipo_documento,
+				IF(codigo_tipo_documento=7,IF(SUBSTRING(REPLACE(tax_id,"-",""),-12)="",tax_id, SUBSTRING(REPLACE(tax_id,"-",""),-12)),IF(grand_total>700,tax_id,IF(ISNULL(tax_id),"",tax_id))) as numero_documento,
+				IF(codigo_tipo_documento=6, razon_social, student_name) as nombre_cliente,
+				"" as valor_exportacion,
+				"" as base_imponible,
+				"" as descuento,
+				"" as monto_impuesto,
+				"" as descuento_igv,
+				"" as total_exonerado,
+				ROUND(grand_total, 2) as total_inafecto,
+				"" as monto_isc,
+				"" as base_arroz,
+				"" as impuesto_arroz,
+				"" as otros_conceptos,
+				ROUND(grand_total, 2) as valor_adquisicion,
+				IF(currency = 'SOL', 'PEN', currency) as moneda,
+				"1.000" as tipo_cambio,
+				IF(is_return,fecha_comprobante,"") as fecha_inicial_devolucion,
+				IF(is_return,tipo_nota_credito,"") as tipo_devolucion,
+				IF(is_return,serie_nota_credito,"") as serie_devolucion,
+				IF(is_return,numero_nota_credito,"")  as numero_devolucion,
+				"" as contrato,
+				"" as error_1,
+				'1' as indicador_pago,
+				IF(fees.docstatus='2','2',IF(CONCAT(DATE_FORMAT(fecha_comprobante,'%Y-%m'),'-01')>=fecha_comprobante,'7','1')) as anotacion
+			from
+				`tabFees` as fees
+			where fecha_comprobante  >= '""" + str(from_date) + """' 
+			and fecha_comprobante  <= '""" + str(to_date) + """'
+            and docstatus != 0
+            and company = '"""+company+"""'
+			order by fecha_comprobante""", as_dict=True)
+    
+        sales_invoices += fees
 
         for d in sales_invoices:
             sales_invoice_list.append({

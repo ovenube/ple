@@ -296,19 +296,19 @@ class PLEVentas(Utils):
 				DATE_FORMAT(posting_date,'%d/%m/%Y') as "fecha_emision",
 				DATE_FORMAT(posting_date,'%d/%m/%Y') as "fecha_cancelacion",
 				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as "tipo_comprobante",
-				SUBSTRING(sales_invoice.name,4,4) as "serie_comprobante",
-				SUBSTRING(sales_invoice.name,9) as "numero_comprobante",
+				SUBSTRING_INDEX(SUBSTRING_INDEX(sales_invoice.name, '-', 2), '-', -1) as "serie_comprobante",
+				SUBSTRING_INDEX(sales_invoice.name, '-', -1) as "numero_comprobante",
 				"" as "maquina_registradora",
 				IF(base_net_total>700,codigo_tipo_documento,IF(ISNULL(tax_id),"",IFNULL(codigo_tipo_documento,""))) as "tipo_documento",
 				IF(codigo_tipo_documento=7,IF(SUBSTRING(REPLACE(tax_id,"-",""),-12)="",tax_id, SUBSTRING(REPLACE(tax_id,"-",""),-12)),IF(base_net_total>700,tax_id,IF(ISNULL(tax_id),"",tax_id))) as "numero_documento",
 				IF(base_net_total>700,customer_name,IF(ISNULL(tax_id),"",IF(customer_name='Clientes Varios',customer_boleta_name,customer_name))) as "nombre_cliente",
 				"" as "valor_exportacion",
-				base_net_total as "base_imponible",
+				IF(base_total_taxes_and_charges != 0, ROUND(base_net_total, 2), "") as "base_imponible",
 				"" as "descuento_base_imponible",
 				base_total_taxes_and_charges as "monto_impuesto",
 				"" as "descuento_monto_impuesto",
-				"" as "monto_exonerado",
-				"" as "monto_inafecto",
+				ROUND(total_amount_free, 2) as "monto_exonerado",
+				IF(base_total_taxes_and_charges != 0, "", base_grand_total) as "monto_inafecto",
 				"" as "monto_isc",
 				"" as "monto_arroz_pilado",
 				"" as "impuesto_arroz_pilado",	
@@ -324,13 +324,58 @@ class PLEVentas(Utils):
 				"" as "error_1",
 				'1' as "indicador_pago",
 				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=posting_date,'7','1')) as "estado"
-						from
-							`tabSales Invoice` as sales_invoice
-						where posting_date >= '"""+str(from_date)+"""' 
-						and posting_date <= '"""+str(to_date)+"""'
-						and docstatus != 0
-						and company = '"""+company+"""'
-						order by posting_date""", as_dict=True)
+			FROM
+				`tabSales Invoice` as sales_invoice
+			WHERE posting_date >= '"""+str(from_date)+"""' 
+			AND posting_date <= '"""+str(to_date)+"""'
+			AND docstatus != 0
+			AND company = '"""+company+"""'
+			ORDER BY posting_date""", as_dict=True)
+
+		fees = frappe.db.sql("""SELECT
+				CONCAT(DATE_FORMAT(IF(is_return, fecha_nota_credito, fecha_comprobante),'%Y%m'),'00') as "periodo",
+				REPLACE(fees.name, '-', '') as "cuo",
+				'M1' as "correlativo_asiento",
+				DATE_FORMAT(IF(is_return, fecha_nota_credito, fecha_comprobante),'%d/%m/%Y') as "fecha_emision",
+				DATE_FORMAT(IF(is_return, fecha_nota_credito, fecha_comprobante),'%d/%m/%Y') as "fecha_cancelacion",
+				IF(LENGTH(codigo_comprobante) = 1,CONCAT('0',codigo_comprobante), codigo_comprobante) as "tipo_comprobante",
+				SUBSTRING_INDEX(SUBSTRING_INDEX(numero_comprobante, '-', 2), '-', -1) as "serie_comprobante",
+				SUBSTRING_INDEX(numero_comprobante, '-', -1) as "numero_comprobante",
+				"" as "maquina_registradora",
+				codigo_tipo_documento as "tipo_documento",
+				IF(codigo_tipo_documento=7,IF(SUBSTRING(REPLACE(tax_id,"-",""),-12)="",tax_id, SUBSTRING(REPLACE(tax_id,"-",""),-12)),IF(grand_total>700,tax_id,IF(ISNULL(tax_id),"",tax_id))) as "numero_documento",
+				IF(codigo_tipo_documento=6, razon_social, student_name) as "nombre_cliente",
+				"" as "valor_exportacion",
+				"" as "base_imponible",
+				"" as "descuento_base_imponible",
+				"" as "monto_impuesto",
+				"" as "descuento_monto_impuesto",
+				"" as "monto_exonerado",
+				ROUND(grand_total, 2) as "monto_inafecto",
+				"" as "monto_isc",
+				"" as "monto_arroz_pilado",
+				"" as "impuesto_arroz_pilado",
+				"" as "otros_conceptos",
+				ROUND(grand_total, 2) as "monto_total",
+				IF(currency = 'SOL', 'PEN', currency) as "moneda",
+				"1.000" as "tipo_cambio",
+				IF(is_return,fecha_comprobante,"") as "fecha_inicial_devolucion",
+				IF(is_return,tipo_nota_credito,"") as "tipo_devolucion",
+				IF(is_return,serie_nota_credito,"") as "serie_devolucion",
+				IF(is_return,numero_nota_credito,"")  as "numero_devolucion",
+				"" as "contrato",
+				"" as "error_1",
+				'1' as "indicador_pago",
+				IF(fees.docstatus='2','2',IF(CONCAT(DATE_FORMAT(fecha_comprobante,'%Y-%m'),'-01')>=fecha_comprobante,'7','1')) as "estado"
+			FROM
+				`tabFees` as fees
+			WHERE fecha_comprobante  >= '""" + str(from_date) + """' 
+			AND fecha_comprobante  <= '""" + str(to_date) + """'
+            AND docstatus != 0
+            AND company = '"""+company+"""'
+			ORDER BY fecha_comprobante""", as_dict=True)
+			
+		sales_invoices += fees
 
 		return sales_invoices
 
