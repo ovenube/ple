@@ -18,36 +18,36 @@ class PLECompras(Utils):
 		columns = [
 			{
 				"fieldname": "periodo",
-				"label": _("Periodo"),
+				"label": _("Periodo [01]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "cuo",
-				"label": _("CUO"),
+				"label": _("CUO [02]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "correlativo_asiento",
-				"label": _("Correlativo Asiento"),
+				"label": _("Correlativo Asiento [03]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
-				"label": _("Fecha Emisión"),
+				"label": _("Fecha Emisión [04]"),
 				"fieldtype": "Data",
 				"fieldname": "fecha_emision",
 				"width": 90
 			},
 			{
-				"label": _("Fecha Cancelación"),
+				"label": _("Fecha Cancelación [05]"),
 				"fieldtype": "Data",
 				"fieldname": "fecha_cancelacion",
 				"width": 90
 			},
 			{
-				"label": _("Tipo Comprobante"),
+				"label": _("Tipo Comprobante [06]"),
 				"fieldtype": "Link",
 				"fieldname": "tipo_comprobante",
 				"options": "Tipos de Comprobante",
@@ -55,25 +55,25 @@ class PLECompras(Utils):
 			},
 			{
 				"fieldname": "serie_comprobante",
-				"label": _("Serie Comprobante"),
+				"label": _("Serie Comprobante [07]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "codigo_dua",
-				"label": _("Código DUA"),
+				"label": _("Código DUA [08]"),
 				"fieldtype": "Data",
 				"width": 90
 			},
 			{
 				"fieldname": "numero_comprobante",
-				"label": _("Número Comprobante"),
+				"label": _("Número Comprobante [09]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "resumen_diario",
-				"label": _("Resumen Diario"),
+				"label": _("Resumen Diario [10]"),
 				"fieldtype": "Data",
 				"width": 90
 			},
@@ -81,92 +81,92 @@ class PLECompras(Utils):
 				"label": _("Tipo Documento"),
 				"fieldtype": "Link",
 				"fieldname": "tipo_documento",
-				"options": "Tipos de Documento de Identidad",
+				"options": "Tipos de Documento de Identidad [11]",
 				"width": 90
 			},
 			{
 				"fieldname": "resumen_diario",
-				"label": _("Resumen Diario"),
+				"label": _("Resumen Diario [12]"),
 				"fieldtype": "Data",
 				"width": 90
 			},
 			{
 				"fieldname": "numero_documento",
-				"label": _("Número Documento"),
+				"label": _("Número Documento [13]"),
 				"fieldtype": "Data",
 				"width": 100
 			},
 			{
 				"fieldname": "nombre_proveedor",
-				"label": _("Nombre Proveedor"),
+				"label": _("Nombre Proveedor [14]"),
 				"fieldtype": "Data",
 				"width": 250
 			},
 			{
-				"label": _("Base Imponible"),
+				"label": _("Base Imponible [15]"),
 				"fieldname": "base_imponible",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Monto Impuesto"),
+				"label": _("Monto Impuesto [16]"),
 				"fieldname": "monto_impuesto",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Base Imponible Exportación"),
+				"label": _("Base Imponible Exportación [17]"),
 				"fieldname": "base_imponible_exportacion",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Monto Impuesto Exportación"),
+				"label": _("Monto Impuesto Exportación [18]"),
 				"fieldname": "monto_impuesto_exportacion",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Base Imponible no Gravada"),
+				"label": _("Base Imponible no Gravada [19]"),
 				"fieldname": "base_imponible_no_gravada",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Monto Impuesto No Gravada"),
+				"label": _("Monto Impuesto No Gravada [20]"),
 				"fieldname": "monto_impuesto_no_gravada",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Valor Adquisición No Gravada"),
+				"label": _("Valor Adquisición No Gravada [21]"),
 				"fieldname": "valor_adquisicion_no_gravada",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Monto ISC"),
+				"label": _("Monto ISC [22]"),
 				"fieldname": "monto_isc",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},			
 			{
-				"label": _("Otros Conceptos"),
+				"label": _("Otros Conceptos [23]"),
 				"fieldname": "otros_conceptos",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Valor Adquisición"),
+				"label": _("Valor Adquisición [24]"),
 				"fieldname": "valor_adquisicion",
 				"fieldtype": "Currency",
 				"options": "currency",
@@ -174,26 +174,26 @@ class PLECompras(Utils):
 			},
 			{
 				"fieldname": "moneda",
-				"label": _("Moneda"),
+				"label": _("Moneda [25]"),
 				"fieldtype": "Link",
 				"options": "Currency",
 				"width": 100
 			},
 			{
-				"label": _("Tipo Cambio"),
+				"label": _("Tipo Cambio [26]"),
 				"fieldname": "tipo_cambio",
 				"fieldtype": "Currency",
 				"options": "currency",
 				"width": 120
 			},
 			{
-				"label": _("Fecha Inicial Devolución"),
+				"label": _("Fecha Inicial Devolución [27]"),
 				"fieldtype": "Data",
 				"fieldname": "fecha_inicial_devolucion",
 				"width": 90
 			},
 			{
-				"label": _("Tipo Devolución"),
+				"label": _("Tipo Devolución [28]"),
 				"fieldtype": "Link",
 				"fieldname": "tipo_devolucion",
 				"options": "Tipos de Comprobante",
@@ -201,85 +201,85 @@ class PLECompras(Utils):
 			},	
 			{
 				"fieldname": "serie_devolucion",
-				"label": _("Serie Devolución"),
+				"label": _("Serie Devolución [29]"),
 				"fieldtype": "Data",
 				"width": 90
 			},
 			{
 				"fieldname": "dua",
-				"label": _("DUA"),
+				"label": _("DUA [30]"),
 				"fieldtype": "Data",
 				"width": 90
 			},
 			{
 				"fieldname": "numero_devolucion",
-				"label": _("Número Devolución"),
+				"label": _("Número Devolución [31]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
-				"label": _("Fecha Detracción"),
+				"label": _("Fecha Detracción [32]"),
 				"fieldtype": "Data",
 				"fieldname": "fecha_detraccion",
 				"width": 90
 			},
 			{
 				"fieldname": "constancia_detraccion",
-				"label": _("Constancia Detraccion"),
+				"label": _("Constancia Detraccion [33]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "marca_retencion",
-				"label": _("Marca Retencion"),
+				"label": _("Marca Retencion [34]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "clasificacion_items",
-				"label": _("Clasificación Items"),
+				"label": _("Clasificación Items [35]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "contrato",
-				"label": _("Contrato"),
+				"label": _("Contrato [36]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "error_1",
-				"label": _("Error 1"),
+				"label": _("Error 1 [37]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "error_2",
-				"label": _("Error 2"),
+				"label": _("Error 2 [38]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "error_3",
-				"label": _("Error 3"),
+				"label": _("Error 3 [39]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "error_4",
-				"label": _("Error 4"),
+				"label": _("Error 4 [40]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "indicador_pago",
-				"label": _("Indicador Pago"),
+				"label": _("Indicador Pago [41]"),
 				"fieldtype": "Data",
 				"width": 120
 			},
 			{
 				"fieldname": "anotacion",
-				"label": _("Anotación"),
+				"label": _("Anotación [42]"),
 				"fieldtype": "Data",
 				"width": 120
 			}]
