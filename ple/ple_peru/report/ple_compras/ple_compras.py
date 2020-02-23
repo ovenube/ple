@@ -78,10 +78,10 @@ class PLECompras(Utils):
 				"width": 90
 			},
 			{
-				"label": _("Tipo Documento"),
+				"label": _("Tipo Documento [11]"),
 				"fieldtype": "Link",
 				"fieldname": "tipo_documento",
-				"options": "Tipos de Documento de Identidad [11]",
+				"options": "Tipos de Documento de Identidad",
 				"width": 90
 			},
 			{
