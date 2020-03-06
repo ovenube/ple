@@ -159,7 +159,7 @@ class LibroElectronicoDiario(Utils):
 
 	def export_libro_diario(self, company, year, periodo, ruc, primer):
 		tipo = "diario"
-		data = self.get_account(year, company, periodo, primer)
+		data = self.get_account(company, year, periodo, primer)
 		codigo_periodo = self.ple_name(year, periodo)
 		if primer == "1":
 			nombre = "LE" + str(ruc) + codigo_periodo + '00050300' + '00' + '1' + '1' + '1' + '1'
