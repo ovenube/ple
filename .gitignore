@@ -9,3 +9,4 @@
 *.csv
 tags
 ple/docs/current
+__pycache__
