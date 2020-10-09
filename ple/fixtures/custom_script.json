@@ -145,17 +145,6 @@
  {
   "docstatus": 0,
   "doctype": "Custom Script",
-  "dt": "Customer",
-  "modified": "2018-10-23 16:30:18.202097",
-  "name": "Customer-Client",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "script": "cur_frm.add_fetch('tipo_documento_identidad', 'codigo_tipo_documento', 'codigo_tipo_documento');"
- },
- {
-  "docstatus": 0,
-  "doctype": "Custom Script",
   "dt": "Purchase Invoice",
   "modified": "2020-01-24 12:46:03.787100",
   "name": "Purchase Invoice-Client",
