@@ -9,7 +9,7 @@ import frappe
 import datetime
 
 from platform import python_version
-from pyreportjasper import JasperPy
+from pyreportjasper import PyReportJasper
 from ple.ple_peru.utils import Utils
 
 class ReportedeLibrosElectronicos(Utils):
@@ -33,13 +33,14 @@ def make_jasper_report(reporte, from_date, to_date, tipo):
 		'database': frappe.conf.get("db_name"),
 		'port': '3306'
 	}
-	jasper = JasperPy()
-	jasper.process(
+	jasper = PyReportJasper()
+	jasper.config(
         input_file,
         output_file=output,
-        format_list=["pdf", "rtf", "xml"],
+        output_formats=["pdf", "rtf", "xml"],
         parameters={'from_date': from_date, 'to_date': to_date},
         db_connection=con,
         locale='en_US'  # LOCALE Ex.:(en_US, de_GE)
     )
+	jasper.process_report()
 	return output
