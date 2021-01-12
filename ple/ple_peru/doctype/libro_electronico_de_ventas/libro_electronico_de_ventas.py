@@ -38,6 +38,7 @@ class LibroElectronicodeVentas(Utils):
 				"" as monto_isc,
 				"" as base_arroz,
 				"" as impuesto_arroz,
+				"" as monto_ibp,
 				"" as otros_conceptos,
 				ROUND(base_grand_total, 2) as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
