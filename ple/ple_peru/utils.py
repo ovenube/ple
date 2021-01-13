@@ -154,6 +154,7 @@ def to_file(data, tipo, nombre, primer=None):
 				str(row['monto_impuesto_no_gravada']) + '|' +
 				str(row['valor_adquisicion_no_gravada']) + '|' +
 				row['monto_isc'] + '|' +
+				row['monto_ibp'] + "|" + 
 				row['otros_conceptos'] + '|' +
 				str(row['valor_adquisicion']) + '|' +
 				row['moneda'] + '|' +

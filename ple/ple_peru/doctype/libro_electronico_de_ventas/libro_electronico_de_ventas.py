@@ -50,7 +50,7 @@ class LibroElectronicodeVentas(Utils):
 				"" as contrato,
 				"" as error_1,
 				'1' as indicador_pago,
-				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>=posting_date,'7','1')) as anotacion
+				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>posting_date,'7','1')) as anotacion
 			from
 				`tabSales Invoice` as sales_invoice
 			where posting_date  >= '""" + str(from_date) + """' 
@@ -82,6 +82,7 @@ class LibroElectronicodeVentas(Utils):
 				"" as monto_isc,
 				"" as base_arroz,
 				"" as impuesto_arroz,
+				"" as monto_ibp
 				"" as otros_conceptos,
 				ROUND(grand_total, 2) as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
@@ -93,12 +94,13 @@ class LibroElectronicodeVentas(Utils):
 				"" as contrato,
 				"" as error_1,
 				'1' as indicador_pago,
-				IF(fees.docstatus='2','2',IF(CONCAT(DATE_FORMAT(fecha_comprobante,'%Y-%m'),'-01')>=fecha_comprobante,'7','1')) as anotacion
+				IF(fees.docstatus='2','2',IF(CONCAT(DATE_FORMAT(fecha_comprobante,'%Y-%m'),'-01')>fecha_comprobante,'7','1')) as anotacion
 			from
 				`tabFees` as fees
 			where fecha_comprobante  >= '""" + str(from_date) + """' 
 			and fecha_comprobante  <= '""" + str(to_date) + """'
             and docstatus != 0
+			and numero_comprobante IS NOT NULL
             and company = '"""+company+"""'
 			order by fecha_comprobante""", as_dict=True)
     
@@ -128,6 +130,7 @@ class LibroElectronicodeVentas(Utils):
                 'monto_isc': d.monto_isc,
                 'base_arroz': d.base_arroz,
                 'impuesto_arroz': d.impuesto_arroz,
+				'monto_ibp': d.monto_ibp,
                 'otros_conceptos': d.otros_conceptos,
                 'valor_adquisicion': d.valor_adquisicion,
                 'moneda': d.moneda,
