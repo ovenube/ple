@@ -38,7 +38,7 @@ class LibroElectronicodeVentas(Utils):
 				"" as monto_isc,
 				"" as base_arroz,
 				"" as impuesto_arroz,
-				IF(monto_ibp != 0, "", monto_ibp) as monto_ibp,
+				IF(total_amount_ibp != 0, "", total_amount_ibp) as monto_ibp,
 				"" as otros_conceptos,
 				ROUND(base_grand_total, 2) as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
@@ -53,8 +53,8 @@ class LibroElectronicodeVentas(Utils):
 				IF(sales_invoice.docstatus='2','2',IF(CONCAT(DATE_FORMAT(posting_date,'%Y-%m'),'-01')>posting_date,'7','1')) as anotacion
 			from
 				`tabSales Invoice` as sales_invoice
-			where posting_date  >= '""" + str(from_date) + """' 
-			and posting_date  <= '""" + str(to_date) + """'
+			where posting_date >= '""" + str(from_date) + """' 
+			and posting_date <= '""" + str(to_date) + """'
             and docstatus != 0
             and company = '"""+company+"""'
 			order by posting_date""", as_dict=True)
