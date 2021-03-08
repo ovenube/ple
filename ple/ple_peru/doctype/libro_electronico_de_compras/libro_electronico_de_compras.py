@@ -94,7 +94,7 @@ class LibroElectronicodeCompras(Utils):
 				"" as monto_impuesto_no_gravada,
 				ROUND(IF(base_total_taxes_and_charges=0, base_grand_total, IF(base_inafected_taxes_and_charges=0, 0, base_inafected_taxes_and_charges)), 2) as valor_adquisicion_no_gravada,
 				"" as monto_isc,
-				"" as monto_ibp,
+				IF(total_amount_ibp != 0, "", total_amount_ibp) as monto_ibp,
 				"" as otros_conceptos,
 				ROUND(base_grand_total, 2) as valor_adquisicion,
 				IF(currency = 'SOL', 'PEN', currency) as moneda,
